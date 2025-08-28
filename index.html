@@ -1,42 +1,113 @@
-<!DOCTYPE html>   <!-- Indica que es un documento HTML5 -->
-<html lang="es">  <!-- Define que el idioma es español -->
+<!DOCTYPE html> <!-- Indica que el documento es HTML5 -->
+<html lang="es"> <!-- Define el idioma de la página (español) -->
 <head>
-    <meta charset="UTF-8"> <!-- Soporte para acentos y ñ -->
+    <meta charset="UTF-8"> <!-- Soporte para acentos, ñ, etc. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Ajusta la página para que se vea bien en móviles -->
+    <!-- Ajusta la web para que se vea bien en móviles -->
     <title>E3WS - Alerta Sísmica</title> <!-- Título que aparece en la pestaña -->
+
+    <!-- CSS interno: define los estilos de la página -->
     <style>
-        /* Aquí está el CSS: define colores, fuentes, estilos */
+        /* Estilo general del cuerpo de la página */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f9;
-            text-align: center;
-            padding: 50px;
+            font-family: Arial, sans-serif; /* Fuente del texto */
+            margin: 0;  /* Elimina márgenes por defecto */
+            padding: 0; /* Elimina padding por defecto */
+            background-color: #f8f9fa; /* Color de fondo gris muy claro */
+            color: #333; /* Color del texto: gris oscuro */
         }
-        h1 {
-            color: #2c3e50;
+
+        /* Encabezado superior */
+        header {
+            background: #2c3e50; /* Fondo azul oscuro */
+            color: white; /* Texto en blanco */
+            padding: 20px; /* Espaciado interno */
+            text-align: center; /* Centrar el texto */
         }
-        p {
-            color: #34495e;
-            font-size: 18px;
+
+        /* Barra de navegación (menú) */
+        nav {
+            background: #34495e; /* Azul más claro que el header */
+            padding: 10px; /* Espaciado interno */
+            text-align: center; /* Centra los enlaces */
         }
+
+        /* Estilo de los enlaces del menú */
+        nav a {
+            color: white; /* Texto blanco */
+            margin: 0 15px; /* Espacio entre enlaces */
+            text-decoration: none; /* Sin subrayado */
+            font-weight: bold; /* Texto en negrita */
+        }
+
+        /* Cada sección de la página */
+        section {
+            padding: 40px; /* Espaciado interno */
+            max-width: 900px; /* Ancho máximo (centrado) */
+            margin: auto; /* Centrar la sección en la página */
+        }
+
+        /* Pie de página */
         footer {
-            margin-top: 40px;
-            font-size: 14px;
-            color: #7f8c8d;
+            background: #2c3e50; /* Igual que el header */
+            color: white; /* Texto blanco */
+            text-align: center; /* Centrado */
+            padding: 15px; /* Espaciado interno */
+            margin-top: 40px; /* Separación arriba */
         }
     </style>
 </head>
 <body>
-    <!-- Aquí está el contenido visible de tu página -->
-    <h1>🌍 Proyecto E3WS</h1>  <!-- Título grande -->
-    <h2>Alerta Sísmica en Tiempo Real</h2> <!-- Subtítulo -->
-    <p>Bienvenido al prototipo del sistema de alerta sísmica E3WS.<br>
-       Aquí mostraremos información y actualizaciones del proyecto.</p>
+    <!-- Encabezado principal -->
+    <header>
+        <h1>🌍 Proyecto E3WS</h1> <!-- Título grande -->
+        <p>Sistema de Alerta Sísmica en Tiempo Real</p> <!-- Subtítulo -->
+    </header>
 
+    <!-- Barra de navegación -->
+    <nav>
+        <!-- Cada enlace lleva a una sección de la misma página -->
+        <a href="#que-es">Qué es</a>
+        <a href="#como-funciona">Cómo funciona</a>
+        <a href="#beneficios">Beneficios</a>
+        <a href="#contacto">Contacto</a>
+    </nav>
+
+    <!-- Sección: Qué es -->
+    <section id="que-es">
+        <h2>¿Qué es E3WS?</h2>
+        <p>E3WS es un sistema innovador de alerta sísmica diseñado para detectar y 
+           comunicar movimientos sísmicos en tiempo real, ofreciendo segundos vitales 
+           de anticipación.</p>
+    </section>
+
+    <!-- Sección: Cómo funciona -->
+    <section id="como-funciona">
+        <h2>¿Cómo funciona?</h2>
+        <p>Utilizamos sensores sísmicos conectados a la nube y procesados mediante 
+           Python para enviar alertas inmediatas a comunidades, empresas y autoridades.</p>
+    </section>
+
+    <!-- Sección: Beneficios -->
+    <section id="beneficios">
+        <h2>Beneficios</h2>
+        <ul>
+            <!-- Lista con viñetas -->
+            <li>Seguridad para comunidades y familias</li>
+            <li>Protección de infraestructuras</li>
+            <li>Prevención de pérdidas humanas y económicas</li>
+        </ul>
+    </section>
+
+    <!-- Sección: Contacto -->
+    <section id="contacto">
+        <h2>Contacto</h2>
+        <p>📧 contacto@e3ws.com (ejemplo)</p>
+    </section>
+
+    <!-- Pie de página -->
     <footer>
         © 2025 Carlos Lara - Proyecto E3WS
     </footer>
 </body>
 </html>
-
