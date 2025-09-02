@@ -1,43 +1,89 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>E3WS - Sistema de Alerta Sísmica</title>
+<!DOCTYPE html> <!-- Documento en HTML5 -->
+<html lang="es"> <!-- Idioma español -->
 
+<head>
+  <meta charset="UTF-8"> <!-- Soporta acentos y caracteres especiales -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive en móviles -->
+  <title>E3WS - Sistema de Alerta Sísmica</title> <!-- Título en la pestaña -->
+
+  <!-- =========================
+       ESTILOS INTERNOS (CSS)
+       ========================= -->
   <style>
-    /* =====================
-       VARIABLES DE DISEÑO
-       ===================== */
-    :root {
-      --bg-light: #ffffff;     /* Fondo blanco */
-      --bg-muted: #f1f5f9;     /* Fondo gris muy claro */
-      --bg-accent: #e0f7ff;    /* Fondo celeste muy suave */
-      --text: #1e293b;         /* Texto principal gris oscuro */
-      --brand: #0ea5e9;        /* Color principal celeste */
+    /* Reset y utilidades */
+    * {
+      box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth; /* Scroll suave al navegar con anclas */
+    }
+
+    /* Variables de colores para fácil mantenimiento */
+    :root {
+      --bg: #f7f9fc; /* Fondo general */
+      --text: #2b2f36; /* Texto principal */
+      --muted: #64748b; /* Texto secundario */
+      --brand: #0ea5e9; /* Azul principal */
+      --brand-dark: #0284c7; /* Azul más oscuro (hover) */
+      --nav: #0f172a; /* Fondo del menú */
+      --card: #ffffff; /* Fondo de secciones */
+      --shadow: 0 10px 25px rgba(2, 8, 23, 0.08); /* Sombra suave */
+    }
+
+    /* Estilo general */
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: var(--bg-light);
+      font-family: system-ui, Arial, sans-serif;
       color: var(--text);
+      background: var(--bg);
       line-height: 1.6;
     }
 
-    /* Menú fijo superior */
-    nav {
-      background: #0f172a;
-      padding: 15px;
+    /* Contenedor centrado */
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* =========================
+       ENCABEZADO
+       ========================= */
+    header {
+      background: var(--nav);
+      color: white;
       text-align: center;
-      position: sticky; /* Menú se queda fijo arriba */
+      padding: 40px 20px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+
+    header p {
+      margin: 10px 0 0;
+      font-size: 1.2rem;
+      color: var(--muted);
+    }
+
+    /* =========================
+       MENÚ DE NAVEGACIÓN
+       ========================= */
+    nav {
+      position: sticky; /* Se mantiene fijo arriba al hacer scroll */
       top: 0;
+      background: var(--nav);
+      padding: 10px;
+      text-align: center;
       z-index: 1000;
     }
 
     nav a {
       color: white;
-      margin: 0 12px;
+      margin: 0 15px;
       text-decoration: none;
       font-weight: bold;
     }
@@ -46,32 +92,31 @@
       color: var(--brand);
     }
 
-    /* Estilo base de secciones */
+    /* =========================
+       SECCIONES
+       ========================= */
     section {
-      padding: 80px 20px;  /* Espaciado amplio arriba y abajo */
-      text-align: center;  /* Centrar contenido por defecto */
+      padding: 80px 20px;
+      text-align: center;
+      scroll-margin-top: 80px; /* Ajuste clave para que el sticky nav no tape los títulos */
     }
 
-    /* Colores alternados para dar sensación de capítulos */
-    .bg-light { background: var(--bg-light); }
-    .bg-muted { background: var(--bg-muted); }
-    .bg-accent { background: var(--bg-accent); }
-
-    /* Encabezados de secciones */
     section h2 {
-      font-size: 2rem;
+      color: var(--brand-dark);
       margin-bottom: 20px;
-      color: var(--brand);
     }
 
     section p {
       max-width: 800px;
-      margin: 0 auto;
+      margin: 0 auto 20px;
+      color: var(--text);
     }
 
-    /* Pie de página */
+    /* =========================
+       PIE DE PÁGINA
+       ========================= */
     footer {
-      background: #0f172a;
+      background: var(--nav);
       color: white;
       text-align: center;
       padding: 20px;
@@ -79,10 +124,19 @@
     }
   </style>
 </head>
+
 <body>
-  <!-- =====================
-       MENÚ SUPERIOR
-       ===================== -->
+  <!-- =========================
+       ENCABEZADO PRINCIPAL
+       ========================= -->
+  <header>
+    <h1>🌍 Proyecto E3WS</h1>
+    <p>Sistema de Alerta Sísmica en Tiempo Real</p>
+  </header>
+
+  <!-- =========================
+       MENÚ PRINCIPAL
+       ========================= -->
   <nav>
     <a href="#inicio">Inicio</a>
     <a href="#nosotros">Nosotros</a>
@@ -95,61 +149,62 @@
     <a href="#contacto">Contacto</a>
   </nav>
 
-  <!-- =====================
-       SECCIONES COMO CAPÍTULOS
-       ===================== -->
+  <!-- =========================
+       SECCIONES DEL SITIO
+       ========================= -->
 
-  <section id="inicio" class="bg-light">
-    <h2>Bienvenido a E3WS</h2>
-    <p>Un sistema avanzado de alerta sísmica en tiempo real diseñado para proteger vidas y comunidades.</p>
+  <section id="inicio">
+    <h2>Inicio</h2>
+    <p>Bienvenido a E3WS, el sistema de alerta sísmica temprana diseñado para proteger vidas y reducir riesgos.</p>
   </section>
 
-  <section id="nosotros" class="bg-muted">
+  <section id="nosotros">
     <h2>Nosotros</h2>
-    <p>Nuestra misión es salvar vidas mediante la detección temprana de sismos. Nuestra visión: un mundo más seguro gracias a la ciencia y la tecnología.</p>
+    <p>Nuestra misión es desarrollar tecnología accesible para la prevención y protección frente a sismos. Nuestra visión es salvar vidas en cada rincón del planeta.</p>
   </section>
 
-  <section id="e3ws" class="bg-accent">
+  <section id="e3ws">
     <h2>¿Qué es E3WS?</h2>
-    <p>E3WS es un sistema de alerta temprana de terremotos que analiza las ondas sísmicas iniciales y emite avisos inmediatos a usuarios y comunidades.</p>
+    <p>E3WS es un sistema de alerta temprana de terremotos que analiza las ondas sísmicas iniciales para enviar avisos inmediatos.</p>
   </section>
 
-  <section id="sistema" class="bg-light">
+  <section id="sistema">
     <h2>Sistema</h2>
-    <p>El sistema se basa en inteligencia artificial y sensores avanzados que detectan y procesan la información sísmica en segundos.</p>
+    <p>El sistema detecta la fase P de un sismo, calcula magnitud, epicentro y profundidad en segundos, y activa alertas en comunidades y empresas.</p>
   </section>
 
-  <section id="beneficios" class="bg-muted">
+  <section id="beneficios">
     <h2>Beneficios</h2>
-    <p>Protección de personas, seguridad en infraestructuras críticas, integración con sistemas de emergencia y mayor resiliencia comunitaria.</p>
+    <p>Protección de personas, prevención de daños en infraestructura y conexión con sistemas de seguridad automatizados.</p>
   </section>
 
-  <section id="casos" class="bg-accent">
+  <section id="casos">
     <h2>Casos</h2>
-    <p>Implementaciones piloto en comunidades vulnerables, con resultados positivos en tiempos de respuesta y confianza ciudadana.</p>
+    <p>Presentamos ejemplos de aplicación, pruebas piloto y proyectos en colaboración con instituciones.</p>
   </section>
 
-  <section id="novedades" class="bg-light">
+  <section id="novedades">
     <h2>Novedades</h2>
-    <p>Aquí publicaremos actualizaciones del proyecto, noticias relevantes y avances en el desarrollo de E3WS.</p>
+    <p>Mantente informado sobre las últimas noticias, avances del sistema y actualizaciones del proyecto.</p>
   </section>
 
-  <section id="demo" class="bg-muted">
+  <section id="demo">
     <h2>Demo</h2>
-    <p>En esta sección los usuarios podrán probar una simulación del sistema de alerta sísmica.</p>
+    <p>Prueba nuestra demo en tiempo real y descubre cómo funciona el sistema de alerta sísmica.</p>
   </section>
 
-  <section id="contacto" class="bg-accent">
+  <section id="contacto">
     <h2>Contacto</h2>
-    <p>📧 contacto@e3ws.com</p>
+    <p>📧 contacto@e3ws.com (ejemplo)</p>
   </section>
 
-  <!-- =====================
+  <!-- =========================
        PIE DE PÁGINA
-       ===================== -->
+       ========================= -->
   <footer>
-    © 2025 Proyecto E3WS - Todos los derechos reservados
+    © 2025 Carlos Lara - Proyecto E3WS
   </footer>
 </body>
 </html>
+
 
