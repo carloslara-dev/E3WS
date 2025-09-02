@@ -1,28 +1,24 @@
-<!DOCTYPE html> <!-- Indica que este documento usa HTML5 -->
-<html lang="es"> <!-- El idioma principal del contenido es español -->
-
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="UTF-8"> <!-- Soporte para acentos y caracteres especiales -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsivo en móviles -->
-  <title>E3WS - Sistema de Alerta Sísmica</title> <!-- Título en la pestaña del navegador -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E3WS - Sistema de Alerta Sísmica</title>
 
-  <!-- =========================
-       ESTILOS INTERNOS (CSS)
-       ========================= -->
   <style>
-    /* Reset básico */
+    /* Reset */
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; } /* Scroll suave */
+    html { scroll-behavior: smooth; }
 
-    /* Paleta de colores centralizada */
+    /* Colores */
     :root {
-      --bg-light: #f8fafc;     /* Fondo claro */
-      --bg-alt: #e2e8f0;       /* Fondo alternado */
-      --text-dark: #1e293b;    /* Texto principal */
-      --text-muted: #475569;   /* Texto secundario */
-      --brand: #0ea5e9;        /* Azul celeste */
-      --brand-dark: #0369a1;   /* Azul más oscuro */
-      --nav-bg: #0f172a;       /* Fondo del menú */
+      --bg-light: #f8fafc;
+      --bg-alt: #e2e8f0;
+      --text-dark: #1e293b;
+      --text-muted: #475569;
+      --brand: #0ea5e9;
+      --brand-dark: #0369a1;
+      --nav-bg: #0f172a;
     }
 
     body {
@@ -32,16 +28,13 @@
       line-height: 1.6;
     }
 
-    /* Contenedor centralizado */
     .container {
       max-width: 1100px;
       margin: auto;
       padding: 60px 20px;
     }
 
-    /* =========================
-       ENCABEZADO Y MENÚ
-       ========================= */
+    /* Encabezado */
     header {
       background: var(--nav-bg);
       color: white;
@@ -49,21 +42,15 @@
       text-align: center;
     }
 
-    header h1 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-    }
+    header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+    header p { font-size: 1.2rem; color: #cbd5e1; }
 
-    header p {
-      font-size: 1.2rem;
-      color: #cbd5e1;
-    }
-
+    /* Menú */
     nav {
       background: var(--nav-bg);
       padding: 15px;
       text-align: center;
-      position: sticky; /* Siempre visible arriba */
+      position: sticky;
       top: 0;
       z-index: 1000;
     }
@@ -76,20 +63,18 @@
       transition: color 0.3s;
     }
 
-    nav a:hover {
+    nav a:hover { color: var(--brand); }
+
+    /* Nuevo: estilo para el link activo */
+    nav a.active {
       color: var(--brand);
+      border-bottom: 2px solid var(--brand);
+      padding-bottom: 3px;
     }
 
-    /* =========================
-       SECCIONES
-       ========================= */
-    section {
-      padding: 80px 20px;
-    }
-
-    section:nth-of-type(even) {
-      background: var(--bg-alt); /* Fondo alternado */
-    }
+    /* Secciones */
+    section { padding: 80px 20px; }
+    section:nth-of-type(even) { background: var(--bg-alt); }
 
     section h2 {
       font-size: 2rem;
@@ -105,19 +90,10 @@
       color: var(--text-muted);
     }
 
-    ul {
-      max-width: 700px;
-      margin: 20px auto;
-      padding-left: 20px;
-    }
+    ul { max-width: 700px; margin: 20px auto; padding-left: 20px; }
+    ul li { margin-bottom: 10px; }
 
-    ul li {
-      margin-bottom: 10px;
-    }
-
-    /* =========================
-       PIE DE PÁGINA
-       ========================= */
+    /* Footer */
     footer {
       background: var(--nav-bg);
       color: white;
@@ -127,15 +103,14 @@
     }
   </style>
 </head>
-
 <body>
-  <!-- ENCABEZADO -->
+  <!-- Encabezado -->
   <header>
     <h1>🌍 Proyecto E3WS</h1>
     <p>Sistema de Alerta Sísmica Temprana</p>
   </header>
 
-  <!-- MENÚ -->
+  <!-- Menú -->
   <nav>
     <a href="#inicio">Inicio</a>
     <a href="#nosotros">Nosotros</a>
@@ -148,7 +123,7 @@
     <a href="#contacto">Contacto</a>
   </nav>
 
-  <!-- SECCIONES -->
+  <!-- Secciones -->
   <section id="inicio">
     <div class="container">
       <h2>Bienvenido a E3WS</h2>
@@ -216,12 +191,41 @@
     </div>
   </section>
 
-  <!-- PIE -->
+  <!-- Pie -->
   <footer>
     © 2025 Carlos Lara - Proyecto E3WS
   </footer>
+
+  <!-- =========================
+       SCRIPT: resaltar menú activo
+       ========================= -->
+  <script>
+    const sections = document.querySelectorAll("section");
+    const navLinks = document.querySelectorAll("nav a");
+
+    window.addEventListener("scroll", () => {
+      let current = "";
+
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 80; // Ajuste para sticky nav
+        const sectionHeight = section.clientHeight;
+
+        if (pageYOffset >= sectionTop && pageYOffset < sectionTop + sectionHeight) {
+          current = section.getAttribute("id");
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove("active");
+        if (link.getAttribute("href") === "#" + current) {
+          link.classList.add("active");
+        }
+      });
+    });
+  </script>
 </body>
 </html>
+
 
 
 
