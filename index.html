@@ -10,11 +10,11 @@
        ESTILOS INTERNOS (CSS)
        ========================= -->
   <style>
-    /* Reseteos y utilidades básicas */
+    /* ==== RESETEOS Y UTILIDADES BÁSICAS ==== */
     * { box-sizing: border-box; } /* Incluye padding/border dentro del ancho/alto total de los elementos */
     html { scroll-behavior: smooth; } /* Desplazamiento suave al hacer clic en anclas del menú */
 
-    /* Paleta de colores centralizada con variables CSS para fácil mantenimiento */
+    /* ==== PALETA DE COLORES CON VARIABLES ==== */
     :root {
       --bg: #f7f9fc;        /* Fondo general muy claro */
       --text: #2b2f36;      /* Texto principal gris muy oscuro */
@@ -26,315 +26,167 @@
       --shadow: 0 10px 25px rgba(2,8,23,0.08); /* Sombra suave */
     }
 
-    /* Tipografía y layout base */
+    /* ==== TIPOGRAFÍA Y LAYOUT BASE ==== */
     body {
-      margin: 0;                         /* Quitamos márgenes por defecto del navegador */
-      font-family: system-ui, Arial, sans-serif; /* Fuente legible y disponible */
-      color: var(--text);                /* Color de texto principal */
-      background: var(--bg);             /* Color de fondo global */
-      line-height: 1.6;                  /* Altura de línea para legibilidad */
+      margin: 0;                         
+      font-family: system-ui, Arial, sans-serif; 
+      color: var(--text);                
+      background: var(--bg);             
+      line-height: 1.6;                  
     }
 
-    /* Contenedor para limitar el ancho del contenido y centrarlo */
+    /* ==== CONTENEDOR GENERAL ==== */
     .container {
-      width: 100%;            /* Ocupa todo el ancho disponible */
-      max-width: 1100px;      /* Máximo ancho legible en pantallas grandes */
-      margin: 0 auto;         /* Centrado horizontal */
-      padding: 0 20px;        /* Respiración lateral en pantallas pequeñas */
+      width: 100%;            
+      max-width: 1100px;      
+      margin: 0 auto;         
+      padding: 0 20px;        
     }
 
-    /* Menú de navegación superior */
+    /* ==== HEADER (ENCABEZADO PRINCIPAL) ==== */
+    header {
+      background: var(--nav); /* Fondo azul oscuro */
+      color: white;           /* Texto en blanco */
+      text-align: center;     /* Centrado horizontal */
+      padding: 60px 20px;     /* Espaciado superior/inferior */
+    }
+    header h1 {
+      margin: 0;              /* Quita espacio extra arriba/abajo */
+      font-size: 2.5rem;      /* Título grande */
+    }
+    header p {
+      margin-top: 10px;
+      font-size: 1.2rem;      /* Subtítulo más pequeño */
+      color: #e2e8f0;         /* Gris claro para contraste */
+    }
+
+    /* ==== NAVEGACIÓN SUPERIOR ==== */
     nav {
-      position: sticky;       /* Se “pega” arriba cuando hacemos scroll */
-      top: 0;                 /* Se fija al borde superior de la ventana */
-      z-index: 1000;          /* Asegura que quede por encima del contenido */
-      background: var(--nav); /* Fondo oscuro para contraste */
-      box-shadow: var(--shadow); /* Sombra sutil bajo el nav */
+      background: var(--nav); 
+      padding: 15px 0; 
+      text-align: center;     
+      position: sticky;       /* Se queda pegado arriba al hacer scroll */
+      top: 0;
+      z-index: 1000;          /* Siempre visible por encima */
+    }
+    nav a {
+      color: white;           
+      margin: 0 15px;         
+      text-decoration: none;  
+      font-weight: bold;      
+      transition: color 0.3s; /* Efecto suave al pasar el mouse */
+    }
+    nav a:hover {
+      color: var(--brand);    
     }
 
-    /* Contenido interno del nav: usamos flex para distribuir enlaces */
-    .nav-inner {
-      display: flex;                 /* Activa distribución flexible */
-      align-items: center;           /* Alinea verticalmente los elementos */
-      justify-content: space-between;/* Logo a la izq., enlaces a la der. */
-      min-height: 64px;              /* Altura mínima cómoda para clics */
-    }
-
-    /* “Logo” textual simple por ahora */
-    .brand {
-      color: #fff;              /* Texto blanco para contraste */
-      font-weight: 800;         /* Muy negrita para presencia */
-      letter-spacing: 0.5px;    /* Ligero espaciado entre letras */
-      text-decoration: none;    /* Sin subrayado */
-      font-size: 1.05rem;       /* Tamaño de fuente del logo */
-    }
-
-    /* Lista de enlaces del menú */
-    .menu {
-      display: flex;                  /* Coloca elementos en fila */
-      gap: 18px;                      /* Separación uniforme entre enlaces */
-      flex-wrap: wrap;                /* Permite envolver si no entra en móvil */
-    }
-
-    /* Estilo base de cada enlace del menú */
-    .menu a {
-      color: #e2e8f0;                 /* Gris muy claro (mejor que blanco puro) */
-      text-decoration: none;          /* Quitamos subrayado */
-      font-weight: 600;               /* Seminegrita */
-      padding: 10px 8px;              /* Área clickeable más cómoda */
-      border-radius: 8px;             /* Bordes suaves */
-      transition: background .2s, color .2s; /* Animación al pasar el mouse */
-    }
-
-    /* Efecto hover para feedback visual */
-    .menu a:hover {
-      background: rgba(255,255,255,0.12); /* Fondo claro translúcido */
-      color: #ffffff;                     /* Blanco pleno en hover */
-    }
-
-    /* Secciones generales (One Page) */
+    /* ==== SECCIONES GENERALES ==== */
     section {
-      scroll-margin-top: 90px;  /* Corrige el anclaje para que el título no quede debajo del nav */
-      padding: 72px 0;          /* Espaciado vertical amplio */
+      padding: 60px 20px;
+      background: var(--card); 
+      margin: 40px auto;      
+      border-radius: 12px;    
+      box-shadow: var(--shadow); 
+      max-width: 900px;       
+    }
+    section h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: var(--brand-dark);
     }
 
-    /* Tarjeta visual para bloques de contenido */
-    .card {
-      background: var(--card);    /* Fondo blanco */
-      border-radius: 16px;        /* Esquinas redondeadas */
-      box-shadow: var(--shadow);  /* Sombra suave */
-      padding: 28px;              /* Respiración interna */
+    /* ==== PIE DE PÁGINA ==== */
+    footer {
+      background: var(--nav); 
+      color: white;           
+      text-align: center;     
+      padding: 20px;          
+      margin-top: 40px;       
     }
-
-    /* Títulos de sección */
-    h1, h2 {
-      margin: 0 0 16px 0;   /* Espacio inferior */
-      line-height: 1.25;    /* Títulos más compactos */
-    }
-
-    h1 { font-size: 2.2rem; } /* Tamaño grande para el hero */
-    h2 { font-size: 1.6rem; } /* Tamaño estándar de sección */
-
-    p.lead {
-      color: var(--muted);         /* Texto secundario */
-      font-size: 1.1rem;           /* Un poco más grande para destacar */
-      margin-bottom: 22px;         /* Separación respecto a lo siguiente */
-    }
-
-    /* Botón de llamada a la acción (CTA) */
-    .btn {
-      display: inline-block;           /* Permite padding y márgenes */
-      background: var(--brand);        /* Color principal */
-      color: #ffffff;                  /* Texto blanco */
-      padding: 12px 18px;              /* Tamaño cómodo */
-      border-radius: 999px;            /* Pastilla redondeada */
-      text-decoration: none;           /* Sin subrayado */
-      font-weight: 700;                /* Negrita */
-      transition: background .2s;      /* Animación de hover */
-    }
-
-    .btn:hover { background: var(--brand-dark); } /* Oscurece al pasar el mouse */
-
-    /* Disposición en rejilla simple para listas de “Beneficios/Casos” */
-    .grid {
-      display: grid;                 /* Activa CSS Grid */
-      gap: 16px;                     /* Separación entre tarjetas */
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      /* Crea columnas automáticas que nunca bajan de 260px */
-      margin-top: 18px;              /* Separación del título/párrafo */
-    }
-
-    /* Pequeño detalle para subtítulos dentro de tarjetas */
-    .muted { color: var(--muted); } /* Clase utilitaria de color secundario */
   </style>
 </head>
 
-<body> <!-- Contenido visible de la página -->
+<body>
+  <!-- =========================
+       ENCABEZADO PRINCIPAL
+       ========================= -->
+  <header>
+    <h1>🌍 Proyecto E3WS</h1>
+    <p>Sistema de Alerta Sísmica en Tiempo Real</p>
+  </header>
 
   <!-- =========================
-       NAVEGACIÓN SUPERIOR (MENÚ)
+       MENÚ DE NAVEGACIÓN
        ========================= -->
-  <nav> <!-- Barra superior fija/pegajosa -->
-    <div class="container nav-inner"> <!-- Contenedor para centrar contenido del nav -->
-      <a class="brand" href="#inicio">E3WS</a> <!-- “Logo” que enlaza al inicio -->
-      <div class="menu"> <!-- Grupo de enlaces del menú -->
-        <a href="#inicio">Inicio</a> <!-- Portada / Hero -->
-        <a href="#nosotros">Nosotros</a> <!-- Visión, misión, quiénes somos -->
-        <a href="#e3ws">E3WS</a> <!-- Qué es el sistema en general -->
-        <a href="#funciona">Funciona</a> <!-- Cómo opera la tecnología -->
-        <a href="#beneficios">Beneficios</a> <!-- Ventajas para clientes -->
-        <a href="#casos">Casos</a> <!-- Casos de uso / pilotos -->
-        <a href="#novedades">Novedades</a> <!-- Noticias / avances / blog -->
-        <a href="#demo">Demo</a> <!-- Espacio para probar el sistema -->
-        <a href="#contacto">Contacto</a> <!-- Formas de comunicación -->
-      </div>
-    </div>
+  <nav>
+    <a href="#inicio">Inicio</a>
+    <a href="#nosotros">Nosotros</a>
+    <a href="#e3ws">E3WS</a>
+    <a href="#funciona">Funciona</a>
+    <a href="#beneficios">Beneficios</a>
+    <a href="#casos">Casos</a>
+    <a href="#novedades">Novedades</a>
+    <a href="#demo">Demo</a>
+    <a href="#contacto">Contacto</a>
   </nav>
 
   <!-- =========================
-       SECCIÓN 1: INICIO (HERO)
+       SECCIONES
        ========================= -->
-  <section id="inicio"> <!-- Ancla para el menú -->
-    <div class="container"> <!-- Centra y limita el ancho -->
-      <div class="card"> <!-- Tarjeta visual del hero -->
-        <h1>Alerta sísmica temprana para proteger vidas y activos</h1> <!-- Mensaje principal -->
-        <p class="lead">
-          E3WS detecta los primeros segundos de un sismo, analiza en tiempo real y emite alertas inmediatas para que tomes acción antes de las ondas más dañinas.
-        </p> <!-- Subtítulo explicativo -->
-        <a class="btn" href="#demo">Probar la Demo</a> <!-- Botón de CTA que lleva a la sección Demo -->
-      </div>
-    </div>
+  <section id="inicio">
+    <h2>Bienvenido a E3WS</h2>
+    <p>Aquí irá una introducción clara y breve sobre el sistema.</p>
+  </section>
+
+  <section id="nosotros">
+    <h2>Nosotros</h2>
+    <p>Aquí se mostrará misión, visión y quiénes somos.</p>
+  </section>
+
+  <section id="e3ws">
+    <h2>¿Qué es E3WS?</h2>
+    <p>E3WS es un sistema de alerta temprana de terremotos diseñado para proteger vidas y bienes...</p>
+  </section>
+
+  <section id="funciona">
+    <h2>Cómo Funciona</h2>
+    <p>Explicación técnica simplificada de cómo opera la tecnología.</p>
+  </section>
+
+  <section id="beneficios">
+    <h2>Beneficios</h2>
+    <ul>
+      <li>Protección de comunidades</li>
+      <li>Prevención de daños en infraestructura</li>
+      <li>Integración con sistemas de seguridad</li>
+    </ul>
+  </section>
+
+  <section id="casos">
+    <h2>Casos</h2>
+    <p>Ejemplos de aplicación, pruebas piloto o demos.</p>
+  </section>
+
+  <section id="novedades">
+    <h2>Novedades</h2>
+    <p>Últimas noticias y actualizaciones del proyecto.</p>
+  </section>
+
+  <section id="demo">
+    <h2>Demo</h2>
+    <p>Espacio donde el usuario podrá probar el sistema.</p>
+  </section>
+
+  <section id="contacto">
+    <h2>Contacto</h2>
+    <p>📧 contacto@e3ws.com (ejemplo)</p>
   </section>
 
   <!-- =========================
-       SECCIÓN 2: NOSOTROS
+       PIE DE PÁGINA
        ========================= -->
-  <section id="nosotros"> <!-- Visión, misión, equipo -->
-    <div class="container">
-      <div class="card">
-        <h2>Nosotros</h2> <!-- Título de sección -->
-        <p class="lead">
-          Construimos tecnología confiable para alertas tempranas, enfocada en simplicidad de implementación y alto impacto social.
-        </p> <!-- Resumen de identidad -->
-        <h3>Visión</h3> <!-- Subtítulo: visión -->
-        <p>Ser el estándar regional en sistemas de alerta sísmica temprana, accesible para ciudades, empresas y comunidades.</p>
-        <h3>Misión</h3> <!-- Subtítulo: misión -->
-        <p>Reducir pérdidas humanas y materiales con soluciones de monitoreo y alerta inmediatas, integrables y escalables.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================
-       SECCIÓN 3: E3WS (QUÉ ES)
-       ========================= -->
-  <section id="e3ws"> <!-- Explicación general del producto -->
-    <div class="container">
-      <div class="card">
-        <h2>¿Qué es E3WS?</h2> <!-- Título de sección -->
-        <p>
-          E3WS es un <strong>sistema de alerta temprana de terremotos</strong> que analiza los primeros segundos de las ondas sísmicas (fase P),
-          estima parámetros clave y distribuye alertas a personas y sistemas automatizados.
-        </p> <!-- Definición clara para negocio -->
-        <p class="muted">
-          Técnicamente, emplea modelos de aprendizaje automático para estimar magnitud y proximidad a partir de señales iniciales,
-          optimizando latencia y precisión desde una estación por sitio.
-        </p> <!-- Detalle técnico resumido -->
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================
-       SECCIÓN 4: FUNCIONA (CÓMO OPERA)
-       ========================= -->
-  <section id="funciona"> <!-- Flujo simplificado -->
-    <div class="container">
-      <div class="card">
-        <h2>Cómo funciona</h2> <!-- Título -->
-        <ol> <!-- Lista ordenada del flujo -->
-          <li><strong>Detección:</strong> sensores registran la fase P en milisegundos.</li>
-          <li><strong>Análisis:</strong> el modelo estima magnitud/epicentro y riesgo.</li>
-          <li><strong>Alerta:</strong> distribución inmediata a apps, SMS, sirenas o integraciones.</li>
-          <li><strong>Automatización:</strong> puede activar protocolos (cortes, evacuación, etc.).</li>
-        </ol>
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================
-       SECCIÓN 5: BENEFICIOS
-       ========================= -->
-  <section id="beneficios"> <!-- Valor para negocio/comunidad -->
-    <div class="container">
-      <div class="card">
-        <h2>Beneficios</h2> <!-- Título -->
-        <div class="grid"> <!-- Mosaico de tarjetas -->
-          <div class="card">
-            <h3>Continuidad Operativa</h3>
-            <p class="muted">Reduce paradas imprevistas y daños en infraestructura crítica.</p>
-          </div>
-          <div class="card">
-            <h3>Seguridad de Personas</h3>
-            <p class="muted">Más segundos para activar protocolos y evacuar ordenadamente.</p>
-          </div>
-          <div class="card">
-            <h3>Integración Simple</h3>
-            <p class="muted">Compatibilidad con sirenas, paneles, apps y APIs empresariales.</p>
-          </div>
-          <div class="card">
-            <h3>Escalable</h3>
-            <p class="muted">Despliegue por sitios, ciudades o redes regionales.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================
-       SECCIÓN 6: CASOS (EJEMPLOS)
-       ========================= -->
-  <section id="casos"> <!-- Casos de uso o pilotos -->
-    <div class="container">
-      <div class="card">
-        <h2>Casos</h2> <!-- Título -->
-        <div class="grid"> <!-- Rejilla de ejemplos -->
-          <div class="card">
-            <h3>Industria</h3>
-            <p class="muted">Protocolos automáticos para proteger maquinaria y personal.</p>
-          </div>
-          <div class="card">
-            <h3>Colegios y Universidades</h3>
-            <p class="muted">Simulacros y alertas coordinadas para evacuaciones seguras.</p>
-          </div>
-          <div class="card">
-            <h3>Municipios</h3>
-            <p class="muted">Cobertura comunitaria con sirenas y mensajería masiva.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================
-       SECCIÓN 7: NOVEDADES (NOTICIAS/BLOG)
-       ========================= -->
-  <section id="novedades"> <!-- Comunicados y avances -->
-    <div class="container">
-      <div class="card">
-        <h2>Novedades</h2> <!-- Título -->
-        <p class="muted">Aquí publicaremos avances del proyecto, actualizaciones y buenas prácticas de preparación sísmica.</p>
-        <!-- Más adelante puedes convertir esto en una lista de posts con enlaces -->
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================
-       SECCIÓN 8: DEMO (PRUEBA)
-       ========================= -->
-  <section id="demo"> <!-- Zona para probar la experiencia -->
-    <div class="container">
-      <div class="card">
-        <h2>Demo</h2> <!-- Título -->
-        <p class="lead">Explora una demostración del flujo de alertas E3WS.</p>
-        <a class="btn" href="#contacto">Solicitar acceso</a> <!-- CTA provisional hacia contacto -->
-        <!-- En el futuro aquí puedes embeber gráficos, mapas o un simulador -->
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================
-       SECCIÓN 9: CONTACTO
-       ========================= -->
-  <section id="contacto"> <!-- Información de contacto -->
-    <div class="container">
-      <div class="card">
-        <h2>Contacto</h2> <!-- Título -->
-        <p>¿Quieres implementar E3WS en tu organización?</p>
-        <p><strong>Email:</strong> contacto@e3ws.com</p> <!-- Correo de ejemplo -->
-        <p><strong>Teléfono:</strong> +56 9 1234 5678</p> <!-- Teléfono de ejemplo -->
-        <!-- Más adelante puedes agregar un formulario real o enlaces a redes -->
-      </div>
-    </div>
-  </section>
-
-</body> <!-- Fin del contenido visible -->
-</html> <!-- Cierre del documento HTML -->
+  <footer>
+    © 2025 Carlos Lara - Proyecto E3WS
+  </footer>
+</body>
+</html>
