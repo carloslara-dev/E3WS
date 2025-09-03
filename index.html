@@ -57,19 +57,23 @@
 
     nav a {
       color: white;
-      margin: 0 15px;
+      margin: 0 10px;
+      padding: 8px 12px;
       text-decoration: none;
       font-weight: bold;
-      transition: color 0.3s;
+      border-radius: 5px;
+      transition: all 0.3s ease;
     }
 
-    nav a:hover { color: var(--brand); }
+    nav a:hover {
+      background: var(--brand-dark);
+      color: white;
+    }
 
-    /* Nuevo: estilo para el link activo */
+    /* Enlace activo con fondo */
     nav a.active {
-      color: var(--brand);
-      border-bottom: 2px solid var(--brand);
-      padding-bottom: 3px;
+      background: var(--brand);
+      color: white;
     }
 
     /* Secciones */
@@ -196,18 +200,19 @@
     © 2025 Carlos Lara - Proyecto E3WS
   </footer>
 
-  <!-- =========================
-       SCRIPT: resaltar menú activo
-       ========================= -->
+  <!-- Script: resaltar menú activo -->
   <script>
+    /* Selecciona todas las secciones y enlaces del menú */
     const sections = document.querySelectorAll("section");
     const navLinks = document.querySelectorAll("nav a");
 
+    /* Evento que corre cuando el usuario hace scroll */
     window.addEventListener("scroll", () => {
       let current = "";
 
+      /* Recorremos cada sección para ver cuál está en la ventana visible */
       sections.forEach(section => {
-        const sectionTop = section.offsetTop - 80; // Ajuste para sticky nav
+        const sectionTop = section.offsetTop - 100; // desplazamiento para compensar el menú sticky
         const sectionHeight = section.clientHeight;
 
         if (pageYOffset >= sectionTop && pageYOffset < sectionTop + sectionHeight) {
@@ -215,6 +220,7 @@
         }
       });
 
+      /* Quitar 'active' de todos y añadirlo al enlace correspondiente */
       navLinks.forEach(link => {
         link.classList.remove("active");
         if (link.getAttribute("href") === "#" + current) {
