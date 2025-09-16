@@ -9,35 +9,39 @@
        ESTILOS INTERNOS (CSS)
        ========================= -->
   <style>
-    /* Reset básico */
+    /* Reset básico de márgenes y paddings para todos los elementos */
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; /* permite scroll suave nativo */ }
 
     /* =========================
        VARIABLES DE COLORES
        ========================= */
     :root {
-      --bg: #f7faff;
-      --text: #2b2f36;
-      --muted: #64748b;
-      --brand: #0ea5e9;
-      --brand-dark: #0284c7;
-      --nav: #0f172a;
-      --nav-active: #1e293b;
-      --card-light: #ffffff;
-      --card-dark: #dbeafe;
-      --shadow: 0 10px 25px rgba(2,8,23,0.08);
-      --radius: 10px;
-      --nav-height: 70px;
+      --bg: #f7faff;          /* color de fondo general */
+      --text: #2b2f36;        /* color principal del texto */
+      --muted: #64748b;       /* color secundario de texto */
+      --brand: #0ea5e9;       /* azul principal */
+      --brand-dark: #0284c7;  /* azul oscuro para hover */
+      --nav: #0f172a;         /* color de fondo del menú */
+      --nav-active: #1e293b;  /* fondo del enlace activo */
+      --card-light: #ffffff;  /* fondo secciones claras */
+      --card-dark: #dbeafe;   /* fondo secciones alternas */
+      --shadow: 0 10px 25px rgba(2,8,23,0.08); /* sombra de tarjetas/secciones */
+      --radius: 10px;          /* radio de bordes */
+      --nav-height: 70px;      /* altura fija del menú */
     }
 
+    /* =========================
+       TIPOGRAFÍA Y BODY
+       ========================= */
     body {
-      font-family: system-ui, Arial, sans-serif;
+      font-family: system-ui, Arial, sans-serif; /* tipografía general */
       background: var(--bg);
       color: var(--text);
       line-height: 1.6;
     }
 
+    /* Contenedor central con máximo ancho */
     .container {
       max-width: 1100px;
       margin: 0 auto;
@@ -48,10 +52,10 @@
        MENÚ DE NAVEGACIÓN
        ========================= */
     nav {
-      background: var(--nav);
-      position: sticky;
+      background: var(--nav); /* color de fondo del nav */
+      position: sticky;       /* se queda fijo al hacer scroll */
       top: 0;
-      z-index: 1000;
+      z-index: 1000;          /* encima de otros elementos */
       box-shadow: var(--shadow);
       height: var(--nav-height);
       display: flex;
@@ -81,7 +85,7 @@
     nav a.active { background: var(--nav-active); }
 
     /* =========================
-       ENCABEZADO
+       HEADER
        ========================= */
     header {
       background: linear-gradient(135deg, rgba(14,165,233,0.85), rgba(2,132,199,0.85));
@@ -91,17 +95,17 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      min-height: 100vh;
+      min-height: 100vh; /* ocupar toda la ventana */
       padding-top: var(--nav-height);
       border-radius: var(--radius);
       margin-bottom: 40px;
     }
 
-    /* Logo */
+    /* Logo centrado y tamaño proporcional */
     .logo {
       display: flex;
       justify-content: center;
-      margin-bottom: 1rem;
+      margin-bottom: 1rem; /* separa del título */
     }
     .logo svg {
       max-width: 100%;
@@ -111,6 +115,7 @@
     header h1 { font-size: 2.5rem; margin-bottom: 10px; }
     header p { font-size: 1.2rem; margin-bottom: 20px; }
 
+    /* Botón de llamada a la acción */
     .btn-cta {
       background: white;
       color: var(--brand-dark);
@@ -136,6 +141,7 @@
       box-shadow: var(--shadow);
     }
 
+    /* Alternar colores de fondo en secciones */
     section:nth-of-type(odd) { background: var(--card-light); }
     section:nth-of-type(even) { background: var(--card-dark); }
 
@@ -155,6 +161,7 @@
 
     section ul { padding-left: 20px; }
 
+    /* Anclas para scroll */
     .anchor {
       position: relative;
       top: -80px;
@@ -209,32 +216,36 @@
   </nav>
 
   <!-- =========================
-       HEADER
+       HEADER / INICIO
        ========================= -->
   <header id="inicio">
     <div class="container">
+      <!-- Ancla invisible para scroll correcto -->
       <span class="anchor" id="inicio-anchor"></span>
 
-      <!-- LOGO E3WS SIMPLIFICADO -->
+      <!-- LOGO E3WS VISIBLE -->
       <div class="logo">
-        <svg xmlns="http://www.w3.org/2000/svg" width="220" height="60" viewBox="0 0 220 60">
-          <!-- Triángulo de alerta -->
-          <polygon points="0,60 30,0 60,60" fill="#0ea5e9"/>
-          <!-- Ondas simples -->
-          <path d="M70,30 Q85,10 100,30 T130,30" stroke="#0284c7" stroke-width="4" fill="none"/>
+        <svg xmlns="http://www.w3.org/2000/svg" width="250" height="80" viewBox="0 0 250 80">
+          <!-- Triángulo de alerta grande y visible -->
+          <polygon points="0,80 40,0 80,80" fill="#0ea5e9"/>
+          <!-- Ondas sísmicas simples -->
+          <path d="M90,40 Q110,10 130,40 T170,40" stroke="#0284c7" stroke-width="4" fill="none"/>
           <!-- Texto E3WS -->
-          <text x="140" y="45" font-family="Arial, sans-serif" font-size="30" fill="#0284c7" font-weight="bold">E3WS</text>
+          <text x="180" y="60" font-family="Arial, sans-serif" font-size="35" fill="#0284c7" font-weight="bold">E3WS</text>
         </svg>
       </div>
 
+      <!-- Título principal -->
       <h1>🌍 Proyecto E3WS</h1>
+      <!-- Descripción breve -->
       <p>Sistema de Alerta Sísmica Temprana para proteger vidas y comunidades</p>
+      <!-- Botón de acción -->
       <a href="#sistema-anchor" class="btn-cta">Conocer más</a>
     </div>
   </header>
 
   <!-- =========================
-       SECCIONES
+       SECCIONES PRINCIPALES
        ========================= -->
   <section id="nosotros" class="container">
     <span class="anchor" id="nosotros-anchor"></span>
@@ -286,78 +297,6 @@
 
   <section id="contacto" class="container">
     <span class="anchor" id="contacto-anchor"></span>
-    <h2>Contacto</h2>
-    <p>📧 contacto@e3ws.com</p>
-    <p>🌐 Redes sociales: próximamente</p>
-  </section>
-
-  <!-- =========================
-       FOOTER
-       ========================= -->
-  <footer>
-    © 2025 Proyecto E3WS - Todos los derechos reservados
-  </footer>
-
-  <!-- =========================
-       SCRIPT
-       ========================= -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const sections = document.querySelectorAll("section, header");
-      const navLinks = document.querySelectorAll("nav a");
-      const nav = document.querySelector("nav");
-
-      // Detectar sección activa
-      const setActiveLink = () => {
-        let current = "";
-        sections.forEach(section => {
-          const anchor = section.querySelector(".anchor");
-          if (anchor) {
-            const rect = anchor.getBoundingClientRect();
-            if (rect.top <= nav.offsetHeight + 10 && rect.bottom > nav.offsetHeight + 10) {
-              current = anchor.id;
-            }
-          }
-        });
-        navLinks.forEach(link => {
-          link.classList.remove("active");
-          if (link.getAttribute("href") === "#" + current) {
-            link.classList.add("active");
-          }
-        });
-      };
-
-      window.addEventListener("scroll", setActiveLink);
-      setActiveLink();
-
-      // Scroll suave corregido
-      navLinks.forEach(link => {
-        link.addEventListener("click", e => {
-          e.preventDefault();
-          const target = document.querySelector(link.getAttribute("href"));
-          if (target) {
-            const topPosition = target.getBoundingClientRect().top + window.scrollY - nav.offsetHeight;
-            window.scrollTo({ top: topPosition, behavior: "smooth" });
-          }
-        });
-      });
-
-      // Animaciones con IntersectionObserver
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          }
-        });
-      }, { threshold: 0.2 });
-
-      sections.forEach(section => {
-        observer.observe(section);
-      });
-    });
-  </script>
-</body>
-</html>
 
 
 
