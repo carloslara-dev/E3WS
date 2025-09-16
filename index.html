@@ -65,13 +65,7 @@
     border-radius: var(--radius);
     margin: 2rem 0;
     box-shadow: var(--shadow);
-    opacity: 0;
-    transform: translateY(30px);
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-  }
-  header.visible {
-    opacity: 1 !important;
-    transform: translateY(0) !important;
   }
   header h1 { font-size: 3rem; margin-bottom: 1rem; }
   header p { font-size: 1.25rem; }
@@ -95,13 +89,13 @@
     margin: 2rem 0;
     border-radius: var(--radius);
     box-shadow: var(--shadow);
-    opacity: 0;
-    transform: translateY(30px);
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    /* contenido siempre visible */
+    opacity: 1;
+    transform: translateY(0);
   }
   section:nth-of-type(odd) { background: var(--bg-light); }
   section:nth-of-type(even) { background: var(--bg-dark); }
-  section.visible { opacity: 1; transform: translateY(0); }
   section h2 {
     text-align: center;
     color: var(--primary);
@@ -145,7 +139,7 @@
 </nav>
 
 <!-- HEADER -->
-<header id="inicio" class="visible">
+<header id="inicio">
   <div class="container">
     <h1>🌍 Proyecto E3WS</h1>
     <p>Sistema de Alerta Sísmica Temprana para proteger vidas y comunidades</p>
@@ -213,7 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const navLinks = document.querySelectorAll("nav a");
   const nav = document.querySelector("nav");
 
-  // Animaciones al aparecer
+  // Animaciones opcionales al scroll
   const observerAnim = new IntersectionObserver(
     entries => {
       entries.forEach(entry => {
@@ -251,7 +245,7 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("scroll", setActiveLink);
   setActiveLink();
 
-  // Scroll suave
+  // Scroll suave al hacer click
   navLinks.forEach(link => {
     link.addEventListener("click", e => {
       e.preventDefault();
@@ -267,3 +261,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </body>
 </html>
+
