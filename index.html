@@ -24,8 +24,8 @@
       --brand-dark: #0284c7;    /* Azul oscuro (hover) */
       --nav: #0f172a;           /* Fondo del menú */
       --nav-active: #1e293b;    /* Fondo del enlace activo */
-      --card-light: #ffffff;     /* Fondo de secciones claras */
-      --card-dark: #e2e8f0;      /* Fondo de secciones alternas */
+      --card-light: #ffffff;    /* Fondo de secciones claras */
+      --card-dark: #e2e8f0;     /* Fondo de secciones alternas */
       --shadow: 0 10px 25px rgba(2,8,23,0.08);
     }
 
@@ -82,33 +82,32 @@
        SECCIÓN DE ENCABEZADO (Inicio)
        ========================= */
     header {
-      background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+      background: linear-gradient(135deg, rgba(14,165,233,0.9), rgba(2,132,199,0.9));
       color: white;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      min-height: 60vh; /* Altura moderada para que no ocupe todo el viewport */
-      padding: 60px 20px;
+      min-height: 35vh; /* altura más compacta */
+      padding: 30px 20px; /* menos padding vertical */
       border-radius: 10px;
       margin-bottom: 40px;
     }
 
-    header h1 { font-size: 2.5rem; margin-bottom: 15px; }
+    header h1 { font-size: 2.5rem; margin-bottom: 10px; }
     header p { font-size: 1.2rem; }
 
     /* =========================
        SECCIONES PRINCIPALES
        ========================= */
     section {
-      padding: 80px 20px;   /* Espacio interno amplio */
-      margin: 40px auto;    /* Separación entre secciones */
+      padding: 60px 20px;   /* espacio interno adecuado */
+      margin: 40px auto;    /* separación entre secciones */
       border-radius: 10px;
       box-shadow: var(--shadow);
     }
 
-    /* Alternancia de fondos para diferenciar bloques */
     section:nth-of-type(odd) { background: var(--card-light); }
     section:nth-of-type(even) { background: var(--card-dark); }
 
@@ -282,6 +281,7 @@
   </script>
 </body>
 </html>
+
 
 
 
