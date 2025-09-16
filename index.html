@@ -1,200 +1,88 @@
-<!DOCTYPE html> <!-- Documento en HTML5 -->
-<html lang="es"> <!-- Idioma principal: español -->
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8"> <!-- Soporte para acentos y caracteres especiales -->
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Ajuste responsive en móviles -->
-  <title>E3WS - Sistema de Alerta Sísmica</title>
-
-  <!-- =========================
-       ESTILOS INTERNOS (CSS)
-       ========================= -->
+  <title>Alerta Temprana</title>
   <style>
-    /* Reset y utilidades básicas */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; } /* Efecto de scroll suave */
-
-    /* Paleta de colores con variables CSS */
-    :root {
-      --bg: #f7f9fc;        /* Fondo general */
-      --text: #2b2f36;      /* Texto principal */
-      --muted: #64748b;     /* Texto secundario */
-      --brand: #0ea5e9;     /* Azul principal */
-      --brand-dark: #0284c7;/* Azul oscuro (hover) */
-      --nav: #0f172a;       /* Fondo menú */
-      --nav-active: #1e293b;/* Fondo de enlace activo */
-      --card: #ffffff;      /* Fondo tarjetas/secciones */
-      --shadow: 0 10px 25px rgba(2,8,23,0.08);
-    }
-
-    /* Tipografía base */
+    /* Estilos generales */
     body {
-      font-family: system-ui, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
     }
 
-    /* Contenedor centralizado */
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 20px;
+    /* Estilos del encabezado */
+    header {
+      background-color: #333;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
     }
 
-    /* =========================
-       ESTILOS DEL MENÚ
-       ========================= */
-    nav {
-      background: var(--nav);
-      position: sticky;  /* Siempre visible arriba */
-      top: 0;
-      z-index: 1000;
-      box-shadow: var(--shadow);
+    .logo {
+      width: 150px;
+      height: 150px;
+      background-color: #fff;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     nav ul {
-      display: flex;
       list-style: none;
-      justify-content: center;
+      display: flex;
     }
 
-    nav li { margin: 0 10px; }
+    nav li {
+      margin-right: 20px;
+    }
 
     nav a {
-      display: block;
-      padding: 15px 20px;
-      color: white;
+      color: #fff;
       text-decoration: none;
-      font-weight: bold;
-      border-radius: 5px;
-      transition: background 0.3s;
     }
 
-    nav a:hover { background: var(--brand-dark); }
-    nav a.active { background: var(--nav-active); }
-
-    /* =========================
-       SECCIONES PRINCIPALES
-       ========================= */
-    section {
-      padding: 60px 20px;
-      margin: 40px auto;
-      background: var(--card);
-      border-radius: 10px;
-      box-shadow: var(--shadow);
-    }
-
-    section h2 {
-      color: var(--brand);
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    section p {
-      margin-bottom: 15px;
-      color: var(--muted);
-      text-align: justify;
-    }
-
-    /* Encabezado inicial (Inicio) */
-    header {
-      background: linear-gradient(135deg, var(--brand), var(--brand-dark));
-      color: white;
-      padding: 100px 20px;
-      text-align: center;
-    }
-
-    header h1 { font-size: 2.5rem; margin-bottom: 10px; }
-    header p { font-size: 1.2rem; }
-    
-    /* Pie de página */
-    footer {
-      background: var(--nav);
-      color: white;
-      text-align: center;
+    /* Estilos del contenido principal */
+    main {
       padding: 20px;
-      margin-top: 40px;
+    }
+
+    section {
+      margin-bottom: 20px;
+    }
+
+    section h1, h2 {
+      margin-top: 0;
+    }
+
+    /* Estilos del pie de página */
+    footer {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 10px;
     }
   </style>
 </head>
-
 <body>
-  <!-- =========================
-       MENÚ DE NAVEGACIÓN
-       ========================= -->
-  <nav>
-    <ul>
-      <li><a href="#inicio" class="active">Inicio</a></li>
-      <li><a href="#nosotros">Nosotros</a></li>
-      <li><a href="#e3ws">E3WS</a></li>
-      <li><a href="#sistema">Sistema</a></li>
-      <li><a href="#beneficios">Beneficios</a></li>
-      <li><a href="#casos">Casos</a></li>
-      <li><a href="#novedades">Novedades</a></li>
-      <li><a href="#demo">Demo</a></li>
-      <li><a href="#contacto">Contacto</a></li>
-    </ul>
-  </nav>
-
-  <!-- =========================
-       SECCIÓN: INICIO
-       ========================= -->
-  <header id="inicio">
-    <div class="container">
-      <h1>🌍 Proyecto E3WS</h1>
-      <p>Sistema de Alerta Sísmica Temprana para proteger vidas y comunidades</p>
+  <header>
+    <div class="logo">
+      <!-- Aquí colocarás tu logo -->
     </div>
+    <nav>
+      <ul>
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#sobre-nos">Sobre Nosotros</a></li>
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
   </header>
 
-  <!-- =========================
-       SECCIÓN: NOSOTROS
-       ========================= -->
-  <section id="nosotros" class="container">
-    <h2>Nosotros</h2>
-    <p><strong>Visión:</strong> Ser líderes en sistemas de alerta temprana en Latinoamérica.</p>
-    <p><strong>Misión:</strong> Proteger vidas mediante tecnología accesible y confiable.</p>
-    <p><strong>Quiénes somos:</strong> Un equipo de ingenieros, investigadores y desarrolladores comprometidos con la seguridad sísmica.</p>
-  </section>
-
-  <!-- =========================
-       SECCIÓN: E3WS
-       ========================= -->
-  <section id="e3ws" class="container">
-    <h2>¿Qué es E3WS?</h2>
-    <p>E3WS es un sistema de alerta temprana que detecta movimientos sísmicos y envía notificaciones en tiempo real a comunidades, empresas y autoridades.</p>
-  </section>
-
-  <!-- =========================
-       SECCIÓN: SISTEMA
-       ========================= -->
-  <section id="sistema" class="container">
-    <h2>El Sistema</h2>
-    <p>El sistema analiza las ondas sísmicas iniciales para estimar epicentro, magnitud y posible impacto. Utiliza algoritmos de inteligencia artificial y redes distribuidas de sensores.</p>
-  </section>
-
-  <!-- =========================
-       SECCIÓN: BENEFICIOS
-       ========================= -->
-  <section id="beneficios" class="container">
-    <h2>Beneficios</h2>
-    <ul>
-      <li>Protección inmediata a comunidades.</li>
-      <li>Reducción de daños en infraestructura crítica.</li>
-      <li>Integración con sistemas de seguridad y evacuación.</li>
-    </ul>
-  </section>
-
-  <!-- =========================
-       SECCIÓN: CASOS
-       ========================= -->
-  <section id="casos" class="container">
-    <h2>Casos</h2>
-    <p>Ejemplos de aplicación y pruebas piloto en distintas regiones.</p>
-  </section>
-
-  <!-- =========================
-       SECCIÓN: NOVEDADES
 
 
 
