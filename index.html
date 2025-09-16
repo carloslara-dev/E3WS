@@ -23,9 +23,9 @@
       --shadow: 0 10px 25px rgba(2,8,23,0.08);
     }
 
-    /* Tipografía base igual que antes */
+    /* Tipografía base estable */
     body {
-      font-family: Arial, sans-serif; /* fuente estable */
+      font-family: Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.6;
@@ -91,7 +91,7 @@
       font-size: 1rem;
     }
 
-    /* Header inicial igual que antes */
+    /* Header inicial */
     header {
       background: linear-gradient(135deg, var(--brand), var(--brand-dark));
       color: white;
@@ -187,28 +187,35 @@
   </footer>
 
   <script>
-    const sections = document.querySelectorAll("section, header");
-    const navLinks = document.querySelectorAll("nav a");
+    document.addEventListener("DOMContentLoaded", () => {
+      const sections = document.querySelectorAll("section, header");
+      const navLinks = document.querySelectorAll("nav a");
 
-    window.addEventListener("scroll", () => {
-      let current = "";
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop - 80;
-        const sectionHeight = section.clientHeight;
-        if (pageYOffset >= sectionTop && pageYOffset < sectionTop + sectionHeight) {
-          current = section.getAttribute("id");
-        }
-      });
-      navLinks.forEach(link => {
-        link.classList.remove("active");
-        if (link.getAttribute("href") === "#" + current) {
-          link.classList.add("active");
-        }
-      });
+      const setActiveLink = () => {
+        let current = "";
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop - 100; // ajustado al padding del header
+          const sectionHeight = section.offsetHeight;
+          if (window.pageYOffset >= sectionTop && window.pageYOffset < sectionTop + sectionHeight) {
+            current = section.getAttribute("id");
+          }
+        });
+
+        navLinks.forEach(link => {
+          link.classList.remove("active");
+          if (link.getAttribute("href") === "#" + current) {
+            link.classList.add("active");
+          }
+        });
+      };
+
+      window.addEventListener("scroll", setActiveLink);
+      setActiveLink(); // activa enlace al cargar la página
     });
   </script>
 </body>
 </html>
+
 
 
 
