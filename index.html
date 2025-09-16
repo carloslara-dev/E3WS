@@ -63,10 +63,14 @@
     background: linear-gradient(135deg, rgba(14,165,233,0.85), rgba(2,132,199,0.85));
     color: white;
     text-align: center;
-    padding: 6rem 2rem;
+    padding: 2rem 2rem;
     border-radius: var(--radius);
     margin: 2rem 0;
     box-shadow: var(--shadow);
+    min-height: 100vh; /* ocupa todo el viewport */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   header h1 { font-size: 3rem; margin-bottom: 1rem; }
   header p { font-size: 1.25rem; }
@@ -92,7 +96,8 @@
 
   /* Secciones */
   section {
-    padding: 5rem 1rem;
+    min-height: calc(100vh - var(--nav-height) - 20px); /* asegura ocupar viewport completo */
+    padding: calc(var(--nav-height) + 20px) 1rem 5rem 1rem; /* espacio arriba para nav fijo */
     margin: 2rem 0;
     border-radius: var(--radius);
     box-shadow: var(--shadow);
@@ -222,7 +227,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const navLinks = document.querySelectorAll("nav a");
   const nav = document.querySelector("nav");
 
-  // Menú activo según sección más cercana al top
   const setActiveLink = () => {
     let indexClosest = 0;
     let minDistance = Infinity;
@@ -244,7 +248,6 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("scroll", setActiveLink);
   setActiveLink();
 
-  // Scroll suave hacia las anclas invisibles
   navLinks.forEach(link => {
     link.addEventListener("click", e => {
       e.preventDefault();
@@ -260,4 +263,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </body>
 </html>
+
 
