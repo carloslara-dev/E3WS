@@ -5,25 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>E3WS - Sistema de Alerta Sísmica</title>
 
+  <!-- =========================
+       ESTILOS INTERNOS (CSS)
+       ========================= -->
   <style>
-    /* Reset básico */
+    /* Reset básico y scroll suave */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
 
-    /* Paleta de colores */
+    /* =========================
+       VARIABLES DE COLORES
+       ========================= */
     :root {
-      --bg: #f0f4f8;
-      --text: #2b2f36;
-      --muted: #64748b;
-      --brand: #0ea5e9;
-      --brand-dark: #0284c7;
-      --nav: #0f172a;
-      --nav-active: #1e293b;
-      --card-light: #ffffff;
-      --card-dark: #e2e8f0;
+      --bg: #f0f4f8;            /* Fondo general */
+      --text: #2b2f36;          /* Texto principal */
+      --muted: #64748b;         /* Texto secundario */
+      --brand: #0ea5e9;         /* Azul principal */
+      --brand-dark: #0284c7;    /* Azul oscuro (hover) */
+      --nav: #0f172a;           /* Fondo del menú */
+      --nav-active: #1e293b;    /* Fondo del enlace activo */
+      --card-light: #ffffff;     /* Fondo de secciones claras */
+      --card-dark: #e2e8f0;      /* Fondo de secciones alternas */
       --shadow: 0 10px 25px rgba(2,8,23,0.08);
     }
 
+    /* =========================
+       TIPOGRAFÍA BASE
+       ========================= */
     body {
       font-family: system-ui, Arial, sans-serif;
       background: var(--bg);
@@ -37,10 +45,12 @@
       padding: 0 20px;
     }
 
-    /* Menú de navegación */
+    /* =========================
+       MENÚ DE NAVEGACIÓN
+       ========================= */
     nav {
       background: var(--nav);
-      position: sticky;
+      position: sticky;  /* Siempre visible */
       top: 0;
       z-index: 1000;
       box-shadow: var(--shadow);
@@ -68,15 +78,37 @@
     nav a:hover { background: var(--brand-dark); }
     nav a.active { background: var(--nav-active); }
 
-    /* Secciones */
+    /* =========================
+       SECCIÓN DE ENCABEZADO (Inicio)
+       ========================= */
+    header {
+      background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 60vh; /* Altura moderada para que no ocupe todo el viewport */
+      padding: 60px 20px;
+      border-radius: 10px;
+      margin-bottom: 40px;
+    }
+
+    header h1 { font-size: 2.5rem; margin-bottom: 15px; }
+    header p { font-size: 1.2rem; }
+
+    /* =========================
+       SECCIONES PRINCIPALES
+       ========================= */
     section {
-      padding: 80px 20px;
-      margin: 40px auto;
+      padding: 80px 20px;   /* Espacio interno amplio */
+      margin: 40px auto;    /* Separación entre secciones */
       border-radius: 10px;
       box-shadow: var(--shadow);
     }
 
-    /* Alternar colores de fondo */
+    /* Alternancia de fondos para diferenciar bloques */
     section:nth-of-type(odd) { background: var(--card-light); }
     section:nth-of-type(even) { background: var(--card-dark); }
 
@@ -94,16 +126,11 @@
       font-size: 1rem;
     }
 
-    header {
-      background: linear-gradient(135deg, var(--brand), var(--brand-dark));
-      color: white;
-      padding: 120px 20px;
-      text-align: center;
-    }
+    section ul { padding-left: 20px; }
 
-    header h1 { font-size: 2.5rem; margin-bottom: 10px; }
-    header p { font-size: 1.2rem; }
-
+    /* =========================
+       PIE DE PÁGINA
+       ========================= */
     footer {
       background: var(--nav);
       color: white;
@@ -115,6 +142,9 @@
 </head>
 
 <body>
+  <!-- =========================
+       MENÚ DE NAVEGACIÓN
+       ========================= -->
   <nav>
     <ul>
       <li><a href="#inicio" class="active">Inicio</a></li>
@@ -129,6 +159,9 @@
     </ul>
   </nav>
 
+  <!-- =========================
+       SECCIÓN: INICIO
+       ========================= -->
   <header id="inicio">
     <div class="container">
       <h1>🌍 Proyecto E3WS</h1>
@@ -136,6 +169,9 @@
     </div>
   </header>
 
+  <!-- =========================
+       SECCIÓN: NOSOTROS
+       ========================= -->
   <section id="nosotros" class="container">
     <h2>Nosotros</h2>
     <p><strong>Visión:</strong> Ser líderes en sistemas de alerta temprana en Latinoamérica.</p>
@@ -143,16 +179,25 @@
     <p><strong>Quiénes somos:</strong> Un equipo de ingenieros, investigadores y desarrolladores comprometidos con la seguridad sísmica.</p>
   </section>
 
+  <!-- =========================
+       SECCIÓN: E3WS
+       ========================= -->
   <section id="e3ws" class="container">
     <h2>¿Qué es E3WS?</h2>
     <p>E3WS es un sistema de alerta temprana que detecta movimientos sísmicos y envía notificaciones en tiempo real a comunidades, empresas y autoridades.</p>
   </section>
 
+  <!-- =========================
+       SECCIÓN: SISTEMA
+       ========================= -->
   <section id="sistema" class="container">
     <h2>El Sistema</h2>
     <p>El sistema analiza las ondas sísmicas iniciales para estimar epicentro, magnitud y posible impacto. Utiliza algoritmos de inteligencia artificial y redes distribuidas de sensores.</p>
   </section>
 
+  <!-- =========================
+       SECCIÓN: BENEFICIOS
+       ========================= -->
   <section id="beneficios" class="container">
     <h2>Beneficios</h2>
     <ul>
@@ -162,31 +207,49 @@
     </ul>
   </section>
 
+  <!-- =========================
+       SECCIÓN: CASOS
+       ========================= -->
   <section id="casos" class="container">
     <h2>Casos</h2>
     <p>Ejemplos de aplicación y pruebas piloto en distintas regiones.</p>
   </section>
 
+  <!-- =========================
+       SECCIÓN: NOVEDADES
+       ========================= -->
   <section id="novedades" class="container">
     <h2>Novedades</h2>
     <p>Aquí se publicarán avances, noticias y actualizaciones del proyecto.</p>
   </section>
 
+  <!-- =========================
+       SECCIÓN: DEMO
+       ========================= -->
   <section id="demo" class="container">
     <h2>Demo</h2>
     <p>Espacio para probar la plataforma E3WS en acción.</p>
   </section>
 
+  <!-- =========================
+       SECCIÓN: CONTACTO
+       ========================= -->
   <section id="contacto" class="container">
     <h2>Contacto</h2>
     <p>📧 contacto@e3ws.com</p>
     <p>🌐 Redes sociales: próximamente</p>
   </section>
 
+  <!-- =========================
+       PIE DE PÁGINA
+       ========================= -->
   <footer>
     © 2025 Proyecto E3WS - Todos los derechos reservados
   </footer>
 
+  <!-- =========================
+       SCRIPT: MENÚ FUNCIONAL
+       ========================= -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const sections = document.querySelectorAll("section, header");
@@ -196,16 +259,12 @@
         let current = "";
         sections.forEach(section => {
           const rect = section.getBoundingClientRect();
-          if (rect.top <= 100 && rect.bottom > 100) {
-            current = section.id;
-          }
+          if (rect.top <= 100 && rect.bottom > 100) current = section.id;
         });
 
         navLinks.forEach(link => {
           link.classList.remove("active");
-          if (link.getAttribute("href") === "#" + current) {
-            link.classList.add("active");
-          }
+          if (link.getAttribute("href") === "#" + current) link.classList.add("active");
         });
       };
 
@@ -213,19 +272,17 @@
       setActiveLink();
 
       navLinks.forEach(link => {
-        link.addEventListener("click", (e) => {
+        link.addEventListener("click", e => {
           e.preventDefault();
           const target = document.querySelector(link.getAttribute("href"));
-          window.scrollTo({
-            top: target.offsetTop - 80,
-            behavior: "smooth"
-          });
+          window.scrollTo({ top: target.offsetTop - 80, behavior: "smooth" });
         });
       });
     });
   </script>
 </body>
 </html>
+
 
 
 
