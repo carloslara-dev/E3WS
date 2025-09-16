@@ -79,9 +79,12 @@
     font-weight: bold;
     border-radius: var(--radius);
     text-decoration: none;
-    transition: background 0.3s;
+    transition: background 0.3s, transform 0.3s;
   }
-  .btn-cta:hover { background: var(--primary-dark); }
+  .btn-cta:hover { 
+    background: var(--primary-dark); 
+    transform: scale(1.05);
+  }
 
   /* Secciones */
   section {
@@ -90,7 +93,6 @@
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    /* contenido siempre visible */
     opacity: 1;
     transform: translateY(0);
   }
@@ -207,29 +209,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const navLinks = document.querySelectorAll("nav a");
   const nav = document.querySelector("nav");
 
-  // Animaciones opcionales al scroll
-  const observerAnim = new IntersectionObserver(
-    entries => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting) entry.target.classList.add("visible");
-      });
-    }, 
-    { threshold: 0.2 }
-  );
-  sections.forEach(section => observerAnim.observe(section));
-
-  // Mapa de links
-  const navMap = {};
-  navLinks.forEach(link => navMap[link.getAttribute("href")] = link);
-
   // Menú activo según sección más cercana al top
   const setActiveLink = () => {
     let indexClosest = 0;
     let minDistance = Infinity;
 
     sections.forEach((sec, i) => {
-      const rect = sec.getBoundingClientRect();
-      const distance = Math.abs(rect.top - nav.offsetHeight);
+      const distance = Math.abs(sec.getBoundingClientRect().top - nav.offsetHeight);
       if(distance < minDistance){
         minDistance = distance;
         indexClosest = i;
@@ -245,13 +231,13 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("scroll", setActiveLink);
   setActiveLink();
 
-  // Scroll suave al hacer click
+  // Scroll suave preciso considerando márgenes
   navLinks.forEach(link => {
     link.addEventListener("click", e => {
       e.preventDefault();
       const target = document.querySelector(link.getAttribute("href"));
       if(target){
-        const topPosition = target.offsetTop - nav.offsetHeight - 10;
+        const topPosition = target.getBoundingClientRect().top + window.scrollY - nav.offsetHeight - 10;
         window.scrollTo({ top: topPosition, behavior: 'smooth' });
       }
     });
@@ -261,4 +247,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </body>
 </html>
+
 
