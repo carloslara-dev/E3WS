@@ -5,17 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>E3WS - Sistema de Alerta Sísmica</title>
 
-<!-- =========================
-     ESTILOS BASE
-     ========================= -->
 <style>
   /* Reset y box-sizing */
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; font-size: 16px; }
 
-  /* =========================
-     VARIABLES DE COLOR
-     ========================= */
+  /* Variables de color */
   :root {
     --primary: #0ea5e9;
     --primary-dark: #0284c7;
@@ -27,22 +22,17 @@
     --radius: 1rem;
   }
 
-  /* =========================
-     BODY Y TIPOGRAFÍA
-     ========================= */
   body {
     font-family: 'Roboto', system-ui, Arial, sans-serif;
     background: var(--bg-light);
     color: #2b2f36;
     line-height: 1.6;
-    padding-top: 60px; /* espacio para nav fijo */
+    padding-top: 60px;
   }
 
   .container { max-width: 1100px; margin: 0 auto; padding: 0 1rem; }
 
-  /* =========================
-     MENÚ NAVEGACIÓN
-     ========================= */
+  /* Navegación */
   nav {
     background: var(--nav-bg);
     position: fixed;
@@ -65,9 +55,7 @@
   nav a:hover { background: var(--primary-dark); }
   nav a.active { background: var(--primary); }
 
-  /* =========================
-     HEADER / INICIO
-     ========================= */
+  /* Header / Inicio */
   header {
     background: linear-gradient(135deg, rgba(14,165,233,0.85), rgba(2,132,199,0.85));
     color: white;
@@ -93,9 +81,7 @@
   }
   .btn-cta:hover { background: var(--primary-dark); }
 
-  /* =========================
-     SECCIONES
-     ========================= */
+  /* Secciones */
   section {
     padding: 5rem 1rem;
     margin: 2rem 0;
@@ -121,23 +107,13 @@
   }
   section ul { padding-left: 1.5rem; }
 
-  /* =========================
-     PIE DE PÁGINA
-     ========================= */
+  /* Footer */
   footer {
     background: var(--nav-bg);
     color: #fff;
     text-align: center;
     padding: 2rem;
     margin-top: 2rem;
-  }
-
-  /* =========================
-     ANIMACIONES
-     ========================= */
-  section.visible, header.visible {
-    opacity: 1;
-    transform: translateY(0);
   }
 </style>
 </head>
@@ -212,44 +188,60 @@
   © 2025 Proyecto E3WS - Todos los derechos reservados
 </footer>
 
-<!-- =========================
-     SCRIPT ANIMACIONES Y MENU
-     ========================= -->
+<!-- SCRIPT MEJORADO -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const sections = document.querySelectorAll("section, header");
   const navLinks = document.querySelectorAll("nav a");
   const nav = document.querySelector("nav");
 
-  // Animación al hacer scroll
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting) entry.target.classList.add("visible");
-    });
-  }, { threshold: 0.2 });
-  sections.forEach(section => observer.observe(section));
+  // Animaciones al aparecer las secciones
+  const observerAnim = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting) entry.target.classList.add("visible");
+      });
+    }, 
+    { threshold: 0.2 }
+  );
+  sections.forEach(section => observerAnim.observe(section));
 
-  // Menú activo según sección visible
+  // Mapa de links
   const navMap = {};
   navLinks.forEach(link => navMap[link.getAttribute("href")] = link);
 
-  const observerNav = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      const id = "#" + entry.target.id;
-      if(entry.isIntersecting){
-        Object.values(navMap).forEach(l => l.classList.remove("active"));
-        navMap[id].classList.add("active");
+  // Activar menú según sección más cercana al top
+  const setActiveLink = () => {
+    let indexClosest = 0;
+    let minDistance = Infinity;
+
+    sections.forEach((sec, i) => {
+      const rect = sec.getBoundingClientRect();
+      const distance = Math.abs(rect.top - nav.offsetHeight);
+      if(distance < minDistance){
+        minDistance = distance;
+        indexClosest = i;
       }
     });
-  }, { threshold: 0.6 });
-  sections.forEach(section => observerNav.observe(section));
+
+    navLinks.forEach(link => link.classList.remove("active"));
+    const activeId = "#" + sections[indexClosest].id;
+    const activeLink = document.querySelector(`nav a[href="${activeId}"]`);
+    if(activeLink) activeLink.classList.add("active");
+  };
+
+  window.addEventListener("scroll", setActiveLink);
+  setActiveLink();
 
   // Scroll suave al hacer click en menú
   navLinks.forEach(link => {
     link.addEventListener("click", e => {
       e.preventDefault();
       const target = document.querySelector(link.getAttribute("href"));
-      window.scrollTo({ top: target.offsetTop - nav.offsetHeight, behavior: 'smooth' });
+      if(target){
+        const topPosition = target.offsetTop - nav.offsetHeight - 10;
+        window.scrollTo({ top: topPosition, behavior: 'smooth' });
+      }
     });
   });
 });
@@ -257,6 +249,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </body>
 </html>
+
 
 
 
