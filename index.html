@@ -18,16 +18,17 @@
     --bg-light: #f7faff;
     --bg-dark: #dbeafe;
     --nav-bg: #0f172a;
+    --nav-active: #1e293b;
     --shadow: 0 10px 25px rgba(2,8,23,0.08);
     --radius: 1rem;
   }
 
   body {
-    font-family: 'Roboto', system-ui, Arial, sans-serif;
+    font-family: system-ui, Arial, sans-serif;
     background: var(--bg-light);
     color: #2b2f36;
     line-height: 1.6;
-    padding-top: 60px;
+    padding-top: 60px; /* espacio para nav fijo */
   }
 
   .container { max-width: 1100px; margin: 0 auto; padding: 0 1rem; }
@@ -53,7 +54,7 @@
     transition: background 0.3s;
   }
   nav a:hover { background: var(--primary-dark); }
-  nav a.active { background: var(--primary); }
+  nav a.active { background: var(--nav-active); }
 
   /* Header / Inicio */
   header {
@@ -64,6 +65,13 @@
     border-radius: var(--radius);
     margin: 2rem 0;
     box-shadow: var(--shadow);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+  header.visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
   }
   header h1 { font-size: 3rem; margin-bottom: 1rem; }
   header p { font-size: 1.25rem; }
@@ -93,6 +101,7 @@
   }
   section:nth-of-type(odd) { background: var(--bg-light); }
   section:nth-of-type(even) { background: var(--bg-dark); }
+  section.visible { opacity: 1; transform: translateY(0); }
   section h2 {
     text-align: center;
     color: var(--primary);
@@ -125,6 +134,7 @@
   <ul>
     <li><a href="#inicio" class="active">Inicio</a></li>
     <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#e3ws">E3WS</a></li>
     <li><a href="#sistema">Sistema</a></li>
     <li><a href="#beneficios">Beneficios</a></li>
     <li><a href="#casos">Casos</a></li>
@@ -134,121 +144,8 @@
   </ul>
 </nav>
 
-<!-- HEADER -->
-<header id="inicio">
-  <div class="container">
-    <h1>🌍 Proyecto E3WS</h1>
-    <p>Sistema de Alerta Sísmica Temprana para proteger vidas y comunidades</p>
-    <a href="#sistema" class="btn-cta">Conocer más</a>
-  </div>
-</header>
+<!--
 
-<!-- SECCIONES -->
-<section id="nosotros" class="container">
-  <h2>Nosotros</h2>
-  <p>Breve descripción de la misión, visión y equipo.</p>
-</section>
-
-<section id="sistema" class="container">
-  <h2>El Sistema</h2>
-  <p>Explicación técnica del sistema de alerta sísmica con diagramas o iconos.</p>
-</section>
-
-<section id="beneficios" class="container">
-  <h2>Beneficios</h2>
-  <ul>
-    <li>Protección inmediata a comunidades.</li>
-    <li>Reducción de daños en infraestructura crítica.</li>
-    <li>Integración con sistemas de seguridad y evacuación.</li>
-  </ul>
-</section>
-
-<section id="casos" class="container">
-  <h2>Casos de Éxito</h2>
-  <p>Ejemplos y testimonios de pruebas piloto.</p>
-</section>
-
-<section id="novedades" class="container">
-  <h2>Novedades</h2>
-  <p>Actualizaciones y noticias recientes del proyecto.</p>
-</section>
-
-<section id="demo" class="container">
-  <h2>Demo</h2>
-  <p>Espacio interactivo para probar la plataforma.</p>
-</section>
-
-<section id="contacto" class="container">
-  <h2>Contacto</h2>
-  <p>Formulario de contacto y enlaces a redes sociales.</p>
-</section>
-
-<!-- PIE DE PÁGINA -->
-<footer>
-  © 2025 Proyecto E3WS - Todos los derechos reservados
-</footer>
-
-<!-- SCRIPT MEJORADO -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const sections = document.querySelectorAll("section, header");
-  const navLinks = document.querySelectorAll("nav a");
-  const nav = document.querySelector("nav");
-
-  // Animaciones al aparecer las secciones
-  const observerAnim = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting) entry.target.classList.add("visible");
-      });
-    }, 
-    { threshold: 0.2 }
-  );
-  sections.forEach(section => observerAnim.observe(section));
-
-  // Mapa de links
-  const navMap = {};
-  navLinks.forEach(link => navMap[link.getAttribute("href")] = link);
-
-  // Activar menú según sección más cercana al top
-  const setActiveLink = () => {
-    let indexClosest = 0;
-    let minDistance = Infinity;
-
-    sections.forEach((sec, i) => {
-      const rect = sec.getBoundingClientRect();
-      const distance = Math.abs(rect.top - nav.offsetHeight);
-      if(distance < minDistance){
-        minDistance = distance;
-        indexClosest = i;
-      }
-    });
-
-    navLinks.forEach(link => link.classList.remove("active"));
-    const activeId = "#" + sections[indexClosest].id;
-    const activeLink = document.querySelector(`nav a[href="${activeId}"]`);
-    if(activeLink) activeLink.classList.add("active");
-  };
-
-  window.addEventListener("scroll", setActiveLink);
-  setActiveLink();
-
-  // Scroll suave al hacer click en menú
-  navLinks.forEach(link => {
-    link.addEventListener("click", e => {
-      e.preventDefault();
-      const target = document.querySelector(link.getAttribute("href"));
-      if(target){
-        const topPosition = target.offsetTop - nav.offsetHeight - 10;
-        window.scrollTo({ top: topPosition, behavior: 'smooth' });
-      }
-    });
-  });
-});
-</script>
-
-</body>
-</html>
 
 
 
