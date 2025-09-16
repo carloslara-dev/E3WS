@@ -17,16 +17,16 @@
        VARIABLES DE COLORES
        ========================= */
     :root {
-      --bg: #f0f4f8;            /* Fondo general */
-      --text: #2b2f36;          /* Texto principal */
-      --muted: #64748b;         /* Texto secundario */
+      --bg: #f7faff;            /* Fondo general (azul muy claro, fresco) */
+      --text: #2b2f36;          /* Texto principal (gris oscuro) */
+      --muted: #64748b;         /* Texto secundario (gris azulado) */
       --brand: #0ea5e9;         /* Azul principal */
-      --brand-dark: #0284c7;    /* Azul oscuro (hover) */
-      --nav: #0f172a;           /* Fondo del menú */
+      --brand-dark: #0284c7;    /* Azul oscuro (hover y gradiente) */
+      --nav: #0f172a;           /* Fondo del menú (azul muy oscuro) */
       --nav-active: #1e293b;    /* Fondo del enlace activo */
-      --card-light: #ffffff;    /* Fondo de secciones claras */
-      --card-dark: #e2e8f0;     /* Fondo de secciones alternas */
-      --shadow: 0 10px 25px rgba(2,8,23,0.08);
+      --card-light: #ffffff;    /* Fondo secciones claras */
+      --card-dark: #dbeafe;     /* Fondo secciones alternas suave */
+      --shadow: 0 10px 25px rgba(2,8,23,0.08); /* Sombra de tarjetas/secciones */
     }
 
     /* =========================
@@ -82,7 +82,7 @@
        SECCIÓN DE ENCABEZADO (Inicio)
        ========================= */
     header {
-      background: linear-gradient(135deg, rgba(14,165,233,0.9), rgba(2,132,199,0.9));
+      background: linear-gradient(135deg, rgba(14,165,233,0.85), rgba(2,132,199,0.85));
       color: white;
       display: flex;
       flex-direction: column;
@@ -108,6 +108,7 @@
       box-shadow: var(--shadow);
     }
 
+    /* Secciones alternas diferenciadas por color */
     section:nth-of-type(odd) { background: var(--card-light); }
     section:nth-of-type(even) { background: var(--card-dark); }
 
@@ -288,6 +289,9 @@
   </script>
 </body>
 </html>
+
+
+
 
 
 
