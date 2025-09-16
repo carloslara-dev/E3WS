@@ -188,16 +188,15 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const sections = document.querySelectorAll("section, header");
+      const sections = document.querySelectorAll("section");
       const navLinks = document.querySelectorAll("nav a");
 
       const setActiveLink = () => {
         let current = "";
         sections.forEach(section => {
-          const sectionTop = section.offsetTop - 100; // ajustado al padding del header
-          const sectionHeight = section.offsetHeight;
-          if (window.pageYOffset >= sectionTop && window.pageYOffset < sectionTop + sectionHeight) {
-            current = section.getAttribute("id");
+          const rect = section.getBoundingClientRect();
+          if (rect.top <= 80 && rect.bottom > 80) {
+            current = section.id;
           }
         });
 
@@ -210,11 +209,24 @@
       };
 
       window.addEventListener("scroll", setActiveLink);
-      setActiveLink(); // activa enlace al cargar la página
+      setActiveLink();
+
+      // Scroll suave al hacer click en enlaces
+      navLinks.forEach(link => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          const target = document.querySelector(link.getAttribute("href"));
+          window.scrollTo({
+            top: target.offsetTop - 60, // ajusta para header sticky
+            behavior: "smooth"
+          });
+        });
+      });
     });
   </script>
 </body>
 </html>
+
 
 
 
