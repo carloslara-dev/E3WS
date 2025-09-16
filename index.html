@@ -195,6 +195,70 @@
 
   <!-- =========================
        SECCIÓN: NOVEDADES
+       ========================= -->
+  <section id="novedades" class="container">
+    <h2>Novedades</h2>
+    <p>Aquí se publicarán avances, noticias y actualizaciones del proyecto.</p>
+  </section>
+
+  <!-- =========================
+       SECCIÓN: DEMO
+       ========================= -->
+  <section id="demo" class="container">
+    <h2>Demo</h2>
+    <p>Espacio para probar la plataforma E3WS en acción.</p>
+  </section>
+
+  <!-- =========================
+       SECCIÓN: CONTACTO
+       ========================= -->
+  <section id="contacto" class="container">
+    <h2>Contacto</h2>
+    <p>📧 contacto@e3ws.com</p>
+    <p>🌐 Redes sociales: próximamente</p>
+  </section>
+
+  <!-- =========================
+       PIE DE PÁGINA
+       ========================= -->
+  <footer>
+    © 2025 Proyecto E3WS - Todos los derechos reservados
+  </footer>
+
+  <!-- =========================
+       SCRIPT: MENÚ ACTIVO
+       ========================= -->
+  <script>
+    // Seleccionamos todas las secciones y los enlaces del menú
+    const sections = document.querySelectorAll("section, header");
+    const navLinks = document.querySelectorAll("nav a");
+
+    // Escuchar el evento scroll
+    window.addEventListener("scroll", () => {
+      let current = "";
+
+      // Recorremos cada sección para ver cuál está en pantalla
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 80; // margen superior
+        const sectionHeight = section.clientHeight;
+
+        if (pageYOffset >= sectionTop && pageYOffset < sectionTop + sectionHeight) {
+          current = section.getAttribute("id");
+        }
+      });
+
+      // Activamos el enlace correspondiente
+      navLinks.forEach(link => {
+        link.classList.remove("active");
+        if (link.getAttribute("href") === "#" + current) {
+          link.classList.add("active");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+
 
 
 
