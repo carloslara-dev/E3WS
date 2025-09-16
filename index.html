@@ -12,20 +12,20 @@
 
     /* Paleta de colores */
     :root {
-      --bg: #f7f9fc;
+      --bg: #f0f4f8;
       --text: #2b2f36;
       --muted: #64748b;
       --brand: #0ea5e9;
       --brand-dark: #0284c7;
       --nav: #0f172a;
       --nav-active: #1e293b;
-      --card: #ffffff;
+      --card-light: #ffffff;
+      --card-dark: #e2e8f0;
       --shadow: 0 10px 25px rgba(2,8,23,0.08);
     }
 
-    /* Tipografía base estable */
     body {
-      font-family: Arial, sans-serif;
+      font-family: system-ui, Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.6;
@@ -70,12 +70,15 @@
 
     /* Secciones */
     section {
-      padding: 60px 20px;
+      padding: 80px 20px;
       margin: 40px auto;
-      background: var(--card);
       border-radius: 10px;
       box-shadow: var(--shadow);
     }
+
+    /* Alternar colores de fondo */
+    section:nth-of-type(odd) { background: var(--card-light); }
+    section:nth-of-type(even) { background: var(--card-dark); }
 
     section h2 {
       color: var(--brand);
@@ -91,18 +94,16 @@
       font-size: 1rem;
     }
 
-    /* Header inicial */
     header {
       background: linear-gradient(135deg, var(--brand), var(--brand-dark));
       color: white;
-      padding: 100px 20px;
+      padding: 120px 20px;
       text-align: center;
     }
 
     header h1 { font-size: 2.5rem; margin-bottom: 10px; }
     header p { font-size: 1.2rem; }
 
-    /* Pie de página */
     footer {
       background: var(--nav);
       color: white;
@@ -188,14 +189,14 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const sections = document.querySelectorAll("section");
+      const sections = document.querySelectorAll("section, header");
       const navLinks = document.querySelectorAll("nav a");
 
       const setActiveLink = () => {
         let current = "";
         sections.forEach(section => {
           const rect = section.getBoundingClientRect();
-          if (rect.top <= 80 && rect.bottom > 80) {
+          if (rect.top <= 100 && rect.bottom > 100) {
             current = section.id;
           }
         });
@@ -211,13 +212,12 @@
       window.addEventListener("scroll", setActiveLink);
       setActiveLink();
 
-      // Scroll suave al hacer click en enlaces
       navLinks.forEach(link => {
         link.addEventListener("click", (e) => {
           e.preventDefault();
           const target = document.querySelector(link.getAttribute("href"));
           window.scrollTo({
-            top: target.offsetTop - 60, // ajusta para header sticky
+            top: target.offsetTop - 80,
             behavior: "smooth"
           });
         });
@@ -226,6 +226,7 @@
   </script>
 </body>
 </html>
+
 
 
 
