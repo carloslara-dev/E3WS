@@ -138,6 +138,20 @@
       padding: 20px;
       margin-top: 40px;
     }
+
+    /* =========================
+       ANIMACIONES AL SCROLL
+       ========================= */
+    section, header {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    section.visible, header.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
 
@@ -248,7 +262,7 @@
   </footer>
 
   <!-- =========================
-       SCRIPT: MENÚ FUNCIONAL CON SCROLL CORRECTO
+       SCRIPT: MENÚ FUNCIONAL Y ANIMACIONES
        ========================= -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -256,7 +270,9 @@
       const navLinks = document.querySelectorAll("nav a");
       const nav = document.querySelector("nav");
 
-      // Actualiza el enlace activo según sección visible
+      // =========================
+      // MENÚ FUNCIONAL CON SCROLL SUAVE
+      // =========================
       const setActiveLink = () => {
         let current = "";
         sections.forEach(section => {
@@ -276,7 +292,6 @@
       window.addEventListener("scroll", setActiveLink);
       setActiveLink();
 
-      // Scroll suave al hacer clic, considerando altura del menú
       navLinks.forEach(link => {
         link.addEventListener("click", e => {
           e.preventDefault();
@@ -285,10 +300,26 @@
           window.scrollTo({ top: target.offsetTop - navHeight, behavior: "smooth" });
         });
       });
+
+      // =========================
+      // ANIMACIONES AL SCROLL
+      // =========================
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      }, { threshold: 0.2 }); // Activar cuando el 20% sea visible
+
+      sections.forEach(section => {
+        observer.observe(section);
+      });
     });
   </script>
 </body>
 </html>
+
 
 
 
