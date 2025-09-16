@@ -9,27 +9,31 @@
        ESTILOS INTERNOS (CSS)
        ========================= -->
   <style>
-    /* Reset básico */
+    /* Reset básico y scroll suave */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
 
-    /* Variables de colores y estilos generales */
+    /* =========================
+       VARIABLES DE COLORES Y ESTILOS
+       ========================= */
     :root {
-      --bg: #f7faff;
-      --text: #2b2f36;
-      --muted: #64748b;
-      --brand: #0ea5e9;
-      --brand-dark: #0284c7;
-      --nav: #0f172a;
-      --nav-active: #1e293b;
-      --card-light: #ffffff;
-      --card-dark: #dbeafe;
-      --shadow: 0 10px 25px rgba(2,8,23,0.08);
-      --radius: 10px;
-      --nav-height: 70px;
+      --bg: #f7faff;           /* Fondo general */
+      --text: #2b2f36;         /* Texto principal */
+      --muted: #64748b;        /* Texto secundario */
+      --brand: #0ea5e9;        /* Azul principal */
+      --brand-dark: #0284c7;   /* Azul oscuro */
+      --nav: #0f172a;          /* Fondo del menú */
+      --nav-active: #1e293b;   /* Fondo del enlace activo */
+      --card-light: #ffffff;    /* Fondo secciones claras */
+      --card-dark: #dbeafe;    /* Fondo secciones alternas */
+      --shadow: 0 10px 25px rgba(2,8,23,0.08); /* Sombra */
+      --radius: 10px;           /* Bordes redondeados */
+      --nav-height: 70px;       /* Altura del menú */
     }
 
-    /* Tipografía base */
+    /* =========================
+       TIPOGRAFÍA BASE
+       ========================= */
     body {
       font-family: system-ui, Arial, sans-serif;
       background: var(--bg);
@@ -47,8 +51,8 @@
        MENÚ DE NAVEGACIÓN
        ========================= */
     nav {
-      background: var(--nav);
-      position: sticky;
+      background: var(--nav);           /* Fondo del menú */
+      position: sticky;                 /* Fijo al hacer scroll */
       top: 0;
       z-index: 1000;
       box-shadow: var(--shadow);
@@ -95,14 +99,6 @@
       border-radius: var(--radius);
       margin-bottom: 40px;
     }
-
-    /* Logo centrado y proporcional */
-    .logo {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 1rem;
-    }
-    .logo svg { max-width: 100%; height: auto; }
 
     header h1 { font-size: 2.5rem; margin-bottom: 10px; }
     header p { font-size: 1.2rem; margin-bottom: 20px; }
@@ -160,7 +156,7 @@
       visibility: hidden;
     }
 
-    /* Pie de página */
+    /* PIE DE PÁGINA */
     footer {
       background: var(--nav);
       color: white;
@@ -169,7 +165,9 @@
       margin-top: 40px;
     }
 
-    /* Animaciones al scroll */
+    /* =========================
+       ANIMACIONES AL SCROLL
+       ========================= */
     section, header {
       opacity: 0;
       transform: translateY(30px);
@@ -206,22 +204,14 @@
        ========================= -->
   <header id="inicio">
     <div class="container">
+      <!-- Ancla invisible para scroll -->
       <span class="anchor" id="inicio-anchor"></span>
 
-      <!-- LOGO E3WS estilo moderno -->
-      <div class="logo">
-        <svg xmlns="http://www.w3.org/2000/svg" width="180" height="80" viewBox="0 0 180 80">
-          <!-- Triángulo de alerta -->
-          <polygon points="10,70 50,10 90,70" fill="#0ea5e9"/>
-          <!-- Ondas sísmicas encima del triángulo -->
-          <path d="M25,30 Q40,5 55,30 T85,30" stroke="#0284c7" stroke-width="3" fill="none"/>
-          <!-- Texto E3WS a la derecha -->
-          <text x="110" y="55" font-family="Arial, sans-serif" font-size="28" fill="#0284c7" font-weight="bold">E3WS</text>
-        </svg>
-      </div>
-
+      <!-- Título principal -->
       <h1>🌍 Proyecto E3WS</h1>
+      <!-- Descripción breve -->
       <p>Sistema de Alerta Sísmica Temprana para proteger vidas y comunidades</p>
+      <!-- Botón de acción -->
       <a href="#sistema-anchor" class="btn-cta">Conocer más</a>
     </div>
   </header>
@@ -284,13 +274,15 @@
     <p>🌐 Redes sociales: próximamente</p>
   </section>
 
-  <!-- PIE DE PÁGINA -->
+  <!-- =========================
+       PIE DE PÁGINA
+       ========================= -->
   <footer>
     © 2025 Proyecto E3WS - Todos los derechos reservados
   </footer>
 
   <!-- =========================
-       SCRIPT: MENÚ Y ANIMACIONES
+       SCRIPT: MENÚ FUNCIONAL Y ANIMACIONES
        ========================= -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -298,7 +290,9 @@
       const navLinks = document.querySelectorAll("nav a");
       const nav = document.querySelector("nav");
 
-      // Función para actualizar el enlace activo según scroll
+      // =========================
+      // Actualizar enlace activo según scroll
+      // =========================
       const setActiveLink = () => {
         let current = "";
         sections.forEach(section => {
@@ -318,7 +312,9 @@
       window.addEventListener("scroll", setActiveLink);
       setActiveLink();
 
-      // Scroll suave al hacer clic en los enlaces del menú
+      // =========================
+      // Scroll suave al hacer clic
+      // =========================
       navLinks.forEach(link => {
         link.addEventListener("click", e => {
           e.preventDefault();
@@ -328,7 +324,9 @@
         });
       });
 
-      // Animaciones al aparecer con IntersectionObserver
+      // =========================
+      // Animaciones al aparecer en pantalla
+      // =========================
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
@@ -340,10 +338,6 @@
       sections.forEach(section => observer.observe(section));
     });
   </script>
+
 </body>
 </html>
-
-
-
-
-
