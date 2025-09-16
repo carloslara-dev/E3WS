@@ -50,7 +50,7 @@
        ========================= */
     nav {
       background: var(--nav);
-      position: sticky;  /* Siempre visible */
+      position: sticky;
       top: 0;
       z-index: 1000;
       box-shadow: var(--shadow);
@@ -90,7 +90,7 @@
       align-items: center;
       text-align: center;
       min-height: 35vh; /* altura más compacta */
-      padding: 30px 20px; /* menos padding vertical */
+      padding: 30px 20px;
       border-radius: 10px;
       margin-bottom: 40px;
     }
@@ -102,8 +102,8 @@
        SECCIONES PRINCIPALES
        ========================= */
     section {
-      padding: 60px 20px;   /* espacio interno adecuado */
-      margin: 40px auto;    /* separación entre secciones */
+      padding: 60px 20px;
+      margin: 40px auto;
       border-radius: 10px;
       box-shadow: var(--shadow);
     }
@@ -247,40 +247,48 @@
   </footer>
 
   <!-- =========================
-       SCRIPT: MENÚ FUNCIONAL
+       SCRIPT: MENÚ FUNCIONAL CON SCROLL CORRECTO
        ========================= -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const sections = document.querySelectorAll("section, header");
       const navLinks = document.querySelectorAll("nav a");
+      const nav = document.querySelector("nav");
 
+      // Actualiza el enlace activo según sección visible
       const setActiveLink = () => {
         let current = "";
         sections.forEach(section => {
           const rect = section.getBoundingClientRect();
-          if (rect.top <= 100 && rect.bottom > 100) current = section.id;
+          if (rect.top <= nav.offsetHeight + 10 && rect.bottom > nav.offsetHeight + 10) {
+            current = section.id;
+          }
         });
-
         navLinks.forEach(link => {
           link.classList.remove("active");
-          if (link.getAttribute("href") === "#" + current) link.classList.add("active");
+          if (link.getAttribute("href") === "#" + current) {
+            link.classList.add("active");
+          }
         });
       };
 
       window.addEventListener("scroll", setActiveLink);
       setActiveLink();
 
+      // Scroll suave al hacer clic, considerando altura del menú
       navLinks.forEach(link => {
         link.addEventListener("click", e => {
           e.preventDefault();
           const target = document.querySelector(link.getAttribute("href"));
-          window.scrollTo({ top: target.offsetTop - 80, behavior: "smooth" });
+          const navHeight = nav.offsetHeight;
+          window.scrollTo({ top: target.offsetTop - navHeight, behavior: "smooth" });
         });
       });
     });
   </script>
 </body>
 </html>
+
 
 
 
