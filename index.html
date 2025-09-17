@@ -3,298 +3,346 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>E3WS - Sistema de Alerta Sísmica</title>
-
-  <!-- =========================
-       ESTILOS INTERNOS (CSS)
-       ========================= -->
-  <style>
-    /* Reset básico y scroll suave */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-
-    /* =========================
-       VARIABLES DE COLORES
-       ========================= */
-    :root {
-      --bg: #f7faff;
-      --text: #2b2f36;
-      --muted: #64748b;
-      --brand: #0ea5e9;
-      --brand-dark: #0284c7;
-      --nav: #0f172a;
-      --nav-active: #1e293b;
-      --card-light: #ffffff;
-      --card-dark: #dbeafe;
-      --shadow: 0 10px 25px rgba(2,8,23,0.08);
-    }
-
-    /* =========================
-       TIPOGRAFÍA BASE
-       ========================= */
-    body {
-      font-family: system-ui, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-
-    /* =========================
-       MENÚ DE NAVEGACIÓN
-       ========================= */
-    nav {
-      background: var(--nav);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      box-shadow: var(--shadow);
-    }
-
-    nav ul {
-      display: flex;
-      list-style: none;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    nav li { margin: 0 10px; }
-
-    nav a {
-      display: block;
-      padding: 15px 20px;
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 5px;
-      transition: background 0.3s;
-    }
-
-    nav a:hover { background: var(--brand-dark); }
-    nav a.active { background: var(--nav-active); }
-
-    /* =========================
-       HEADER (INICIO) - Espacio para logo y título
-       ========================= */
-    header {
-      background: linear-gradient(135deg, rgba(14,165,233,0.85), rgba(2,132,199,0.85));
-      color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      min-height: 35vh;
-      padding: 30px 20px;
-      border-radius: 10px;
-      margin-bottom: 40px;
-    }
-
-    header h1 { font-size: 2.5rem; margin-bottom: 10px; }
-    header p { font-size: 1.2rem; }
-
-    /* =========================
-       SECCIONES PRINCIPALES
-       ========================= */
-    section {
-      padding: 60px 20px;
-      margin: 40px auto;
-      border-radius: 10px;
-      box-shadow: var(--shadow);
-    }
-
-    section:nth-of-type(odd) { background: var(--card-light); }
-    section:nth-of-type(even) { background: var(--card-dark); }
-
-    section h2 {
-      color: var(--brand);
-      margin-bottom: 20px;
-      text-align: center;
-      font-size: 2rem;
-    }
-
-    section p, section ul li {
-      margin-bottom: 15px;
-      color: var(--muted);
-      text-align: justify;
-      font-size: 1rem;
-    }
-
-    section ul { padding-left: 20px; }
-
-    /* =========================
-       PIE DE PÁGINA
-       ========================= */
-    footer {
-      background: var(--nav);
-      color: white;
-      text-align: center;
-      padding: 20px;
-      margin-top: 40px;
-    }
-
-    /* =========================
-       ANIMACIONES AL SCROLL
-       ========================= */
-    section, header {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    }
-
-    section.visible, header.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  </style>
+  <meta name="description" content="Sistema de Alerta Sísmica Temprana E3WS para proteger vidas y comunidades">
+  <meta name="keywords" content="alerta sísmica, terremoto, sismo, protección civil, seguridad, E3WS">
+  <meta name="author" content="E3WS">
+  <meta property="og:title" content="E3WS - Sistema de Alerta Sísmica Temprana">
+  <meta property="og:description" content="Protege tu comunidad con nuestro sistema de alerta sísmica temprana">
+  <meta property="og:image" content="https://e3ws.com/images/og-image.jpg">
+  <meta property="og:url" content="https://e3ws.com">
+  <meta name="twitter:card" content="summary_large_image">
+  
+  <title>E3WS - Sistema de Alerta Sísmica Temprana</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="alternate icon" href="images/favicon.ico">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+  
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Hojas de estilo -->
+  <link rel="stylesheet" href="styles.css">
+  
+  <!-- Preload de recursos críticos -->
+  <link rel="preload" href="script.js" as="script">
+  <link rel="preload" href="styles.css" as="style">
 </head>
 
 <body>
-  <!-- =========================
-       MENÚ DE NAVEGACIÓN
-       ========================= -->
-  <nav>
-    <ul>
-      <li><a href="#inicio" class="active">Inicio</a></li>
-      <li><a href="#nosotros">Nosotros</a></li>
-      <li><a href="#e3ws">E3WS</a></li>
-      <li><a href="#sistema">Sistema</a></li>
-      <li><a href="#beneficios">Beneficios</a></li>
-      <li><a href="#casos">Casos</a></li>
-      <li><a href="#novedades">Novedades</a></li>
-      <li><a href="#demo">Demo</a></li>
-      <li><a href="#contacto">Contacto</a></li>
-    </ul>
+  <!-- Barra de navegación -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="#inicio" class="nav-logo">
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBkPSJNMjU2IDhDMTE5IDggOCAxMTkgOCAyNTZzMTExIDI0OCAyNDggMjQ4IDI0OC0xMTEgMjQ4LTI0OFMzOTMgOCAyNTYgOHptMCA0NDhjLTExMC41IDAtMjAwLTg5LjUtMjAwLTIwMFMxNDUuNSA1NiAyNTYgNTZzMjAwIDg5LjUgMjAwIDIwMC04OS41IDIwMC0yMDAgMjAwem02MS44LTEwNC40bC04NC45LTYxLjdjLTMuMS0yLjMtNC45LTUuOS00LjktOS43VDIyNiAxOTJoMTM1LjJjOC44IDAgMTYtNy4yIDE2LTE2di0zMmMwLTguOC03LjItMTYtMTYtMTZIMjE2Yy04LjggMC0xNiA3LjItMTYgMTZ2ODguO2MwIDQuNSAxLjkgOC44IDUuNCAxMS44bDg0LjkgNjEuN2M1LjQgMy45IDYuNSAxMS40IDIuNiAxNi44QzMxMC41IDM2MyAzMDYuMiAzNjQgMzAyIDM2NGMtMi40IDAtNC44LS42LTYuOS0xLjl6IiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==" alt="E3WS Logo">
+        E3WS
+      </a>
+      
+      <!-- Menú de navegación -->
+      <ul class="nav-menu">
+        <li><a href="#inicio" class="nav-link active">Inicio</a></li>
+        <li><a href="#nosotros" class="nav-link">Nosotros</a></li>
+        <li><a href="#e3ws" class="nav-link">E3WS</a></li>
+        <li><a href="#sistema" class="nav-link">Sistema</a></li>
+        <li><a href="#beneficios" class="nav-link">Beneficios</a></li>
+        <li><a href="#contacto" class="btn btn-outline">Contacto</a></li>
+      </ul>
+      
+      <!-- Botón de menú móvil -->
+      <div class="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </div>
   </nav>
 
-  <!-- =========================
-       HEADER (INICIO)
-       ========================= -->
-  <header id="inicio">
+  <!-- Sección Hero -->
+  <header id="inicio" class="hero">
     <div class="container">
-      <!-- Aquí se integrará el logo más adelante -->
-      <h1>🌍 Proyecto E3WS</h1>
-      <p>Sistema de Alerta Sísmica Temprana para proteger vidas y comunidades</p>
+      <h1 class="fade-in">Protege lo que más importa</h1>
+      <p class="fade-in delay-1">Sistema de Alerta Sísmica Temprana que brinda segundos vitales para salvar vidas y reducir daños materiales.</p>
+      <div class="fade-in delay-2">
+        <a href="#contacto" class="btn">Solicitar Demo</a>
+        <a href="#sistema" class="btn btn-outline">Conocer más</a>
+      </div>
     </div>
   </header>
 
-  <!-- =========================
-       SECCIONES PRINCIPALES
-       ========================= -->
-  <section id="nosotros" class="container">
-    <h2>Nosotros</h2>
-    <p><strong>Visión:</strong> Ser líderes en sistemas de alerta temprana en Latinoamérica.</p>
-    <p><strong>Misión:</strong> Proteger vidas mediante tecnología accesible y confiable.</p>
-    <p><strong>Quiénes somos:</strong> Un equipo de ingenieros, investigadores y desarrolladores comprometidos con la seguridad sísmica.</p>
+  <!-- Sección Nosotros -->
+  <section id="nosotros" class="section-padding">
+    <div class="container">
+      <div class="section-title fade-in">
+        <span class="subtitle">Sobre Nosotros</span>
+        <h2>Comprometidos con tu seguridad</h2>
+      </div>
+      
+      <div class="features-grid">
+        <div class="feature-card fade-in">
+          <div class="feature-icon">
+            <i class="fas fa-eye"></i>
+          </div>
+          <h3>Visión</h3>
+          <p>Ser la solución líder en sistemas de alerta temprana en Latinoamérica, protegiendo a millones de personas de desastres naturales.</p>
+        </div>
+        
+        <div class="feature-card fade-in delay-1">
+          <div class="feature-icon">
+            <i class="fas fa-bullseye"></i>
+          </div>
+          <h3>Misión</h3>
+          <p>Desarrollar tecnología accesible y confiable que permita a las comunidades estar preparadas ante eventos sísmicos, salvando vidas y reduciendo daños materiales.</p>
+        </div>
+        
+        <div class="feature-card fade-in delay-2">
+          <div class="feature-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <h3>Nuestro Equipo</h3>
+          <p>Ingenieros, sismólogos y especialistas en gestión de desastres trabajando juntos para crear soluciones innovadoras.</p>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section id="e3ws" class="container">
-    <h2>¿Qué es E3WS?</h2>
-    <p>E3WS es un sistema de alerta temprana que detecta movimientos sísmicos y envía notificaciones en tiempo real a comunidades, empresas y autoridades.</p>
+  <!-- Sección E3WS -->
+  <section id="e3ws" class="bg-light section-padding">
+    <div class="container">
+      <div class="section-title fade-in">
+        <span class="subtitle">Tecnología</span>
+        <h2>¿Qué es E3WS?</h2>
+      </div>
+      
+      <div class="grid-2-cols">
+        <div class="fade-in">
+          <h3>Sistema de Alerta Sísmica Temprana</h3>
+          <p>E3WS (Early Earthquake Warning System) es una solución tecnológica avanzada que detecta los primeros indicios de un sismo y emite alertas con segundos de anticipación, permitiendo tomar acciones preventivas.</p>
+          <p>Nuestro sistema analiza las ondas sísmicas primarias (ondas P) que viajan más rápido que las ondas destructivas (ondas S), brindando un tiempo valioso para activar protocolos de seguridad.</p>
+          <div class="mt-4">
+            <a href="#sistema" class="btn">Ver más detalles</a>
+          </div>
+        </div>
+        <div class="fade-in delay-1" style="text-align: center;">
+          <img src="https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?q=80&w=1000&auto=format&fit=crop" alt="Sistema de alerta sísmica" style="max-width: 100%; border-radius: 0.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section id="sistema" class="container">
-    <h2>El Sistema</h2>
-    <p>El sistema analiza las ondas sísmicas iniciales para estimar epicentro, magnitud y posible impacto. Utiliza algoritmos de inteligencia artificial y redes distribuidas de sensores.</p>
+  <!-- Sección Sistema -->
+  <section id="sistema" class="section-padding">
+    <div class="container">
+      <div class="section-title fade-in">
+        <span class="subtitle">Tecnología Avanzada</span>
+        <h2>¿Cómo funciona nuestro sistema?</h2>
+      </div>
+      
+      <div class="features-grid">
+        <div class="feature-card fade-in">
+          <div class="feature-icon">
+            <i class="fas fa-satellite-dish"></i>
+          </div>
+          <h3>Red de Sensores</h3>
+          <p>Desplegamos una red de sensores sísmicos de alta sensibilidad en ubicaciones estratégicas para detectar movimientos telúricos.</p>
+        </div>
+        
+        <div class="feature-card fade-in delay-1">
+          <div class="feature-icon">
+            <i class="fas fa-brain"></i>
+          </div>
+          <h3>Análisis en Tiempo Real</h3>
+          <p>Nuestros algoritmos de IA analizan los datos en milisegundos para determinar la magnitud y ubicación del sismo.</p>
+        </div>
+        
+        <div class="feature-card fade-in delay-2">
+          <div class="feature-icon">
+            <i class="fas fa-bell"></i>
+          </div>
+          <h3>Alertas Inmediatas</h3>
+          <p>Envío automático de alertas a dispositivos móviles, sistemas de sonido, pantallas y otros canales de comunicación.</p>
+        </div>
+      </div>
+      
+      <div class="mt-5 text-center fade-in">
+        <a href="#demo" class="btn btn-outline">Ver demostración</a>
+      </div>
+    </div>
   </section>
 
-  <section id="beneficios" class="container">
-    <h2>Beneficios</h2>
-    <ul>
-      <li>Protección inmediata a comunidades.</li>
-      <li>Reducción de daños en infraestructura crítica.</li>
-      <li>Integración con sistemas de seguridad y evacuación.</li>
-    </ul>
+  <!-- Sección Beneficios -->
+  <section id="beneficios" class="bg-light section-padding">
+    <div class="container">
+      <div class="section-title fade-in">
+        <span class="subtitle">Ventajas</span>
+        <h2>Beneficios Clave</h2>
+      </div>
+      
+      <div class="grid-2-cols">
+        <div class="fade-in">
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <i class="fas fa-heart"></i>
+            </div>
+            <div class="benefit-content">
+              <h3>Salvar Vidas</h3>
+              <p>Los segundos de advertencia permiten a las personas buscar refugio y adoptar posiciones de seguridad.</p>
+            </div>
+          </div>
+          
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <i class="fas fa-building"></i>
+            </div>
+            <div class="benefit-content">
+              <h3>Protección de Infraestructura</h3>
+              <p>Activa automáticamente protocolos para detener ascensores, sistemas eléctricos y maquinaria industrial.</p>
+            </div>
+          </div>
+          
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="benefit-content">
+              <h3>Reducción de Daños Económicos</h3>
+              <p>Minimiza pérdidas materiales y acelera la recuperación post-desastre.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="fade-in delay-1">
+          <div class="stats-container">
+            <div class="stat-item">
+              <div class="counter" data-count="99.9">0</div>
+              <div class="stat-label">% Precisión</div>
+            </div>
+            <div class="stat-item">
+              <div class="counter" data-count="30">0</div>
+              <div class="stat-label">Segundos de advertencia</div>
+            </div>
+            <div class="stat-item">
+              <div class="counter" data-count="1000">0</div>
+              <div class="stat-label">Vidas salvadas</div>
+            </div>
+            <div class="stat-item">
+              <div class="counter" data-count="50">0</div>
+              <div class="stat-label">Ciudades protegidas</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section id="casos" class="container">
-    <h2>Casos</h2>
-    <p>Ejemplos de aplicación y pruebas piloto en distintas regiones.</p>
+  <!-- Sección de Contacto -->
+  <section id="contacto" class="section-padding">
+    <div class="container">
+      <div class="section-title fade-in">
+        <span class="subtitle">Contáctanos</span>
+        <h2>¿Listo para proteger tu comunidad?</h2>
+        <p class="mt-3">Completa el formulario y nos pondremos en contacto contigo a la brevedad.</p>
+      </div>
+      
+      <div class="contact-form fade-in">
+        <form id="contactForm">
+          <div class="form-group">
+            <label for="name" class="form-label">Nombre completo</label>
+            <input type="text" id="name" name="name" class="form-control" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="email" class="form-label">Correo electrónico</label>
+            <input type="email" id="email" name="email" class="form-control" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="organization" class="form-label">Organización</label>
+            <input type="text" id="organization" name="organization" class="form-control" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="message" class="form-label">Mensaje</label>
+            <textarea id="message" name="message" class="form-control" rows="5" required></textarea>
+          </div>
+          
+          <div class="form-group text-center">
+            <button type="submit" class="btn">Enviar Mensaje</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </section>
 
-  <section id="novedades" class="container">
-    <h2>Novedades</h2>
-    <p>Aquí se publicarán avances, noticias y actualizaciones del proyecto.</p>
-  </section>
-
-  <section id="demo" class="container">
-    <h2>Demo</h2>
-    <p>Espacio para probar la plataforma E3WS en acción.</p>
-  </section>
-
-  <section id="contacto" class="container">
-    <h2>Contacto</h2>
-    <p>📧 contacto@e3ws.com</p>
-    <p>🌐 Redes sociales: próximamente</p>
-  </section>
-
-  <!-- =========================
-       PIE DE PÁGINA
-       ========================= -->
-  <footer>
-    © 2025 Proyecto E3WS - Todos los derechos reservados
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-col">
+          <a href="#" class="footer-logo">E3WS</a>
+          <p>Sistema de Alerta Sísmica Temprana para proteger vidas y comunidades.</p>
+          <div class="social-links">
+            <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="social-link" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        
+        <div class="footer-col">
+          <h3 class="footer-title">Enlaces Rápidos</h3>
+          <ul class="footer-links">
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#nosotros">Nosotros</a></li>
+            <li><a href="#e3ws">E3WS</a></li>
+            <li><a href="#sistema">Sistema</a></li>
+            <li><a href="#beneficios">Beneficios</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h3 class="footer-title">Contacto</h3>
+          <ul class="footer-contact">
+            <li><i class="fas fa-map-marker-alt"></i> Av. Principal 123, Ciudad, País</li>
+            <li><i class="fas fa-phone"></i> +1 234 567 890</li>
+            <li><i class="fas fa-envelope"></i> info@e3ws.com</li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h3 class="footer-title">Boletín</h3>
+          <p>Suscríbete para recibir actualizaciones y noticias.</p>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Tu correo electrónico" class="form-control" required>
+            <button type="submit" class="btn btn-small">Suscribirse</button>
+          </form>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2025 E3WS. Todos los derechos reservados. | <a href="#" style="color: rgba(255,255,255,0.7);">Política de Privacidad</a> | <a href="#" style="color: rgba(255,255,255,0.7);">Términos de Servicio</a></p>
+      </div>
+    </div>
   </footer>
 
-  <!-- =========================
-       SCRIPT: MENÚ FUNCIONAL Y ANIMACIONES
-       ========================= -->
+  <!-- Botón de ir arriba -->
+  <a href="#inicio" id="back-to-top" class="back-to-top" aria-label="Volver arriba">
+    <i class="fas fa-arrow-up"></i>
+  </a>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+  
+  <!-- Google Analytics (reemplazar con tu ID de seguimiento) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const sections = document.querySelectorAll("section, header");
-      const navLinks = document.querySelectorAll("nav a");
-      const nav = document.querySelector("nav");
-
-      // =========================
-      // FUNCIONALIDAD DEL MENÚ CON SCROLL SUAVE
-      // =========================
-      const setActiveLink = () => {
-        let current = "";
-        sections.forEach(section => {
-          const rect = section.getBoundingClientRect();
-          if (rect.top <= nav.offsetHeight + 10 && rect.bottom > nav.offsetHeight + 10) {
-            current = section.id;
-          }
-        });
-        navLinks.forEach(link => {
-          link.classList.remove("active");
-          if (link.getAttribute("href") === "#" + current) {
-            link.classList.add("active");
-          }
-        });
-      };
-
-      window.addEventListener("scroll", setActiveLink);
-      setActiveLink();
-
-      navLinks.forEach(link => {
-        link.addEventListener("click", e => {
-          e.preventDefault();
-          const target = document.querySelector(link.getAttribute("href"));
-          const navHeight = nav.offsetHeight;
-          window.scrollTo({ top: target.offsetTop - navHeight, behavior: "smooth" });
-        });
-      });
-
-      // =========================
-      // ANIMACIONES AL SCROLL
-      // =========================
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          }
-        });
-      }, { threshold: 0.2 });
-
-      sections.forEach(section => {
-        observer.observe(section);
-      });
-    });
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
   </script>
 </body>
 </html>
