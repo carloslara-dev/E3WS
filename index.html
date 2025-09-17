@@ -14,21 +14,19 @@
     html { scroll-behavior: smooth; }
 
     /* =========================
-       VARIABLES DE COLORES Y ESTILOS
+       VARIABLES DE COLORES
        ========================= */
     :root {
-      --bg: #f7faff;           /* Fondo general */
-      --text: #2b2f36;         /* Texto principal */
-      --muted: #64748b;        /* Texto secundario */
-      --brand: #0ea5e9;        /* Azul principal */
-      --brand-dark: #0284c7;   /* Azul oscuro */
-      --nav: #0f172a;          /* Fondo del menú */
-      --nav-active: #1e293b;   /* Fondo del enlace activo */
-      --card-light: #ffffff;   /* Fondo secciones claras */
-      --card-dark: #dbeafe;    /* Fondo secciones alternas */
-      --shadow: 0 10px 25px rgba(2,8,23,0.08); /* Sombra */
-      --radius: 10px;          /* Bordes redondeados */
-      --nav-height: 70px;      /* Altura del menú */
+      --bg: #f7faff;
+      --text: #2b2f36;
+      --muted: #64748b;
+      --brand: #0ea5e9;
+      --brand-dark: #0284c7;
+      --nav: #0f172a;
+      --nav-active: #1e293b;
+      --card-light: #ffffff;
+      --card-dark: #dbeafe;
+      --shadow: 0 10px 25px rgba(2,8,23,0.08);
     }
 
     /* =========================
@@ -51,20 +49,17 @@
        MENÚ DE NAVEGACIÓN
        ========================= */
     nav {
-      background: var(--nav);          /* Fondo del menú */
-      position: sticky;                /* Se queda fijo al hacer scroll */
+      background: var(--nav);
+      position: sticky;
       top: 0;
       z-index: 1000;
       box-shadow: var(--shadow);
-      height: var(--nav-height);
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
     nav ul {
       display: flex;
       list-style: none;
+      justify-content: center;
       flex-wrap: wrap;
     }
 
@@ -84,7 +79,7 @@
     nav a.active { background: var(--nav-active); }
 
     /* =========================
-       HEADER
+       HEADER (INICIO) - Espacio para logo y título
        ========================= */
     header {
       background: linear-gradient(135deg, rgba(14,165,233,0.85), rgba(2,132,199,0.85));
@@ -94,38 +89,22 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      min-height: 100vh;
-      padding-top: var(--nav-height);
-      border-radius: var(--radius);
+      min-height: 35vh;
+      padding: 30px 20px;
+      border-radius: 10px;
       margin-bottom: 40px;
     }
 
     header h1 { font-size: 2.5rem; margin-bottom: 10px; }
-    header p { font-size: 1.2rem; margin-bottom: 20px; }
-
-    /* Botón de llamada a la acción */
-    .btn-cta {
-      background: white;
-      color: var(--brand-dark);
-      padding: 12px 25px;
-      border-radius: 5px;
-      font-weight: bold;
-      text-decoration: none;
-      transition: background 0.3s;
-    }
-    .btn-cta:hover {
-      background: var(--brand-dark);
-      color: white;
-    }
+    header p { font-size: 1.2rem; }
 
     /* =========================
-       SECCIONES
+       SECCIONES PRINCIPALES
        ========================= */
     section {
-      min-height: calc(100vh - var(--nav-height) - 20px);
-      padding: calc(var(--nav-height) + 20px) 1rem 5rem 1rem;
-      margin: 2rem auto;
-      border-radius: var(--radius);
+      padding: 60px 20px;
+      margin: 40px auto;
+      border-radius: 10px;
       box-shadow: var(--shadow);
     }
 
@@ -148,16 +127,9 @@
 
     section ul { padding-left: 20px; }
 
-    /* Anclas invisibles para scroll */
-    .anchor {
-      position: relative;
-      top: -80px;
-      display: block;
-      height: 0;
-      visibility: hidden;
-    }
-
-    /* PIE DE PÁGINA */
+    /* =========================
+       PIE DE PÁGINA
+       ========================= */
     footer {
       background: var(--nav);
       color: white;
@@ -181,39 +153,33 @@
     }
   </style>
 </head>
-<body>
 
+<body>
   <!-- =========================
        MENÚ DE NAVEGACIÓN
        ========================= -->
   <nav>
     <ul>
-      <li><a href="#inicio-anchor" class="active">Inicio</a></li>
-      <li><a href="#nosotros-anchor">Nosotros</a></li>
-      <li><a href="#e3ws-anchor">E3WS</a></li>
-      <li><a href="#sistema-anchor">Sistema</a></li>
-      <li><a href="#beneficios-anchor">Beneficios</a></li>
-      <li><a href="#casos-anchor">Casos</a></li>
-      <li><a href="#novedades-anchor">Novedades</a></li>
-      <li><a href="#demo-anchor">Demo</a></li>
-      <li><a href="#contacto-anchor">Contacto</a></li>
+      <li><a href="#inicio" class="active">Inicio</a></li>
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#e3ws">E3WS</a></li>
+      <li><a href="#sistema">Sistema</a></li>
+      <li><a href="#beneficios">Beneficios</a></li>
+      <li><a href="#casos">Casos</a></li>
+      <li><a href="#novedades">Novedades</a></li>
+      <li><a href="#demo">Demo</a></li>
+      <li><a href="#contacto">Contacto</a></li>
     </ul>
   </nav>
 
   <!-- =========================
-       HEADER / INICIO
+       HEADER (INICIO)
        ========================= -->
   <header id="inicio">
     <div class="container">
-      <!-- Ancla invisible para scroll -->
-      <span class="anchor" id="inicio-anchor"></span>
-
-      <!-- Título principal -->
+      <!-- Aquí se integrará el logo más adelante -->
       <h1>🌍 Proyecto E3WS</h1>
-      <!-- Descripción breve -->
       <p>Sistema de Alerta Sísmica Temprana para proteger vidas y comunidades</p>
-      <!-- Botón de acción -->
-      <a href="#sistema-anchor" class="btn-cta">Conocer más</a>
     </div>
   </header>
 
@@ -221,7 +187,6 @@
        SECCIONES PRINCIPALES
        ========================= -->
   <section id="nosotros" class="container">
-    <span class="anchor" id="nosotros-anchor"></span>
     <h2>Nosotros</h2>
     <p><strong>Visión:</strong> Ser líderes en sistemas de alerta temprana en Latinoamérica.</p>
     <p><strong>Misión:</strong> Proteger vidas mediante tecnología accesible y confiable.</p>
@@ -229,19 +194,16 @@
   </section>
 
   <section id="e3ws" class="container">
-    <span class="anchor" id="e3ws-anchor"></span>
     <h2>¿Qué es E3WS?</h2>
     <p>E3WS es un sistema de alerta temprana que detecta movimientos sísmicos y envía notificaciones en tiempo real a comunidades, empresas y autoridades.</p>
   </section>
 
   <section id="sistema" class="container">
-    <span class="anchor" id="sistema-anchor"></span>
     <h2>El Sistema</h2>
     <p>El sistema analiza las ondas sísmicas iniciales para estimar epicentro, magnitud y posible impacto. Utiliza algoritmos de inteligencia artificial y redes distribuidas de sensores.</p>
   </section>
 
   <section id="beneficios" class="container">
-    <span class="anchor" id="beneficios-anchor"></span>
     <h2>Beneficios</h2>
     <ul>
       <li>Protección inmediata a comunidades.</li>
@@ -251,25 +213,21 @@
   </section>
 
   <section id="casos" class="container">
-    <span class="anchor" id="casos-anchor"></span>
     <h2>Casos</h2>
     <p>Ejemplos de aplicación y pruebas piloto en distintas regiones.</p>
   </section>
 
   <section id="novedades" class="container">
-    <span class="anchor" id="novedades-anchor"></span>
     <h2>Novedades</h2>
     <p>Aquí se publicarán avances, noticias y actualizaciones del proyecto.</p>
   </section>
 
   <section id="demo" class="container">
-    <span class="anchor" id="demo-anchor"></span>
     <h2>Demo</h2>
     <p>Espacio para probar la plataforma E3WS en acción.</p>
   </section>
 
   <section id="contacto" class="container">
-    <span class="anchor" id="contacto-anchor"></span>
     <h2>Contacto</h2>
     <p>📧 contacto@e3ws.com</p>
     <p>🌐 Redes sociales: próximamente</p>
@@ -292,7 +250,7 @@
       const nav = document.querySelector("nav");
 
       // =========================
-      // Actualizar enlace activo según scroll
+      // FUNCIONALIDAD DEL MENÚ CON SCROLL SUAVE
       // =========================
       const setActiveLink = () => {
         let current = "";
@@ -304,7 +262,7 @@
         });
         navLinks.forEach(link => {
           link.classList.remove("active");
-          if (link.getAttribute("href") === "#" + current + "-anchor") {
+          if (link.getAttribute("href") === "#" + current) {
             link.classList.add("active");
           }
         });
@@ -313,9 +271,6 @@
       window.addEventListener("scroll", setActiveLink);
       setActiveLink();
 
-      // =========================
-      // Scroll suave al hacer clic
-      // =========================
       navLinks.forEach(link => {
         link.addEventListener("click", e => {
           e.preventDefault();
@@ -326,7 +281,7 @@
       });
 
       // =========================
-      // Animaciones al aparecer en pantalla
+      // ANIMACIONES AL SCROLL
       // =========================
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -336,10 +291,10 @@
         });
       }, { threshold: 0.2 });
 
-      sections.forEach(section => observer.observe(section));
+      sections.forEach(section => {
+        observer.observe(section);
+      });
     });
   </script>
-
 </body>
 </html>
-
