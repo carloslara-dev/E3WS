@@ -1,151 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Metadatos básicos -->
+  <meta charset="UTF-8"> <!-- Codificación de caracteres -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Hace la página responsive -->
+  <title>E3WS - Sistema de Alerta Sísmica</title> <!-- Título pestaña -->
+
   <!-- =========================
-       SECCIÓN HERO (Encabezado principal de la página)
+       ESTILOS (CSS) EMBEBIDOS
+       Mantengo CSS aquí para que tengas un único archivo mientras armamos la plantilla.
+       Más adelante, cuando todo esté aprobado, lo separamos en css/style.css
+       ========================= -->
+  <style>
+    /* ---------- RESET BÁSICO ---------- */
+    * { box-sizing: border-box; margin: 0; padding: 0; } /* Hace que padding/margin no rompan el layout */
+    html { scroll-behavior: smooth; } /* Permite scroll suave nativo al hacer anchor links */
+
+    /* ---------- VARIABLES (colores y sombras) ---------- */
+    :root{
+      --bg: #f7faff;           /* fondo general */
+      --text: #2b2f36;         /* color principal del texto */
+      --muted: #64748b;        /* texto secundario */
+      --brand: #0ea5e9;        /* azul principal de la marca */
+      --brand-dark: #0284c7;   /* azul oscuro para hover/accent */
+      --nav-bg: #0f172a;       /* fondo del menú */
+      --nav-active: #1e293b;   /* fondo del enlace activo */
+      --card-light: #ffffff;   /* fondo sección clara */
+      --card-dark: #dbeafe;    /* fondo sección alterna */
+      --shadow: 0 10px 25px rgba(2,8,23,0.08); /* sombra global */
+      --radius: 10px;         /* radio de bordes */
+      --max-width: 1100px;    /* ancho máximo de contenedor */
+      --nav-height: 70px;     /* altura estimada del nav (útil si la necesitas en JS) */
+    }
+
+    /* ---------- TIPOGRAFÍA Y CONTENEDOR ---------- */
+    body {
+      font-family: system-ui, Arial, sans-serif; /* tipografías seguras y legibles */
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: var(--max-width); /* contenedor centrado */
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* =========================
+       NAV (MENÚ)
+       sticky, centrado y con enlaces
+       ========================= */
+    nav {
+      background: var(--nav-bg);      /* color de fondo del menú */
+      position: sticky;               /* se pega al top al hacer scroll */
+      top: 0;
+      z-index: 1000;                  /* quedar encima de todo */
+      box-shadow: var(--shadow);      /* ligera sombra para separarlo del contenido */
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      justify-content: center;        /* centra los items del menú */
+      flex-wrap: wrap;                /* se ajusta en pantallas pequeñas */
+      margin: 0;
+      padding: 0;
+    }
+
+    nav li { margin: 0 10px; }        /* separación entre items */
+
+    nav a {
+      display: block;
+      padding: 15px 20px;
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      border-radius: 6px;
+      transition: background 0.25s ease, transform 0.12s ease;
+    }
+
+    nav a:hover { background: var(--brand-dark); transform: translateY(-1px); }
+    nav a.active { background: var(--nav-active); } /* clase aplicada por JS para resaltar */
+
+    /* =========================
+       HERO (SECCIÓN PRINCIPAL)
+       Ocupa toda la pantalla inicial
+       ========================= */
+    header#inicio {
+      min-height: 100vh; /* ocupa toda la pantalla inicial */
+      display: flex;
+      align-items: center;           /* centra verticalmente el contenido */
+      justify-content: center;       /* centra horizontalmente */
+      padding: 40px 20px;
+      background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); /* degradado */
+      color: white;
+    }
+
+    /* Contenedor interno del Hero: dos columnas (texto + imagen) */
+    .hero-container {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: var(--max-width);
+      flex-wrap: wrap; /* para pantallas pequeñas se apila */
+    }
+
+    /* Columna de texto del Hero */
+    .hero-text { flex: 1 1 480px; min-width: 260px; }
+
+    .hero-text h1 {
+      font-size: clamp(2.2rem, 4vw, 3.2rem); /* tamaño responsivo */
+      margin-bottom: 8px;
+      line-height: 1.05;
+    }
+
+    .hero-text h2 {
+      font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+      margin-bottom: 18px;
+      font-weight: 600;
+    }
+
+    .hero-text p {
+      font-size: 1.05rem;
+      margin-bottom: 26px;
+      color: rgba(255,255,255,0.93);
+      max-width: 720px;
+    }
+
+    /* Botonera del hero (CTA) */
+    .hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 22px;
+      border-radius: 10px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform .12s ease, background .2s ease, box-shadow .12s ease;
+    }
+
+    .btn-primary {
+      background: white;
+      color: var(--brand-dark);
+      box-shadow: 0 6px 18px rgba(2,8,23,0.12);
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 24px rgba(2,8,23,0.18); }
+
+    .btn-secondary {
+      background: transparent;
+      color: white;
+      border: 2px solid rgba(255,255,255,0.18);
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.06); transform: translateY(-2px); }
+
+    /* Columna de imagen / placeholder: aquí irá tu ilustración o logo */
+    .hero-image {
+      flex: 0 1 360px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 260px;
+    }
+
+    .image-placeholder {
+      width: 100%;
+      max-width: 360px;
+      height: 240px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.9);
+      font-style: italic;
+    }
+
+    /* =========================
+       SECCIONES (contenido principal)
+       ========================= */
+    section {
+      padding: 60px 20px;
+      margin: 40px auto;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      width: 100%;
+      max-width: var(--max-width);
+    }
+
+    section:nth-of-type(odd) { background: var(--card-light); }
+    section:nth-of-type(even) { background: var(--card-dark); }
+
+    section h2 {
+      color: var(--brand);
+      margin-bottom: 16px;
+      text-align: center;
+      font-size: 1.9rem;
+    }
+
+    section p, section ul li {
+      color: var(--muted);
+      margin-bottom: 12px;
+      text-align: justify;
+      font-size: 1rem;
+    }
+
+    section ul { padding-left: 20px; }
+
+    /* =========================
+       FOOTER
+       ========================= */
+    footer {
+      background: var(--nav-bg);
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+
+    /* =========================
+       ANIMACIONES AL SCROLL
+       ========================= */
+    section, header {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .8s ease-out, transform .8s ease-out;
+    }
+    section.visible, header.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* =========================
+       RESPONSIVE (móviles)
+       ========================= */
+    @media (max-width: 900px) {
+      .hero-container { gap: 22px; padding: 10px 0; }
+      .image-placeholder { height: 200px; max-width: 320px; }
+    }
+
+    @media (max-width: 600px) {
+      nav ul { gap: 6px; padding: 6px 8px; }
+      .hero-text h1 { font-size: 1.9rem; }
+      .hero-text h2 { font-size: 1.15rem; }
+      .hero-text p { font-size: 1rem; }
+      .image-placeholder { height: 160px; }
+      section { padding: 40px 14px; margin: 24px 10px; border-radius: 8px; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- =========================
+       NAV (Menú principal) - cada enlace apunta a la sección por su id
+       ========================= -->
+  <nav>
+    <ul>
+      <!-- IMPORTANTE: los href deben coincidir exactamente con los id de las secciones -->
+      <li><a href="#inicio" class="active">Inicio</a></li>
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#e3ws">E3WS</a></li>
+      <li><a href="#sistema">Sistema</a></li>
+      <li><a href="#beneficios">Beneficios</a></li>
+      <li><a href="#casos">Casos</a></li>
+      <li><a href="#novedades">Novedades</a></li>
+      <li><a href="#demo">Demo</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- =========================
+       HERO / HEADER (reemplaza tu header anterior por este)
+       - Estructura: columna izquierda = texto / columna derecha = espacio para imagen/logo
        ========================= -->
   <header id="inicio">
     <div class="hero-container">
-      <!-- Contenedor izquierdo: Texto principal -->
+      <!-- Texto principal -->
       <div class="hero-text">
-        <!-- Título grande del proyecto -->
+        <!-- H1: título principal (puedes cambiar emoji por logo luego) -->
         <h1>🌍 E3WS</h1>
+        <!-- H2: subtítulo / descriptor -->
         <h2>Sistema de Alerta Sísmica Temprana</h2>
-        <!-- Subtítulo más breve y claro -->
-        <p>Protegiendo vidas y comunidades en Latinoamérica mediante tecnología de alerta temprana.</p>
+        <!-- P: descripción corta y directa -->
+        <p>Protegiendo vidas y comunidades en Latinoamérica mediante tecnología de detección rápida, análisis y notificaciones en tiempo real.</p>
 
-        <!-- Botones de acción (CTA: Call to Action) -->
+        <!-- Botones principales: CTA (Ver Demo) y secundario (Conocer más) -->
         <div class="hero-buttons">
-          <!-- Botón principal que lleva a la sección Demo -->
+          <!-- Asegura href correcto a la sección demo (id="demo") -->
           <a href="#demo" class="btn btn-primary">Ver Demo</a>
-          <!-- Botón secundario que lleva a la sección "Nosotros" -->
           <a href="#nosotros" class="btn btn-secondary">Conocer más</a>
         </div>
       </div>
 
-      <!-- Contenedor derecho: espacio reservado para futura imagen/ilustración -->
+      <!-- Imagen / placeholder (ahora muestra 'Imagen aquí'; más tarde coloca tu SVG/PNG) -->
       <div class="hero-image">
-        <!-- Aquí más adelante podemos poner una ilustración del sistema, 
-             un mapa o incluso el logo de E3WS -->
-        <div class="image-placeholder">Imagen aquí</div>
+        <div class="image-placeholder">Imagen / Logo (aquí)</div>
       </div>
     </div>
   </header>
 
   <!-- =========================
-       ESTILOS HERO (CSS)
+       SECCIONES PRINCIPALES (contenidos)
+       Cada section tiene un id que coincide con el href del menú.
        ========================= -->
-  <style>
-    /* Hero general */
-    header#inicio {
-      min-height: 100vh; /* ocupa toda la pantalla inicial */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 20px;
-      background: linear-gradient(135deg, #0ea5e9, #0284c7); /* fondo degradado azul */
-      color: white;
-    }
+  <section id="nosotros" class="container">
+    <h2>Nosotros</h2>
+    <p><strong>Visión:</strong> Ser líderes en sistemas de alerta temprana en Latinoamérica.</p>
+    <p><strong>Misión:</strong> Proteger vidas mediante tecnología accesible y confiable.</p>
+    <p><strong>Quiénes somos:</strong> Equipo de ingenieros, investigadores y desarrolladores comprometidos con la seguridad sísmica.</p>
+  </section>
 
-    /* Contenedor interno con dos columnas (texto + imagen) */
-    .hero-container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 40px;
-      max-width: 1100px;
-      width: 100%;
-      flex-wrap: wrap; /* para móviles se apila */
-    }
+  <section id="e3ws" class="container">
+    <h2>¿Qué es E3WS?</h2>
+    <p>E3WS detecta movimientos sísmicos con una red de sensores y algoritmos de procesamiento que estiman epicentro y magnitud para enviar alertas tempranas a sistemas y personas.</p>
+  </section>
 
-    /* Columna de texto */
-    .hero-text {
-      flex: 1 1 500px;
-    }
+  <section id="sistema" class="container">
+    <h2>El Sistema</h2>
+    <p>Analizamos las ondas iniciales (P-waves) para estimar el impacto y disparar alertas en milisegundos. La arquitectura es distribuida con redundancia y monitoreo continuo.</p>
+  </section>
 
-    .hero-text h1 {
-      font-size: 3rem;
-      margin-bottom: 10px;
-    }
+  <section id="beneficios" class="container">
+    <h2>Beneficios</h2>
+    <ul>
+      <li>Protección inmediata a comunidades.</li>
+      <li>Reducción de daños en infraestructura crítica.</li>
+      <li>Integración con sistemas de seguridad y evacuación.</li>
+    </ul>
+  </section>
 
-    .hero-text h2 {
-      font-size: 2rem;
-      margin-bottom: 20px;
-      font-weight: 600;
-    }
+  <section id="casos" class="container">
+    <h2>Casos</h2>
+    <p>Ejemplos de aplicación y pruebas piloto en distintas regiones.</p>
+  </section>
 
-    .hero-text p {
-      font-size: 1.2rem;
-      margin-bottom: 30px;
-      line-height: 1.6;
-    }
+  <section id="novedades" class="container">
+    <h2>Novedades</h2>
+    <p>Aquí se publicarán avances, noticias y actualizaciones del proyecto.</p>
+  </section>
 
-    /* Botones del Hero */
-    .hero-buttons {
-      display: flex;
-      gap: 15px;
-    }
+  <section id="demo" class="container">
+    <h2>Demo</h2>
+    <p>Espacio para probar la plataforma E3WS en acción. (Aquí agregaremos mapas interactivos y ejemplos cuando lo necesites)</p>
+  </section>
 
-    .btn {
-      padding: 12px 25px;
-      border-radius: 8px;
-      font-weight: bold;
-      text-decoration: none;
-      transition: background 0.3s, transform 0.2s;
-    }
+  <section id="contacto" class="container">
+    <h2>Contacto</h2>
+    <p>📧 contacto@e3ws.com</p>
+    <p>🌐 Redes sociales: próximamente</p>
+  </section>
 
-    .btn-primary {
-      background: white;
-      color: #0284c7;
-    }
+  <!-- =========================
+       FOOTER
+       ========================= -->
+  <footer>
+    © 2025 Proyecto E3WS - Todos los derechos reservados
+  </footer>
 
-    .btn-primary:hover {
-      background: #e0f2fe;
-      transform: scale(1.05);
-    }
+  <!-- =========================
+       JAVASCRIPT (INTERACTIVIDAD)
+       - Mantengo JS integrado para debug y pruebas. Luego lo separamos a js/main.js
+       ========================= -->
+  <script>
+    /*
+      JS explicado (línea a línea / bloque por bloque).
+      - Objetivo: scroll suave al clicar en enlaces del menú,
+                 marcar enlace 'active' según la sección visible,
+                 y animar secciones con IntersectionObserver.
+    */
 
-    .btn-secondary {
-      background: transparent;
-      border: 2px solid white;
-      color: white;
-    }
+    // Ejecutar cuando DOM esté listo
+    document.addEventListener("DOMContentLoaded", () => {
 
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.1);
-      transform: scale(1.05);
-    }
+      // Seleccionamos todas las secciones y el header para controlar la sección "actual"
+      const sections = document.querySelectorAll("section, header");
+      // Seleccionamos todos los enlaces del menú (nav)
+      const navLinks = document.querySelectorAll("nav a");
+      // Referencia al nav (útil para medir su altura)
+      const nav = document.querySelector("nav");
 
-    /* Columna de imagen (placeholder de momento) */
-    .hero-image {
-      flex: 1 1 400px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+      /* ---------- FUNCIÓN: setActiveLink ----------
+         Recorre las secciones y determina cuál está en el viewport (considerando la altura del nav).
+         Luego agrega la clase 'active' al enlace correspondiente.
+      */
+      const setActiveLink = () => {
+        let current = ""; // id de la sección actual visible
 
-    .image-placeholder {
-      width: 100%;
-      max-width: 350px;
-      height: 250px;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-style: italic;
-      font-size: 1rem;
-    }
+        // Recorremos cada sección/header
+        sections.forEach(section => {
+          // getBoundingClientRect devuelve coordenadas relativas a la ventana
+          const rect = section.getBoundingClientRect();
 
-    /* Responsivo para móviles */
-    @media (max-width: 768px) {
-      header#inicio {
-        text-align: center;
-      }
+          /* Lógica:
+             - rect.top <= nav.offsetHeight + 10 : el top está por encima de la parte superior visible extraída por el nav
+             - rect.bottom > nav.offsetHeight + 10 : la sección todavía no ha pasado por completo
+             Si ambas se cumplen, consideramos esta sección "actual".
+          */
+          if (rect.top <= nav.offsetHeight + 10 && rect.bottom > nav.offsetHeight + 10) {
+            current = section.id; // guardamos el id
+          }
+        });
 
-      .hero-container {
-        flex-direction: column;
-      }
+        // Recorremos los links del nav para marcar/desmarcar la clase 'active'
+        navLinks.forEach(link => {
+          link.classList.remove("active"); // limpiar
+          // Si href del link coincide con "#" + current, lo activamos
+          if (link.getAttribute("href") === "#" + current) {
+            link.classList.add("active");
+          }
+        });
+      };
 
-      .hero-buttons {
-        justify-content: center;
-      }
-    }
-  </style>
+      // Llamamos setActiveLink al hacer scroll (cada vez que el usuario se mueve)
+      window.addEventListener("scroll", setActiveLink);
+      // Llamada inicial para fijar el estado correcto si la página carga en una posición no superior
+      setActiveLink();
+
+      /* ---------- Scroll suave al hacer click en enlaces del menú ----------
+         Previene el comportamiento por defecto y calcula la posición objetivo
+         restando la altura del nav (para que la sección no quede oculta debajo del menú).
+      */
+      navLinks.forEach(link => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault(); // evita el salto instantáneo
+          const targetSelector = link.getAttribute("href"); // por ejemplo '#sistema'
+          const target = document.querySelector(targetSelector); // elemento destino
+
+          if (!target) return; // seguridad por si no existe el id
+
+          const navHeight = nav.offsetHeight; // altura del nav (sticky)
+          // top absoluto del elemento + scroll actual - altura del nav
+          const topPosition = target.getBoundingClientRect().top + window.scrollY - navHeight;
+
+          // Scroll suave hacia la posición calculada
+          window.scrollTo({ top: topPosition, behavior: "smooth" });
+        });
+      });
+
+      /* ---------- IntersectionObserver para animaciones al aparecer ----------
+         Observa todas las secciones y header; cuando se intersectan al 20%,
+         agregamos la clase 'visible' para que la transición CSS muestre el elemento.
+      */
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible"); // activa animación (CSS)
+          }
+        });
+      }, { threshold: 0.2 }); // 20% visible activa la animación
+
+      // Observamos cada sección y el header
+      sections.forEach(section => observer.observe(section));
+
+    }); // FIN DOMContentLoaded
+  </script>
+</body>
+</html>
+
 
