@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>E3WS — Plantilla One‑Page (Business)</title>
+  <!--
+    Plantilla One‑Page para E3WS (versión base).
+    - Archivo único con HTML + CSS + JS para aprender y modificar.
+    - Comentarios en español explicando cada bloque.
+    - Recomendación: cuando la estructura y el diseño estén definidos,
+      separa CSS y JS en archivos externos (style.css y script.js).
+  -->
+
+  <!-- ==========================
+       ESTILOS (Puedes moverlos a style.css)
+       ========================== -->
+  <style>
+    /* Variables de color y tipografía: cambia aquí la identidad visual */
+    :root{
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --text:#0f1724;
+      --muted:#475569;
+      --brand:#0ea5e9;     /* color principal (botones, enlaces activos) */
+      --brand-600:#0284c7;
+      --nav-bg:rgba(15,23,42,0.95);
+      --radius:10px;
+      --container:1100px;
+    }
+
+    /* Reset básico y utilidades */
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; color:var(--text);background:var(--bg);line-height:1.5}
+
+    /* Contenedor centralizado con padding responsivo */
+    .container{max-width:var(--container);margin:0 auto;padding:0 20px}
+
+    /* ======= NAV / HEADER ======= */
+    header{position:relative}
+    nav{position:sticky;top:0;z-index:60;background:var(--nav-bg);backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(2,8,23,0.25)}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:var(--container);margin:0 auto;padding:10px 20px}
+
+    /* Logo (imagen o texto) */
+    .brand{display:flex;align-items:center;gap:10px;color:white;text-decoration:none;font-weight:700}
+    .brand img{height:36px;width:auto;border-radius:6px}
+
+    /* Links */
+    .nav-links{display:flex;gap:8px;align-items:center}
+    .nav-links a{color:white;text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:600;opacity:0.95}
+    .nav-links a:hover{background:rgba(255,255,255,0.06)}
+    .nav-links a.active{background:var(--brand);color:white}
+
+    /* CTA */
+    .btn{background:var(--brand);color:white;padding:8px 14px;border-radius:8px;border:0;font-weight:700;cursor:pointer}
+    .btn:hover{background:var(--brand-600)}
+
+    /* HAMBURGER (mobile) */
+    .hamburger{display:none;background:transparent;border:0;color:white;font-size:22px}
+
+    /* ========== HERO ========== */
+    .hero{padding:80px 0;display:grid;grid-template-columns:1fr 420px;gap:30px;align-items:center}
+    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.85));padding:28px;border-radius:12px;box-shadow:0 10px 25px rgba(2,8,23,0.06)}
+    .hero h1{font-size:2rem;margin:0 0 12px;color:var(--nav-bg)}
+    .hero p{color:var(--muted);margin-bottom:18px}
+
+    .hero-visual{border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(2,8,23,0.08)}
+    .hero-visual img{display:block;width:100%;height:100%;object-fit:cover}
+
+    /* ======= SECCIONES ======= */
+    section{margin:28px auto;padding:30px;border-radius:var(--radius);background:var(--card);box-shadow:var(--shadow)}
+    section h2{margin-top:0;color:var(--brand-600);text-align:center}
+    .lead{color:var(--muted);max-width:720px;margin:0 auto 14px;text-align:center}
+
+    /* GRID: beneficios */
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{padding:18px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfcff);box-shadow:0 8px 20px rgba(2,8,23,0.03)}
+
+    /* DEMO area: ejemplo de botón y caja */
+    .demo-cta{display:flex;gap:12px;justify-content:center;align-items:center}
+
+    /* FORM contacto */
+    form{max-width:650px;margin:0 auto;display:grid;gap:12px}
+    input,textarea{padding:12px;border-radius:8px;border:1px solid #e6edf2;font-size:1rem}
+    textarea{min-height:120px}
+
+    /* PIE */
+    footer{padding:18px 0;text-align:center;background:transparent;color:var(--muted)}
+
+    /* ======= RESPONSIVE ======= */
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr;}
+      .grid-3{grid-template-columns:repeat(2,1fr)}
+      .nav-links{display:none}
+      .hamburger{display:inline-block}
+    }
+    @media (max-width:600px){
+      .grid-3{grid-template-columns:1fr}
+      .hero h1{font-size:1.6rem}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAV ===== -->
+  <header>
+    <nav aria-label="Menú principal">
+      <div class="nav-inner">
+        <!-- Logo: reemplaza la imagen por tu logo real cuando lo tengas -->
+        <a href="#inicio" class="brand"><img src="https://picsum.photos/seed/logo/80/40" alt="Logo E3WS">E3WS</a>
+
+        <!-- Links principales (desktop) -->
+        <div class="nav-links" role="navigation" aria-label="Enlaces principales">
+          <a href="#inicio">Inicio</a>
+          <a href="#nosotros">Nosotros</a>
+          <a href="#e3ws">E3WS</a>
+          <a href="#sistema">Sistema</a>
+          <a href="#beneficios">Beneficios</a>
+          <a href="#casos">Casos</a>
+          <a href="#novedades">Novedades</a>
+          <a href="#demo">Demo</a>
+          <a href="#contacto">Contacto</a>
+          <button class="btn" onclick="location.href='#demo'">Solicitar Demo</button>
+        </div>
+
+        <!-- Botón hamburger para mobile -->
+        <button class="hamburger" aria-expanded="false" aria-controls="mobileMenu" id="hamburgerBtn">☰</button>
+      </div>
+
+      <!-- Menú móvil (oculto por defecto) -->
+      <div id="mobileMenu" style="display:none;background:var(--nav-bg);padding:10px 20px">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <a href="#inicio">Inicio</a>
+          <a href="#nosotros">Nosotros</a>
+          <a href="#e3ws">E3WS</a>
+          <a href="#sistema">Sistema</a>
+          <a href="#beneficios">Beneficios</a>
+          <a href="#casos">Casos</a>
+          <a href="#novedades">Novedades</a>
+          <a href="#demo">Demo</a>
+          <a href="#contacto">Contacto</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ===== HERO ===== -->
+    <div class="container hero" id="inicio">
+      <div class="hero-card">
+        <h1>Sistema E3WS — Alerta Sísmica Temprana</h1>
+        <p class="lead">Protegiendo vidas con detección rápida y notificaciones automáticas para empresas, autoridades y comunidades.</p>
+        <div style="display:flex;gap:12px;align-items:center;justify-content:flex-start">
+          <a class="btn" href="#demo">Ver Demo</a>
+          <a href="#contacto" style="text-decoration:none;color:var(--muted);font-weight:600">Contacto</a>
+        </div>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:14px">Disponible para integración en infraestructuras críticas y sistemas industriales.</p>
+      </div>
+
+      <div class="hero-visual">
+        <!-- Imagen visual: reemplazar por imagen propia o mapa interactivo -->
+        <img src="https://picsum.photos/seed/seismo/800/520" alt="Visual E3WS — mapa y sensores">
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== SECCIONES ===== -->
+  <main>
+    <section id="nosotros" class="container">
+      <h2>Nosotros</h2>
+      <p class="lead">Visión, misión y equipo: tecnología aplicada a la seguridad sísmica.</p>
+      <p>Somos un equipo multidisciplinario que combina investigación sísmica, ingeniería y software para construir soluciones que reduzcan el riesgo y aumenten la resiliencia de comunidades y empresas.</p>
+    </section>
+
+    <section id="e3ws" class="container">
+      <h2>¿Qué es E3WS?</h2>
+      <p class="lead">Breve descripción del sistema y su propósito.</p>
+      <p>E3WS procesa señales sísmicas en tiempo real, estimando magnitud y epicentro en segundos. Emite alertas configurables para distintos niveles de gravedad.</p>
+    </section>
+
+    <section id="sistema" class="container">
+      <h2>Sistema</h2>
+      <p class="lead">Arquitectura técnica y flujo de datos (simplificado).</p>
+      <div class="grid-3">
+        <div class="card"><strong>Sensores</strong><p class="lead">Red de estaciones y sensores de bajo coste y alta fidelidad.</p></div>
+        <div class="card"><strong>Procesamiento</strong><p class="lead">Modelo de ML para detección temprana y estimación rápida.</p></div>
+        <div class="card"><strong>Distribución</strong><p class="lead">Notificaciones por webhook, SMS, email y sirenas integradas.</p></div>
+      </div>
+    </section>
+
+    <section id="beneficios" class="container">
+      <h2>Beneficios</h2>
+      <div class="grid-3">
+        <div class="card">Menor tiempo de reacción<p class="lead">Automatiza procesos críticos al recibir alertas.</p></div>
+        <div class="card">Protección de infraestructuras<p class="lead">Integra con PLCs y sistemas SCADA.</p></div>
+        <div class="card">Adaptable<p class="lead">Se configura por zona, empresa y nivel de riesgo.</p></div>
+      </div>
+    </section>
+
+    <section id="casos" class="container">
+      <h2>Casos</h2>
+      <p class="lead">Ejemplos de aplicación y pruebas piloto.</p>
+      <p>Describir brevemente uno o dos casos con resultados y aprendizajes.</p>
+    </section>
+
+    <section id="novedades" class="container">
+      <h2>Novedades</h2>
+      <p class="lead">Publicaciones, versiones y trabajos en curso.</p>
+      <ul>
+        <li>Integración con mapas interactivos (próximamente).</li>
+        <li>Pruebas con redes comunitarias.</li>
+      </ul>
+    </section>
+
+    <section id="demo" class="container">
+      <h2>Demo</h2>
+      <p class="lead">Accede a nuestra demo para ver el sistema en acción (mock o simulador).</p>
+      <div style="text-align:center;margin-top:14px">
+        <button class="btn" onclick="alert('Demo: acceso solicitado (ejemplo)')">Solicitar acceso</button>
+      </div>
+    </section>
+
+    <section id="contacto" class="container">
+      <h2>Contacto</h2>
+      <p class="lead">Escríbenos para coordinar una demo o integración.</p>
+      <form onsubmit="event.preventDefault(); alert('Gracias — formulario simulado');">
+        <input aria-label="Nombre" type="text" placeholder="Nombre" required>
+        <input aria-label="Correo" type="email" placeholder="Correo" required>
+        <textarea aria-label="Mensaje" placeholder="Tu mensaje"></textarea>
+        <div style="text-align:center"><button class="btn" type="submit">Enviar</button></div>
+      </form>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="container">© 2025 E3WS — Proyecto de Alerta Sísmica · Hecho por Carlos Lara</div>
+  </footer>
+
+  <!-- ==========================
+       SCRIPT (Puedes mover a script.js)
+       ========================== -->
+  <script>
+    // ====== HAMBURGER (menu móvil) ======
+    const hbBtn = document.getElementById('hamburgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if(hbBtn){
+      hbBtn.addEventListener('click', ()=>{
+        const open = hbBtn.getAttribute('aria-expanded') === 'true';
+        hbBtn.setAttribute('aria-expanded', String(!open));
+        mobileMenu.style.display = open ? 'none' : 'block';
+      });
+    }
+
+    // ====== RESALTAR LINK ACTIVO SEGÚN SCROLL ======
+    const links = document.querySelectorAll('nav a');
+    const sections = [...document.querySelectorAll('main section, header')];
+
+    function onScroll(){
+      const scrollPos = window.scrollY + 120; // ajuste por nav sticky
+      let currentId = '';
+      for(const sec of sections){
+        if(!sec.id) continue;
+        const top = sec.offsetTop;
+        const bottom = top + sec.offsetHeight;
+        if(scrollPos >= top && scrollPos < bottom){ currentId = sec.id; break }
+      }
+      links.forEach(a=>{
+        a.classList.toggle('active', a.getAttribute('href') === '#'+currentId);
+      });
+    }
+
+    window.addEventListener('scroll', onScroll);
+    window.addEventListener('load', onScroll);
+
+    // ====== ACCESIBILIDAD: CERRAR MENU MÓVIL AL HACER CLICK EN LINK ======
+    document.querySelectorAll('#mobileMenu a').forEach(a=>{
+      a.addEventListener('click', ()=>{ mobileMenu.style.display='none'; hbBtn.setAttribute('aria-expanded','false'); });
+    });
+  </script>
+</body>
+</html>
