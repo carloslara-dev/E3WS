@@ -3,172 +3,258 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>E3WS - Sistema de Alerta Sísmica</title>
+  <title>E3WS - Sistema de Alerta Sísmica Temprana</title>
 
   <style>
-    /* =========================
-       RESETEO BÁSICO
-       ========================= */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { font-family: Arial, sans-serif; line-height: 1.6; background: #f7faff; color: #2b2f36; }
+    /* ----------- ESTILOS GENERALES ----------- */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
 
-    /* =========================
-       MENÚ DE NAVEGACIÓN (NAV)
-       ========================= */
+    section {
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    h1, h2 {
+      margin-bottom: 20px;
+    }
+
+    /* ----------- MENÚ DE NAVEGACIÓN ----------- */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: #111; /* negro elegante */
+      color: white;
+      z-index: 1000;
+    }
+
     nav {
-      background: #0f172a;           /* azul muy oscuro */
-      position: sticky;              /* siempre visible arriba */
-      top: 0;                        /* pegado al borde superior */
-      z-index: 1000;                 /* por encima del Hero */
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+    }
+
+    nav .logo {
+      font-size: 22px;
+      font-weight: bold;
+      color: #fff;
     }
 
     nav ul {
       list-style: none;
       display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
+      margin: 0;
+      padding: 0;
     }
 
-    nav li { margin: 0 10px; }
+    nav ul li {
+      margin-left: 20px;
+    }
 
-    nav a {
-      display: block;
-      padding: 15px 20px;
+    nav ul li a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #00aaff; /* azul al pasar el mouse */
+    }
+
+    /* ----------- HERO (PORTADA PRINCIPAL) ----------- */
+    .hero {
+      margin-top: 70px; /* espacio para que no tape el menú */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(to right, #0077b6, #00b4d8); /* azul degradado */
       color: white;
+      padding: 100px 20px;
+    }
+
+    .hero-content {
+      flex: 1;
+      max-width: 600px;
+      text-align: left;
+    }
+
+    .hero-content h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+
+    .hero-content p {
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    .hero-buttons a {
+      display: inline-block;
+      margin-right: 15px;
+      padding: 12px 25px;
+      border-radius: 5px;
       text-decoration: none;
       font-weight: bold;
-      border-radius: 5px;
       transition: background 0.3s;
     }
 
-    nav a:hover { background: #0284c7; }
-    nav a.active { background: #1e293b; }
-
-    /* =========================
-       HERO PRINCIPAL
-       ========================= */
-    header#inicio {
-      min-height: 100vh; /* ocupa toda la pantalla */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 20px;
-      background: linear-gradient(135deg, #0ea5e9, #0284c7); /* degradado azul */
-      color: white;
+    .btn-primary {
+      background: #fff;
+      color: #0077b6;
     }
 
-    .hero-container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 40px;
-      max-width: 1100px;
-      width: 100%;
-      flex-wrap: wrap; /* para móviles se apila */
+    .btn-primary:hover {
+      background: #e0e0e0;
     }
 
-    .hero-text { flex: 1 1 500px; }
-
-    .hero-text h1 { font-size: 3rem; margin-bottom: 10px; }
-    .hero-text h2 { font-size: 2rem; margin-bottom: 20px; font-weight: 600; }
-    .hero-text p { font-size: 1.2rem; margin-bottom: 30px; line-height: 1.6; }
-
-    .hero-buttons { display: flex; gap: 15px; }
-
-    .btn {
-      padding: 12px 25px;
-      border-radius: 8px;
-      font-weight: bold;
-      text-decoration: none;
-      transition: background 0.3s, transform 0.2s;
+    .btn-secondary {
+      background: #0077b6;
+      color: #fff;
+      border: 2px solid white;
     }
-    .btn-primary { background: white; color: #0284c7; }
-    .btn-primary:hover { background: #e0f2fe; transform: scale(1.05); }
-    .btn-secondary { background: transparent; border: 2px solid white; color: white; }
-    .btn-secondary:hover { background: rgba(255,255,255,0.1); transform: scale(1.05); }
+
+    .btn-secondary:hover {
+      background: #005f86;
+    }
 
     .hero-image {
-      flex: 1 1 400px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      flex: 1;
+      text-align: center;
     }
 
-    .image-placeholder {
-      width: 100%;
-      max-width: 350px;
+    .hero-image .placeholder {
+      width: 250px;
       height: 250px;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 15px;
+      background: rgba(255,255,255,0.2);
       display: flex;
-      align-items: center;
       justify-content: center;
-      font-style: italic;
-      font-size: 1rem;
+      align-items: center;
+      border-radius: 15px;
+      font-size: 16px;
     }
 
-    @media (max-width: 768px) {
-      header#inicio { text-align: center; }
-      .hero-container { flex-direction: column; }
-      .hero-buttons { justify-content: center; }
+    /* ----------- SECCIONES ----------- */
+    .section-alt {
+      background: #f9f9f9; /* gris suave alterno */
+    }
+
+    /* ----------- FOOTER ----------- */
+    footer {
+      background: #111;
+      color: white;
+      text-align: center;
+      padding: 20px;
     }
   </style>
 </head>
 <body>
 
-  <!-- =========================
-       MENÚ DE NAVEGACIÓN
-       ========================= -->
-  <nav>
-    <ul>
-      <li><a href="#inicio" class="active">Inicio</a></li>
-      <li><a href="#nosotros">Nosotros</a></li>
-      <li><a href="#e3ws">E3WS</a></li>
-      <li><a href="#sistema">Sistema</a></li>
-      <li><a href="#beneficios">Beneficios</a></li>
-      <li><a href="#casos">Casos</a></li>
-      <li><a href="#novedades">Novedades</a></li>
-      <li><a href="#demo">Demo</a></li>
-      <li><a href="#contacto">Contacto</a></li>
-    </ul>
-  </nav>
-
-  <!-- =========================
-       HERO PRINCIPAL
-       ========================= -->
-  <header id="inicio">
-    <div class="hero-container">
-      <div class="hero-text">
-        <h1>🌍 E3WS</h1>
-        <h2>Sistema de Alerta Sísmica Temprana</h2>
-        <p>Protegiendo vidas y comunidades en Latinoamérica mediante tecnología de alerta temprana.</p>
-        <div class="hero-buttons">
-          <a href="#demo" class="btn btn-primary">Ver Demo</a>
-          <a href="#nosotros" class="btn btn-secondary">Conocer más</a>
-        </div>
-      </div>
-      <div class="hero-image">
-        <div class="image-placeholder">Imagen aquí</div>
-      </div>
-    </div>
+  <!-- ======= HEADER CON MENÚ DE NAVEGACIÓN ======= -->
+  <header>
+    <nav>
+      <div class="logo">E3WS</div>
+      <ul>
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#e3ws">E3WS</a></li>
+        <li><a href="#sistema">Sistema</a></li>
+        <li><a href="#beneficios">Beneficios</a></li>
+        <li><a href="#casos">Casos</a></li>
+        <li><a href="#novedades">Novedades</a></li>
+        <li><a href="#demo">Demo</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
   </header>
 
-  <!-- =========================
-       SECCIONES DE CONTENIDO (EJEMPLO)
-       ========================= -->
-  <section id="nosotros"><h2>Nosotros</h2><p>Contenido de prueba</p></section>
-  <section id="e3ws"><h2>¿Qué es E3WS?</h2><p>Contenido de prueba</p></section>
-  <section id="sistema"><h2>Sistema</h2><p>Contenido de prueba</p></section>
-  <section id="beneficios"><h2>Beneficios</h2><p>Contenido de prueba</p></section>
-  <section id="casos"><h2>Casos</h2><p>Contenido de prueba</p></section>
-  <section id="novedades"><h2>Novedades</h2><p>Contenido de prueba</p></section>
-  <section id="demo"><h2>Demo</h2><p>Contenido de prueba</p></section>
-  <section id="contacto"><h2>Contacto</h2><p>Contenido de prueba</p></section>
+  <!-- ======= HERO PRINCIPAL ======= -->
+  <section id="inicio" class="hero">
+    <div class="hero-content">
+      <h1>Sistema de Alerta Sísmica Temprana</h1>
+      <p>Protegiendo vidas y comunidades en Latinoamérica mediante tecnología de alerta temprana.</p>
+      <div class="hero-buttons">
+        <a href="#demo" class="btn-primary">Ver Demo</a>
+        <a href="#beneficios" class="btn-secondary">Conocer más</a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <div class="placeholder">Imagen aquí</div>
+    </div>
+  </section>
 
+  <!-- ======= SECCIONES ======= -->
+  <section id="nosotros">
+    <h2>Nosotros</h2>
+    <p>Contenido de prueba para la sección Nosotros.</p>
+  </section>
+
+  <section id="e3ws" class="section-alt">
+    <h2>¿Qué es E3WS?</h2>
+    <p>Contenido de prueba para la sección E3WS.</p>
+  </section>
+
+  <section id="sistema">
+    <h2>Sistema</h2>
+    <p>Contenido de prueba para la sección Sistema.</p>
+  </section>
+
+  <section id="beneficios" class="section-alt">
+    <h2>Beneficios</h2>
+    <p>Contenido de prueba para la sección Beneficios.</p>
+  </section>
+
+  <section id="casos">
+    <h2>Casos</h2>
+    <p>Contenido de prueba para la sección Casos.</p>
+  </section>
+
+  <section id="novedades" class="section-alt">
+    <h2>Novedades</h2>
+    <p>Contenido de prueba para la sección Novedades.</p>
+  </section>
+
+  <section id="demo">
+    <h2>Demo</h2>
+    <p>Contenido de prueba para la sección Demo.</p>
+  </section>
+
+  <section id="contacto" class="section-alt">
+    <h2>Contacto</h2>
+    <p>Contenido de prueba para la sección Contacto.</p>
+  </section>
+
+  <!-- ======= FOOTER ======= -->
+  <footer>
+    <p>&copy; 2025 E3WS - Sistema de Alerta Sísmica Temprana</p>
+  </footer>
+
+  <!-- ======= SCRIPT PARA SCROLL SUAVE ======= -->
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener("click", function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute("href"));
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - 60,
+            behavior: "smooth"
+          });
+        }
+      });
+    });
+  </script>
 </body>
 </html>
+
 
 
 
