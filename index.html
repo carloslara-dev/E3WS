@@ -1,279 +1,151 @@
-<!DOCTYPE html>
-<html lang="es"> <!-- Idioma principal: español -->
-<head>
-  <meta charset="UTF-8"> <!-- Codificación de caracteres en UTF-8 -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Adaptación responsive -->
-  <title>E3WS - Sistema de Alerta Sísmica</title> <!-- Título en la pestaña del navegador -->
-
   <!-- =========================
-       ESTILOS INTERNOS (CSS)
+       SECCIÓN HERO (Encabezado principal de la página)
        ========================= -->
-  <style>
-    /* RESET BÁSICO */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; } /* Desplazamiento suave al hacer clic en el menú */
-
-    /* VARIABLES DE COLOR (para mantener consistencia en el diseño) */
-    :root {
-      --bg: #f7faff;            /* Fondo general */
-      --text: #2b2f36;          /* Texto principal */
-      --muted: #64748b;         /* Texto secundario */
-      --brand: #0ea5e9;         /* Azul principal */
-      --brand-dark: #0284c7;    /* Azul más oscuro */
-      --nav: #0f172a;           /* Fondo del menú */
-      --nav-active: #1e293b;    /* Fondo del enlace activo */
-      --card-light: #ffffff;    /* Fondo secciones claras */
-      --card-dark: #dbeafe;     /* Fondo secciones alternas */
-      --shadow: 0 10px 25px rgba(2,8,23,0.08); /* Sombra general */
-    }
-
-    /* ESTILO BASE DEL DOCUMENTO */
-    body {
-      font-family: system-ui, Arial, sans-serif; /* Fuente moderna y legible */
-      background: var(--bg); /* Fondo definido en variables */
-      color: var(--text);
-      line-height: 1.6;
-    }
-
-    /* CONTENEDOR CENTRAL */
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-
-    /* MENÚ DE NAVEGACIÓN */
-    nav {
-      background: var(--nav); /* Fondo azul oscuro */
-      position: sticky; /* Se queda fijo arriba */
-      top: 0;
-      z-index: 1000;
-      box-shadow: var(--shadow); /* Sombra inferior */
-    }
-
-    nav ul {
-      display: flex;
-      list-style: none;
-      justify-content: center;
-      flex-wrap: wrap; /* Para pantallas pequeñas se acomoda */
-    }
-
-    nav li { margin: 0 10px; }
-
-    nav a {
-      display: block;
-      padding: 15px 20px;
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 5px;
-      transition: background 0.3s;
-    }
-
-    nav a:hover { background: var(--brand-dark); }
-    nav a.active { background: var(--nav-active); }
-
-    /* ENCABEZADO (HEADER / INICIO) */
-    header {
-      background: linear-gradient(135deg, rgba(14,165,233,0.85), rgba(2,132,199,0.85));
-      color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      min-height: 35vh; /* Altura reducida */
-      padding: 30px 20px;
-      border-radius: 10px;
-      margin-bottom: 40px;
-    }
-
-    header h1 { font-size: 2.5rem; margin-bottom: 10px; }
-    header p { font-size: 1.2rem; }
-
-    /* SECCIONES GENERALES */
-    section {
-      padding: 60px 20px;
-      margin: 40px auto;
-      border-radius: 10px;
-      box-shadow: var(--shadow);
-    }
-
-    /* Colores alternados entre secciones */
-    section:nth-of-type(odd) { background: var(--card-light); }
-    section:nth-of-type(even) { background: var(--card-dark); }
-
-    section h2 {
-      color: var(--brand);
-      margin-bottom: 20px;
-      text-align: center;
-      font-size: 2rem;
-    }
-
-    section p, section ul li {
-      margin-bottom: 15px;
-      color: var(--muted);
-      text-align: justify;
-      font-size: 1rem;
-    }
-
-    section ul { padding-left: 20px; }
-
-    /* PIE DE PÁGINA */
-    footer {
-      background: var(--nav);
-      color: white;
-      text-align: center;
-      padding: 20px;
-      margin-top: 40px;
-    }
-
-    /* ANIMACIONES AL APARECER */
-    section, header {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    }
-
-    section.visible, header.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  </style>
-</head>
-
-<body>
-  <!-- =========================
-       MENÚ DE NAVEGACIÓN
-       ========================= -->
-  <nav>
-    <ul>
-      <li><a href="#inicio" class="active">Inicio</a></li>
-      <li><a href="#nosotros">Nosotros</a></li>
-      <li><a href="#e3ws">E3WS</a></li>
-      <li><a href="#sistema">Sistema</a></li>
-      <li><a href="#beneficios">Beneficios</a></li>
-      <li><a href="#casos">Casos</a></li>
-      <li><a href="#novedades">Novedades</a></li>
-      <li><a href="#demo">Demo</a></li>
-      <li><a href="#contacto">Contacto</a></li>
-    </ul>
-  </nav>
-
-  <!-- ENCABEZADO -->
   <header id="inicio">
-    <div class="container">
-      <h1>🌍 Proyecto E3WS</h1>
-      <p>Sistema de Alerta Sísmica Temprana para proteger vidas y comunidades</p>
+    <div class="hero-container">
+      <!-- Contenedor izquierdo: Texto principal -->
+      <div class="hero-text">
+        <!-- Título grande del proyecto -->
+        <h1>🌍 E3WS</h1>
+        <h2>Sistema de Alerta Sísmica Temprana</h2>
+        <!-- Subtítulo más breve y claro -->
+        <p>Protegiendo vidas y comunidades en Latinoamérica mediante tecnología de alerta temprana.</p>
+
+        <!-- Botones de acción (CTA: Call to Action) -->
+        <div class="hero-buttons">
+          <!-- Botón principal que lleva a la sección Demo -->
+          <a href="#demo" class="btn btn-primary">Ver Demo</a>
+          <!-- Botón secundario que lleva a la sección "Nosotros" -->
+          <a href="#nosotros" class="btn btn-secondary">Conocer más</a>
+        </div>
+      </div>
+
+      <!-- Contenedor derecho: espacio reservado para futura imagen/ilustración -->
+      <div class="hero-image">
+        <!-- Aquí más adelante podemos poner una ilustración del sistema, 
+             un mapa o incluso el logo de E3WS -->
+        <div class="image-placeholder">Imagen aquí</div>
+      </div>
     </div>
   </header>
 
-  <!-- SECCIONES -->
-  <section id="nosotros" class="container">
-    <h2>Nosotros</h2>
-    <p><strong>Visión:</strong> Ser líderes en sistemas de alerta temprana en Latinoamérica.</p>
-    <p><strong>Misión:</strong> Proteger vidas mediante tecnología accesible y confiable.</p>
-    <p><strong>Quiénes somos:</strong> Equipo de ingenieros, investigadores y desarrolladores comprometidos con la seguridad sísmica.</p>
-  </section>
-
-  <section id="e3ws" class="container">
-    <h2>¿Qué es E3WS?</h2>
-    <p>E3WS es un sistema de alerta temprana que detecta movimientos sísmicos y envía notificaciones en tiempo real a comunidades, empresas y autoridades.</p>
-  </section>
-
-  <section id="sistema" class="container">
-    <h2>El Sistema</h2>
-    <p>El sistema analiza las ondas sísmicas iniciales para estimar epicentro, magnitud y posible impacto. Utiliza algoritmos de IA y redes distribuidas de sensores.</p>
-  </section>
-
-  <section id="beneficios" class="container">
-    <h2>Beneficios</h2>
-    <ul>
-      <li>Protección inmediata a comunidades.</li>
-      <li>Reducción de daños en infraestructura crítica.</li>
-      <li>Integración con sistemas de seguridad y evacuación.</li>
-    </ul>
-  </section>
-
-  <section id="casos" class="container">
-    <h2>Casos</h2>
-    <p>Ejemplos de aplicación y pruebas piloto en distintas regiones.</p>
-  </section>
-
-  <section id="novedades" class="container">
-    <h2>Novedades</h2>
-    <p>Aquí se publicarán avances, noticias y actualizaciones del proyecto.</p>
-  </section>
-
-  <section id="demo" class="container">
-    <h2>Demo</h2>
-    <p>Espacio para probar la plataforma E3WS en acción.</p>
-  </section>
-
-  <section id="contacto" class="container">
-    <h2>Contacto</h2>
-    <p>📧 contacto@e3ws.com</p>
-    <p>🌐 Redes sociales: próximamente</p>
-  </section>
-
-  <!-- PIE DE PÁGINA -->
-  <footer>
-    © 2025 Proyecto E3WS - Todos los derechos reservados
-  </footer>
-
   <!-- =========================
-       JAVASCRIPT (FUNCIONALIDAD)
+       ESTILOS HERO (CSS)
        ========================= -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const sections = document.querySelectorAll("section, header");
-      const navLinks = document.querySelectorAll("nav a");
-      const nav = document.querySelector("nav");
+  <style>
+    /* Hero general */
+    header#inicio {
+      min-height: 100vh; /* ocupa toda la pantalla inicial */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, #0ea5e9, #0284c7); /* fondo degradado azul */
+      color: white;
+    }
 
-      // FUNCIÓN: Cambiar activo en el menú según la sección visible
-      const setActiveLink = () => {
-        let current = "";
-        sections.forEach(section => {
-          const rect = section.getBoundingClientRect();
-          if (rect.top <= nav.offsetHeight + 10 && rect.bottom > nav.offsetHeight + 10) {
-            current = section.id;
-          }
-        });
-        navLinks.forEach(link => {
-          link.classList.remove("active");
-          if (link.getAttribute("href") === "#" + current) {
-            link.classList.add("active");
-          }
-        });
-      };
+    /* Contenedor interno con dos columnas (texto + imagen) */
+    .hero-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      max-width: 1100px;
+      width: 100%;
+      flex-wrap: wrap; /* para móviles se apila */
+    }
 
-      // Ejecutar cuando se haga scroll
-      window.addEventListener("scroll", setActiveLink);
-      setActiveLink();
+    /* Columna de texto */
+    .hero-text {
+      flex: 1 1 500px;
+    }
 
-      // FUNCIÓN: Scroll suave al hacer clic en los enlaces
-      navLinks.forEach(link => {
-        link.addEventListener("click", e => {
-          e.preventDefault();
-          const target = document.querySelector(link.getAttribute("href"));
-          const navHeight = nav.offsetHeight;
-          window.scrollTo({ top: target.offsetTop - navHeight, behavior: "smooth" });
-        });
-      });
+    .hero-text h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
 
-      // ANIMACIONES DE APARICIÓN CON INTERSECTION OBSERVER
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          }
-        });
-      }, { threshold: 0.2 });
+    .hero-text h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
 
-      sections.forEach(section => {
-        observer.observe(section);
-      });
-    });
-  </script>
-</body>
-</html>
+    .hero-text p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    /* Botones del Hero */
+    .hero-buttons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .btn {
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .btn-primary {
+      background: white;
+      color: #0284c7;
+    }
+
+    .btn-primary:hover {
+      background: #e0f2fe;
+      transform: scale(1.05);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 2px solid white;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: scale(1.05);
+    }
+
+    /* Columna de imagen (placeholder de momento) */
+    .hero-image {
+      flex: 1 1 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .image-placeholder {
+      width: 100%;
+      max-width: 350px;
+      height: 250px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-style: italic;
+      font-size: 1rem;
+    }
+
+    /* Responsivo para móviles */
+    @media (max-width: 768px) {
+      header#inicio {
+        text-align: center;
+      }
+
+      .hero-container {
+        flex-direction: column;
+      }
+
+      .hero-buttons {
+        justify-content: center;
+      }
+    }
+  </style>
+
