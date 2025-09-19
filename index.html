@@ -17,16 +17,16 @@
        VARIABLES DE COLORES
        ========================= */
     :root {
-      --bg: #f7faff;            /* Fondo general (azul muy claro, fresco) */
-      --text: #2b2f36;          /* Texto principal (gris oscuro) */
-      --muted: #64748b;         /* Texto secundario (gris azulado) */
-      --brand: #0ea5e9;         /* Azul principal */
-      --brand-dark: #0284c7;    /* Azul oscuro (hover y gradiente) */
-      --nav: #0f172a;           /* Fondo del menú */
-      --nav-active: #1e293b;    /* Fondo enlace activo */
-      --card-light: #ffffff;    /* Fondo claro */
-      --card-dark: #dbeafe;     /* Fondo alterno */
-      --shadow: 0 10px 25px rgba(2,8,23,0.08); /* Sombra estándar */
+      --bg: #f7faff;
+      --text: #2b2f36;
+      --muted: #64748b;
+      --brand: #0ea5e9;
+      --brand-dark: #0284c7;
+      --nav: #0f172a;
+      --nav-active: #1e293b;
+      --card-light: #ffffff;
+      --card-dark: #dbeafe;
+      --shadow: 0 10px 25px rgba(2,8,23,0.08);
     }
 
     /* =========================
@@ -173,6 +173,75 @@
     }
 
     /* =========================
+       SECCIÓN: CASOS (Carrusel)
+       ========================= */
+    .carousel {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .carousel-item {
+      min-width: 100%;
+      box-sizing: border-box;
+      padding: 20px;
+    }
+
+    .carousel-controls {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .carousel button {
+      background: var(--brand);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+
+    .carousel button:hover {
+      background: var(--brand-dark);
+    }
+
+    /* =========================
+       SECCIÓN: CONTACTO (Formulario)
+       ========================= */
+    form {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    input, textarea {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    button {
+      background: var(--brand);
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover { background: var(--brand-dark); }
+
+    /* =========================
        PIE DE PÁGINA
        ========================= */
     footer {
@@ -215,57 +284,110 @@
   </header>
 
   <!-- =========================
-       SECCIÓN: NOSOTROS (Mejorada con tarjetas)
+       SECCIÓN: NOSOTROS
        ========================= -->
   <section id="nosotros" class="container">
     <h2>Nosotros</h2>
-    
-    <!-- Contenedor en grid -->
     <div class="cards-grid">
-      
-      <!-- Tarjeta 1: Visión -->
       <div class="card">
         <div class="icon">🌍</div>
         <h3>Visión</h3>
         <p>Ser líderes en sistemas de alerta sísmica en Latinoamérica, 
         protegiendo vidas y fortaleciendo la resiliencia de comunidades.</p>
       </div>
-      
-      <!-- Tarjeta 2: Misión -->
       <div class="card">
         <div class="icon">⚡</div>
         <h3>Misión</h3>
         <p>Desarrollar tecnología accesible y confiable de alerta temprana, 
         que permita reducir el impacto de los sismos en la sociedad.</p>
       </div>
-      
-      <!-- Tarjeta 3: Valores -->
       <div class="card">
         <div class="icon">🤝</div>
         <h3>Valores</h3>
         <p>Compromiso con la seguridad, innovación constante, 
         colaboración comunitaria y transparencia en cada acción.</p>
       </div>
-      
     </div>
   </section>
 
   <!-- =========================
-       OTRAS SECCIONES (placeholder)
+       SECCIÓN: E3WS
        ========================= -->
   <section id="e3ws" class="container">
     <h2>¿Qué es E3WS?</h2>
-    <p>E3WS es un sistema de alerta temprana que detecta movimientos sísmicos
-       y envía notificaciones en tiempo real a comunidades, empresas y autoridades.</p>
+    <p>E3WS es un sistema de alerta temprana que detecta movimientos sísmicos y envía notificaciones en tiempo real.</p>
   </section>
 
+  <!-- =========================
+       SECCIÓN: SISTEMA
+       ========================= -->
   <section id="sistema" class="container">
     <h2>El Sistema</h2>
-    <p>Analiza ondas sísmicas iniciales para estimar epicentro, magnitud e impacto
-       usando inteligencia artificial y redes distribuidas de sensores.</p>
+    <p>Analiza ondas sísmicas iniciales para estimar epicentro, magnitud e impacto usando inteligencia artificial.</p>
   </section>
 
-  <!-- Aquí siguen Beneficios, Casos, Novedades, Demo, Contacto... -->
+  <!-- =========================
+       SECCIÓN: BENEFICIOS
+       ========================= -->
+  <section id="beneficios" class="container">
+    <h2>Beneficios</h2>
+    <div class="cards-grid">
+      <div class="card"><div class="icon">⏱️</div><h3>Alerta rápida</h3><p>Notificaciones en tiempo real.</p></div>
+      <div class="card"><div class="icon">🏢</div><h3>Infraestructura</h3><p>Protección de edificios y sistemas críticos.</p></div>
+      <div class="card"><div class="icon">👥</div><h3>Comunidad</h3><p>Integración con planes de evacuación.</p></div>
+    </div>
+  </section>
+
+  <!-- =========================
+       SECCIÓN: CASOS (Carrusel)
+       ========================= -->
+  <section id="casos" class="container">
+    <h2>Casos</h2>
+    <div class="carousel">
+      <div class="carousel-track">
+        <div class="carousel-item"><p><strong>Caso 1:</strong> Piloto en Ciudad X redujo tiempo de alerta en 10 segundos.</p></div>
+        <div class="carousel-item"><p><strong>Caso 2:</strong> Integración con bomberos y hospitales en región Y.</p></div>
+        <div class="carousel-item"><p><strong>Caso 3:</strong> Capacitación comunitaria con pruebas de simulacro.</p></div>
+      </div>
+      <div class="carousel-controls">
+        <button id="prev">Anterior</button>
+        <button id="next">Siguiente</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================
+       SECCIÓN: NOVEDADES
+       ========================= -->
+  <section id="novedades" class="container">
+    <h2>Novedades</h2>
+    <div class="cards-grid">
+      <div class="card"><h3>Actualización 1</h3><p>Se integró nuevo algoritmo de predicción.</p></div>
+      <div class="card"><h3>Actualización 2</h3><p>Expansión de sensores en la región.</p></div>
+      <div class="card"><h3>Actualización 3</h3><p>Pruebas de comunicación masiva en comunidades.</p></div>
+    </div>
+  </section>
+
+  <!-- =========================
+       SECCIÓN: DEMO
+       ========================= -->
+  <section id="demo" class="container">
+    <h2>Demo</h2>
+    <p>Próximamente podrás interactuar con la demo en línea de E3WS.</p>
+  </section>
+
+  <!-- =========================
+       SECCIÓN: CONTACTO
+       ========================= -->
+  <section id="contacto" class="container">
+    <h2>Contacto</h2>
+    <form>
+      <input type="text" name="name" placeholder="Tu nombre" required>
+      <input type="email" name="email" placeholder="Tu correo" required>
+      <textarea name="message" rows="5" placeholder="Tu mensaje" required></textarea>
+      <button type="submit">Enviar</button>
+    </form>
+  </section>
 
   <!-- =========================
        PIE DE PÁGINA
@@ -273,5 +395,67 @@
   <footer>
     © 2025 Proyecto E3WS - Todos los derechos reservados
   </footer>
+
+  <!-- =========================
+       SCRIPT: MENÚ + CARRUSEL
+       ========================= -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // === Menú activo en scroll ===
+      const sections = document.querySelectorAll("section, header");
+      const navLinks = document.querySelectorAll("nav a");
+      const nav = document.querySelector("nav");
+
+      const setActiveLink = () => {
+        let current = "";
+        sections.forEach(section => {
+          const rect = section.getBoundingClientRect();
+          if (rect.top <= nav.offsetHeight + 10 && rect.bottom > nav.offsetHeight + 10) {
+            current = section.id;
+          }
+        });
+        navLinks.forEach(link => {
+          link.classList.remove("active");
+          if (link.getAttribute("href") === "#" + current) {
+            link.classList.add("active");
+          }
+        });
+      };
+
+      window.addEventListener("scroll", setActiveLink);
+      setActiveLink();
+
+      navLinks.forEach(link => {
+        link.addEventListener("click", e => {
+          e.preventDefault();
+          const target = document.querySelector(link.getAttribute("href"));
+          const navHeight = nav.offsetHeight;
+          window.scrollTo({ top: target.offsetTop - navHeight, behavior: "smooth" });
+        });
+      });
+
+      // === Carrusel básico ===
+      const track = document.querySelector(".carousel-track");
+      const items = document.querySelectorAll(".carousel-item");
+      const prevBtn = document.getElementById("prev");
+      const nextBtn = document.getElementById("next");
+      let index = 0;
+
+      const updateCarousel = () => {
+        track.style.transform = `translateX(-${index * 100}%)`;
+      };
+
+      prevBtn.addEventListener("click", () => {
+        index = (index > 0) ? index - 1 : items.length - 1;
+        updateCarousel();
+      });
+
+      nextBtn.addEventListener("click", () => {
+        index = (index < items.length - 1) ? index + 1 : 0;
+        updateCarousel();
+      });
+    });
+  </script>
 </body>
 </html>
+
