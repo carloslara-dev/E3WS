@@ -1,263 +1,278 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <!-- =========================
-       META BÁSICOS
-       ========================= -->
-  <meta charset="UTF-8"> <!-- Soporta tildes y caracteres especiales -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Escala correcta en móviles -->
-  <title>E3WS - Sistema de Alerta Sísmica Temprana</title> <!-- Título de la pestaña -->
+  <!-- =========================================
+       METADATOS BÁSICOS
+       - charset: codificación en UTF-8
+       - viewport: diseño responsive en móviles
+       - title: título de la pestaña del navegador
+       ========================================= -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E3WS - Sistema de Alerta Sísmica Temprana</title>
 
-  <!-- =========================
-       TIPOGRAFÍAS (GOOGLE FONTS) + RESPALDO
-       - Poppins para títulos
-       - Inter para texto/cuerpo
-       - Si Google Fonts falla: Arial/Segoe UI/sans-serif
-       ========================= -->
+  <!-- =========================================
+       TIPOGRAFÍAS (FASE 1)
+       - Cargamos desde Google Fonts:
+         * Inter (texto/cuerpo)
+         * Poppins (títulos)
+       - En CSS definimos fuentes de respaldo por si Google falla
+       ========================================= -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
 
-  <!-- =========================
-       ÍCONOS (TEMPORAL)
-       - Usamos Font Awesome mientras elegimos SVGs propios
-       ========================= -->
+  <!-- =========================================
+       ÍCONOS (temporal)
+       - Librería externa para iconos en Beneficios.
+       - Pendiente a futuro: reemplazar por SVGs propios.
+       ========================================= -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-  <!-- =========================
-       ESTILOS (CSS)
-       - Incluye variables, reset y estilos de cada sección
-       ========================= -->
   <style>
-    /* ---------------------------------
-       1) VARIABLES DE COLOR (tokens)
-       - Cambias colores en un solo lugar
-       --------------------------------- */
+    /* =========================================
+       VARIABLES (FASE 1)
+       - Centralizamos colores para mantener consistencia visual
+       - Cambiar la paleta luego será muy fácil
+       ========================================= */
     :root{
-      --brand:        #0077b6;  /* Azul principal */
-      --brand-light:  #00b4d8;  /* Azul claro (gradiente del hero) */
-      --brand-hover:  #005f7f;  /* Azul para hover del menú/botones */
-      --text:         #0f172a;  /* Texto principal */
-      --muted:        #334155;  /* Texto secundario */
-      --nav:          #111;     /* Fondo navbar/footer */
-      --section-alt:  #f9f9f9;  /* Fondo alternativo suave */
-      --white:        #fff;     /* Blanco */
+      --brand: #0077b6;        /* Azul principal (Hero, botones) */
+      --brand-light: #00b4d8;  /* Azul claro (degradado Hero) */
+      --brand-hover: #005f7f;  /* Azul oscuro (hover del menú y botones) */
+      --text: #0f172a;         /* Texto principal */
+      --muted: #334155;        /* Texto secundario */
+      --nav: #111;             /* Fondo navbar/footer */
+      --section-alt: #f9f9f9;  /* Fondo alterno suave */
+      --white: #fff;           /* Blanco */
     }
 
-    /* ---------------------------------
-       2) RESET Y BASE TIPOGRÁFICA
-       --------------------------------- */
+    /* =========================================
+       RESET + BASE TIPOGRÁFICA (FASE 1)
+       - Quitamos márgenes/paddings por defecto
+       - Activamos scroll suave
+       - Definimos tipografías con respaldo
+       ========================================= */
     *{ margin:0; padding:0; box-sizing:border-box; }
-    html{ scroll-behavior:smooth; } /* Scroll suave en anchors (#id) */
+    html{ scroll-behavior:smooth; }
     body{
-      font-family: Inter, Arial, sans-serif; /* Fuente cuerpo + respaldo */
+      font-family: Inter, Arial, sans-serif; /* Inter con respaldo */
       color: var(--text);
       line-height: 1.6;
       background: #ffffff;
     }
-    h1,h2,h3{
-      font-family: Poppins, "Segoe UI", sans-serif; /* Fuente títulos + respaldo */
+    h1, h2, h3{
+      font-family: Poppins, "Segoe UI", sans-serif; /* Poppins con respaldo */
     }
 
-    /* ---------------------------------
-       3) NAVBAR (menú superior fijo)
-       --------------------------------- */
+    /* =========================================
+       NAVBAR (MENÚ SUPERIOR FIJO)
+       - Header fijo con sombra
+       - Hover azul coherente con el Hero
+       ========================================= */
     header{
-      position: fixed; top:0; left:0; width:100%;
+      position:fixed; top:0; left:0; width:100%;
       background: var(--nav); color: var(--white);
-      z-index: 1000; /* Siempre arriba del contenido */
-      box-shadow: 0 2px 10px rgba(0,0,0,.2);
+      z-index:1000; box-shadow:0 2px 10px rgba(0,0,0,.2);
     }
     nav{
-      max-width: 1200px; margin: auto;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 15px 20px; /* Altura visual ~70px con header fijo */
+      max-width:1200px; margin:auto;
+      display:flex; justify-content:space-between; align-items:center;
+      padding:15px 20px;
     }
-    .logo{ font-size: 22px; font-weight: bold; } /* Logo de texto (temporal) */
-    nav ul{ list-style: none; display: flex; gap: 20px; }
+    .logo{ font-size:22px; font-weight:700; letter-spacing:.5px; }
+    nav ul{ list-style:none; display:flex; gap:20px; }
     nav a{
-      color: var(--white); text-decoration: none; font-weight: bold;
-      padding: 8px 10px; border-radius: 6px;
-      transition: background .25s ease;
+      color: var(--white); text-decoration:none; font-weight:700;
+      padding:8px 10px; border-radius:6px; transition: background .25s ease;
     }
-    nav a:hover{
-      background: var(--brand-hover); /* Azul similar al hero */
-    }
+    nav a:hover{ background: var(--brand-hover); } /* Hover AZUL (pedido) */
 
-    /* ---------------------------------
-       4) HERO (portada)
-       --------------------------------- */
+    /* =========================================
+       HERO (PORTADA)
+       - Degradado azul
+       - Dos columnas: texto + placeholder de imagen/logo
+       ========================================= */
     .hero{
-      margin-top: 70px; /* Evita que el header fijo tape el hero */
-      display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
-      background: linear-gradient(90deg, var(--brand), var(--brand-light)); /* Degradado azul */
-      color: var(--white);
-      padding: 100px 20px; /* Espacio cómodo */
+      margin-top:70px; /* Compensa header fijo */
+      display:flex; flex-wrap:wrap; align-items:center; justify-content:center;
+      background: linear-gradient(90deg, var(--brand), var(--brand-light));
+      color: var(--white); padding:100px 20px;
     }
     .hero-content{ flex:1; min-width:280px; max-width:600px; }
-    .hero-content h1{ font-size: 36px; margin-bottom: 16px; }
-    .hero-content p{ font-size: 18px; margin-bottom: 26px; color: rgba(255,255,255,.95); }
+    .hero-content h1{ font-size:36px; margin-bottom:16px; }
+    .hero-content p{ font-size:18px; margin-bottom:26px; color:rgba(255,255,255,.95); }
     .hero-buttons a{
       display:inline-block; margin-right:12px; padding:12px 22px;
-      border-radius: 6px; font-weight: bold; text-decoration: none;
-      transition: background .25s ease, transform .1s ease;
+      border-radius:6px; font-weight:700; text-decoration:none; transition: background .25s ease;
     }
-    .btn-primary{ background: var(--white); color: var(--brand); }
-    .btn-primary:hover{ background:#e7e7e7; transform: translateY(-1px); }
+    .btn-primary{ background:var(--white); color:var(--brand); }
+    .btn-primary:hover{ background:#e7e7e7; }
     .btn-secondary{ background:transparent; color:var(--white); border:2px solid var(--white); }
-    .btn-secondary:hover{ background: rgba(255,255,255,.1); transform: translateY(-1px); }
+    .btn-secondary:hover{ background: rgba(255,255,255,.1); }
     .hero-image{ flex:1; min-width:280px; text-align:center; }
     .hero-image .placeholder{
       width:260px; height:260px; margin-inline:auto;
       background: rgba(255,255,255,.2);
       display:flex; align-items:center; justify-content:center;
-      border-radius: 14px; font-size: 16px; font-style: italic;
+      border-radius:14px; font-size:16px; font-style:italic;
     }
 
-    /* ---------------------------------
-       5) SECCIONES GENERALES
-       --------------------------------- */
-    section{ padding: 80px 20px; text-align:center; }
-    .section-alt{ background: var(--section-alt); } /* Fondo alterno suave */
-    h2{ font-size: 2rem; margin-bottom: 14px; }
-    section p{ max-width: 820px; margin: 0 auto 8px auto; color: var(--muted); }
+    /* =========================================
+       SECCIONES GENERALES
+       - Paddings consistentes
+       - Fondo alterno para secciones pares
+       ========================================= */
+    section{ padding:80px 20px; text-align:center; }
+    .section-alt{ background: var(--section-alt); }
+    h2{ font-size:2rem; margin-bottom:14px; }
+    section p{ max-width:820px; margin:0 auto 8px auto; color: var(--muted); }
 
-    /* ---------------------------------
-       6) NOSOTROS (tarjetas 3 columnas)
-       --------------------------------- */
+    /* =========================================
+       NOSOTROS (MEJORADO)
+       - Tarjetas en grid para Visión, Misión y Valores
+       - Sombra + hover suave
+       ========================================= */
     .nosotros-grid{
-      display:grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
-      gap: 28px; max-width: 1100px; margin: 36px auto 0; padding: 0 10px;
+      display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap:28px; max-width:1100px; margin:36px auto 0; padding:0 10px;
     }
     .nosotros-card{
-      background:#fff; border-radius: 12px; padding: 28px 20px;
-      box-shadow: 0 6px 16px rgba(0,0,0,.08);
+      background:#fff; border-radius:12px; padding:28px 20px;
+      box-shadow:0 6px 16px rgba(0,0,0,.08);
       transition: transform .25s ease, box-shadow .25s ease;
-      text-align: left; /* Lectura cómoda */
+      text-align:left;
     }
-    .nosotros-card:hover{ transform: translateY(-6px); box-shadow: 0 10px 22px rgba(0,0,0,.12); }
-    .nosotros-card h3{ margin-bottom: 10px; color: var(--brand); }
+    .nosotros-card:hover{ transform: translateY(-6px); box-shadow:0 10px 22px rgba(0,0,0,.12); }
+    .nosotros-card h3{ margin-bottom:10px; color: var(--brand); }
     .nosotros-card p{ color: var(--muted); }
 
-    /* ---------------------------------
-       7) BENEFICIOS (tarjetas + íconos)
-       --------------------------------- */
+    /* =========================================
+       BENEFICIOS (TARJETAS + ÍCONOS)
+       - Íconos grandes con Font Awesome (temporal)
+       ========================================= */
     .benefits-container{
       display:grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
-      gap: 28px; max-width: 1100px; margin: 36px auto 0; padding: 0 10px;
+      gap:28px; max-width:1100px; margin:36px auto 0; padding:0 10px;
     }
     .benefit-card{
-      background:#fff; border-radius: 12px; padding: 28px 20px;
-      box-shadow: 0 6px 16px rgba(0,0,0,.08);
+      background:#fff; border-radius:12px; padding:28px 20px;
+      box-shadow:0 6px 16px rgba(0,0,0,.08);
       transition: transform .25s ease, box-shadow .25s ease;
     }
-    .benefit-card:hover{ transform: translateY(-6px); box-shadow: 0 10px 22px rgba(0,0,0,.12); }
-    .benefit-card i{ font-size: 40px; color: var(--brand); margin-bottom: 10px; }
-    .benefit-card h3{ margin-bottom: 8px; font-size: 1.15rem; }
+    .benefit-card:hover{ transform: translateY(-6px); box-shadow:0 10px 22px rgba(0,0,0,.12); }
+    .benefit-card i{ font-size:40px; color: var(--brand); margin-bottom:10px; }
+    .benefit-card h3{ margin-bottom:8px; font-size:1.15rem; }
     .benefit-card p{ color: var(--muted); }
 
-    /* ---------------------------------
-       8) CASOS (carrusel básico)
-       --------------------------------- */
-    .carousel-container{ max-width: 900px; margin: 24px auto 0; position:relative; overflow:hidden; }
+    /* =========================================
+       CASOS (CARRUSEL BÁSICO)
+       - Track horizontal que se desplaza por transform
+       - Botones previo/siguiente
+       - Pendiente: migrar a Swiper.js (pro)
+       ========================================= */
+    .carousel-container{ max-width:900px; margin:24px auto 0; position:relative; overflow:hidden; }
     .carousel-track{ display:flex; transition: transform .5s ease-in-out; }
-    .carousel-item{ min-width:100%; padding: 40px 18px; box-sizing:border-box; }
+    .carousel-item{ min-width:100%; padding:40px 18px; box-sizing:border-box; }
     .carousel-item h3{ margin-bottom:10px; color: var(--brand); }
     .carousel-item p{ color: var(--muted); }
     .carousel-btn{
       position:absolute; top:50%; transform:translateY(-50%);
       background: var(--brand); color:#fff; border:none; cursor:pointer;
-      padding:10px 14px; border-radius: 50%; transition: background .25s ease;
+      padding:10px 14px; border-radius:50%; transition: background .25s ease;
     }
     .carousel-btn:hover{ background: var(--brand-hover); }
-    .prev{ left: 10px; } .next{ right: 10px; }
+    .prev{ left:10px; } .next{ right:10px; }
 
-    /* ---------------------------------
-       9) NOVEDADES (tarjetas tipo blog)
-       --------------------------------- */
+    /* =========================================
+       NOVEDADES (TARJETAS TIPO BLOG)
+       ========================================= */
     .news-container{
-      display:grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
-      gap: 28px; max-width: 1100px; margin: 36px auto 0; padding: 0 10px;
+      display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+      gap:28px; max-width:1100px; margin:36px auto 0; padding:0 10px;
     }
     .news-card{
-      background:#fff; border-radius: 12px; overflow:hidden;
-      box-shadow: 0 6px 16px rgba(0,0,0,.08);
+      background:#fff; border-radius:12px; overflow:hidden;
+      box-shadow:0 6px 16px rgba(0,0,0,.08);
       text-align:left; transition: transform .25s ease, box-shadow .25s ease;
     }
-    .news-card:hover{ transform: translateY(-6px); box-shadow: 0 10px 22px rgba(0,0,0,.12); }
+    .news-card:hover{ transform: translateY(-6px); box-shadow:0 10px 22px rgba(0,0,0,.12); }
     .news-image{
-      height: 160px; background:#d1d5db; color:#374151;
-      display:flex; align-items:center; justify-content:center; font-size: 14px;
+      height:160px; background:#d1d5db; color:#374151;
+      display:flex; align-items:center; justify-content:center; font-size:14px;
     }
-    .news-card h3{ margin: 14px 14px 8px 14px; font-size: 1.1rem; }
-    .news-card p{ margin: 0 14px 16px 14px; color: var(--muted); }
+    .news-card h3{ margin:14px 14px 8px 14px; font-size:1.1rem; }
+    .news-card p{ margin:0 14px 16px 14px; color: var(--muted); }
     .btn-news{
-      display:inline-block; margin: 0 14px 16px 14px; padding: 8px 14px;
-      background: var(--brand); color:#fff; text-decoration:none; border-radius: 8px;
+      display:inline-block; margin: 0 14px 16px 14px; padding:8px 14px;
+      background: var(--brand); color:#fff; text-decoration:none; border-radius:8px;
       font-size:.9rem; transition: background .25s ease;
     }
     .btn-news:hover{ background: var(--brand-hover); }
 
-    /* ---------------------------------
-       10) CONTACTO (formulario)
-       --------------------------------- */
-    .contact-wrapper{ max-width: 980px; margin: 28px auto 0; padding: 0 10px; }
-    .contact-intro{ color: var(--muted); margin-bottom: 14px; }
+    /* =========================================
+       CONTACTO (FORMULARIO)
+       - Maqueta con validación nativa del navegador
+       - Simulación de envío (JS)
+       - Pendiente: conectar a servicio/Backend
+       ========================================= */
+    .contact-wrapper{ max-width:980px; margin:28px auto 0; padding:0 10px; }
+    .contact-intro{ color: var(--muted); margin-bottom:14px; }
     .contact-form{
-      background:#fff; border-radius: 12px; padding: 24px;
-      box-shadow: 0 6px 16px rgba(0,0,0,.08); text-align:left;
+      background:#fff; border-radius:12px; padding:24px;
+      box-shadow:0 6px 16px rgba(0,0,0,.08); text-align:left;
     }
-    .form-row{ display:grid; grid-template-columns: repeat(2,1fr); gap:16px; }
-    .form-row + .form-row{ margin-top: 14px; }
+    .form-row{ display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+    .form-row + .form-row{ margin-top:14px; }
     .form-group{ display:flex; flex-direction:column; }
     .form-group label{ font-weight:600; margin-bottom:6px; color: var(--text); }
     .form-group input, .form-group textarea{
-      border:1px solid #cbd5e1; border-radius: 8px; padding:12px;
-      font-size: 1rem; color: var(--text); background:#f8fafc;
+      border:1px solid #cbd5e1; border-radius:8px; padding:12px;
+      font-size:1rem; color: var(--text); background:#f8fafc;
       transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
     }
     .form-group input:focus, .form-group textarea:focus{
       outline:none; border-color: var(--brand); background:#fff;
-      box-shadow: 0 0 0 3px rgba(2,132,199,.15);
+      box-shadow:0 0 0 3px rgba(2,132,199,.15);
     }
-    .form-group textarea{ min-height: 140px; resize: vertical; }
-    .contact-actions{ margin-top: 18px; display:flex; gap: 12px; align-items:center; }
+    .form-group textarea{ min-height:140px; resize:vertical; }
+    .contact-actions{ margin-top:18px; display:flex; gap:12px; align-items:center; }
     .btn-send{
-      background: var(--brand); color: #fff; border:none; cursor:pointer;
-      padding: 12px 18px; border-radius: 10px; font-weight:700;
+      background: var(--brand); color:#fff; border:none; cursor:pointer;
+      padding:12px 18px; border-radius:10px; font-weight:700;
       transition: background .25s ease, transform .12s ease, box-shadow .2s ease;
-      box-shadow: 0 6px 16px rgba(0,0,0,.12);
+      box-shadow:0 6px 16px rgba(0,0,0,.12);
     }
-    .btn-send:hover{ background: var(--brand-hover); transform: translateY(-2px); box-shadow: 0 10px 22px rgba(0,0,0,.14); }
+    .btn-send:hover{ background: var(--brand-hover); transform: translateY(-2px); box-shadow:0 10px 22px rgba(0,0,0,.14); }
     .form-success{
       display:none; color:#065f46; background:#d1fae5; border:1px solid #34d399;
-      padding:10px 12px; border-radius: 8px; font-size:.95rem;
+      padding:10px 12px; border-radius:8px; font-size:.95rem;
     }
     .form-success.visible{ display:inline-block; }
-    .honeypot{ position:absolute; left:-9999px; top:-9999px; } /* Anti-bots */
+    .honeypot{ position:absolute; left:-9999px; top:-9999px; }
 
-    /* Responsive: formulario a 1 columna en pantallas pequeñas */
+    /* Responsive: formulario en 1 columna en pantallas pequeñas */
     @media (max-width: 720px){
-      .form-row{ grid-template-columns: 1fr; }
+      .form-row{ grid-template-columns:1fr; }
     }
 
-    /* ---------------------------------
-       11) FOOTER
-       --------------------------------- */
+    /* =========================================
+       FOOTER
+       ========================================= */
     footer{
       background: var(--nav); color: var(--white);
-      text-align: center; padding: 20px; margin-top: 14px;
+      text-align:center; padding:20px; margin-top:14px;
     }
   </style>
 </head>
 <body>
 
-  <!-- =========================
+  <!-- =========================================
        NAVBAR
-       ========================= -->
+       - Logo de texto (provisional)
+       - Enlaces a secciones por ID
+       ========================================= -->
   <header>
     <nav>
-      <div class="logo">E3WS</div> <!-- Logo de texto temporal (reemplazaremos por SVG/PNG) -->
+      <div class="logo">E3WS</div>
       <ul>
-        <!-- Enlaces del menú a cada sección por ID -->
         <li><a href="#inicio">Inicio</a></li>
         <li><a href="#nosotros">Nosotros</a></li>
         <li><a href="#e3ws">E3WS</a></li>
@@ -271,9 +286,11 @@
     </nav>
   </header>
 
-  <!-- =========================
-       HERO (portada)
-       ========================= -->
+  <!-- =========================================
+       HERO (PORTADA)
+       - Botón "Ver Demo" → #demo
+       - Botón "Conocer más" → #beneficios
+       ========================================= -->
   <section id="inicio" class="hero">
     <div class="hero-content">
       <h1>Sistema de Alerta Sísmica Temprana</h1>
@@ -284,83 +301,81 @@
       </div>
     </div>
     <div class="hero-image">
-      <div class="placeholder">Imagen / Logo (pendiente)</div> <!-- Recuadro visible para tu futuro logo -->
+      <div class="placeholder">Imagen / Logo (pendiente)</div>
     </div>
   </section>
 
-  <!-- =========================
-       NOSOTROS (mejorado)
-       ========================= -->
+  <!-- =========================================
+       NOSOTROS (MEJORADO)
+       - Visión, Misión y Valores en tarjetas (grid)
+       ========================================= -->
   <section id="nosotros" class="section-alt">
     <h2>Nosotros</h2>
     <p>Somos un equipo de ingenieros y científicos comprometidos con la seguridad sísmica y la resiliencia comunitaria.</p>
 
-    <!-- Tarjetas (Visión, Misión, Valores) -->
     <div class="nosotros-grid">
-      <article class="nosotros-card">
+      <div class="nosotros-card">
         <h3>Visión</h3>
-        <p>Comunidades resilientes en toda Latinoamérica, preparadas para responder eficazmente ante eventos sísmicos.</p>
-      </article>
-      <article class="nosotros-card">
+        <p>Construir comunidades más seguras y resilientes frente a los sismos en toda Latinoamérica.</p>
+      </div>
+      <div class="nosotros-card">
         <h3>Misión</h3>
-        <p>Proteger vidas mediante sistemas de alerta temprana accesibles, confiables y de implementación ágil.</p>
-      </article>
-      <article class="nosotros-card">
+        <p>Proporcionar alertas tempranas confiables que permitan salvar vidas y reducir daños materiales.</p>
+      </div>
+      <div class="nosotros-card">
         <h3>Valores</h3>
-        <p>Compromiso, innovación y colaboración con instituciones, empresas y ciudadanía.</p>
-      </article>
+        <p>Compromiso, innovación y responsabilidad social en cada acción.</p>
+      </div>
     </div>
   </section>
 
-  <!-- =========================
-       E3WS (qué es)
-       ========================= -->
+  <!-- =========================================
+       E3WS (QUÉ ES)
+       ========================================= -->
   <section id="e3ws">
     <h2>¿Qué es E3WS?</h2>
-    <p>E3WS detecta movimientos sísmicos y envía alertas en tiempo real a comunidades, empresas y autoridades para activar protocolos de respuesta.</p>
+    <p>E3WS detecta movimientos sísmicos y envía notificaciones en tiempo real a comunidades, empresas y autoridades.</p>
   </section>
 
-  <!-- =========================
-       SISTEMA (cómo funciona)
-       ========================= -->
+  <!-- =========================================
+       SISTEMA (CÓMO FUNCIONA)
+       ========================================= -->
   <section id="sistema" class="section-alt">
     <h2>Sistema</h2>
-    <p>Analizamos ondas P para estimar epicentro, magnitud e impacto en segundos, con sensores distribuidos, IA y arquitectura redundante.</p>
+    <p>Analizamos ondas P para estimar epicentro, magnitud e impacto con arquitectura distribuida, IA y redundancia.</p>
   </section>
 
-  <!-- =========================
-       BENEFICIOS (tarjetas + íconos)
-       ========================= -->
+  <!-- =========================================
+       BENEFICIOS (TARJETAS + ÍCONOS)
+       ========================================= -->
   <section id="beneficios">
     <h2>Beneficios</h2>
     <div class="benefits-container">
       <div class="benefit-card">
-        <i class="fas fa-broadcast-tower" aria-hidden="true"></i>
+        <i class="fas fa-broadcast-tower"></i>
         <h3>Alerta en Tiempo Real</h3>
         <p>Notificaciones inmediatas para comunidades, empresas y autoridades.</p>
       </div>
       <div class="benefit-card">
-        <i class="fas fa-city" aria-hidden="true"></i>
+        <i class="fas fa-city"></i>
         <h3>Protección de Infraestructura</h3>
         <p>Reduce daños en hospitales, escuelas y sistemas críticos.</p>
       </div>
       <div class="benefit-card">
-        <i class="fas fa-people-group" aria-hidden="true"></i>
+        <i class="fas fa-people-group"></i>
         <h3>Seguridad Comunitaria</h3>
         <p>Integra protocolos de evacuación y sistemas de respuesta rápida.</p>
       </div>
     </div>
   </section>
 
-  <!-- =========================
-       CASOS (carrusel básico)
-       ========================= -->
+  <!-- =========================================
+       CASOS (CARRUSEL BÁSICO)
+       ========================================= -->
   <section id="casos" class="section-alt">
     <h2>Casos</h2>
-
-    <!-- Contenedor del carrusel -->
-    <div class="carousel-container" aria-roledescription="carousel">
-      <!-- Pista con los slides -->
+    <div class="carousel-container">
+      <!-- Pista que se mueve -->
       <div class="carousel-track">
         <div class="carousel-item">
           <h3>Ciudad X</h3>
@@ -375,68 +390,62 @@
           <p>Simulacros con vecinos mejoraron tiempos de evacuación.</p>
         </div>
       </div>
-
-      <!-- Botones del carrusel -->
+      <!-- Botones de navegación -->
       <button class="carousel-btn prev" aria-label="Anterior">&#10094;</button>
       <button class="carousel-btn next" aria-label="Siguiente">&#10095;</button>
     </div>
   </section>
 
-  <!-- =========================
-       NOVEDADES (tarjetas tipo blog)
-       ========================= -->
+  <!-- =========================================
+       NOVEDADES (TARJETAS TIPO BLOG)
+       ========================================= -->
   <section id="novedades">
     <h2>Novedades</h2>
-
     <div class="news-container">
-      <article class="news-card">
-        <div class="news-image">Imagen</div> <!-- Reemplazar por imagen real (pendiente) -->
+      <div class="news-card">
+        <div class="news-image">Imagen</div>
         <h3>Nuevo sensor instalado</h3>
-        <p>Se implementó un nuevo sensor sísmico en Ciudad X para mejorar la cobertura y precisión.</p>
+        <p>Se implementó un nuevo sensor sísmico en Ciudad X para mejorar la cobertura.</p>
         <a href="#" class="btn-news">Leer más</a>
-      </article>
-
-      <article class="news-card">
+      </div>
+      <div class="news-card">
         <div class="news-image">Imagen</div>
         <h3>Prueba piloto</h3>
         <p>La comunidad de Ciudad Y realizó un simulacro exitoso con el sistema E3WS.</p>
         <a href="#" class="btn-news">Leer más</a>
-      </article>
-
-      <article class="news-card">
+      </div>
+      <div class="news-card">
         <div class="news-image">Imagen</div>
         <h3>Colaboración académica</h3>
         <p>Universidades locales se unieron para analizar datos sísmicos en tiempo real.</p>
         <a href="#" class="btn-news">Leer más</a>
-      </article>
+      </div>
     </div>
   </section>
 
-  <!-- =========================
-       DEMO (placeholder)
-       ========================= -->
+  <!-- =========================================
+       DEMO (PLACEHOLDER)
+       ========================================= -->
   <section id="demo" class="section-alt">
     <h2>Demo</h2>
     <p>Espacio para probar la plataforma E3WS en acción (pendiente integrar mapas/visualizaciones).</p>
   </section>
 
-  <!-- =========================
-       CONTACTO (formulario)
-       ========================= -->
+  <!-- =========================================
+       CONTACTO (FORMULARIO MAQUETA)
+       - Honeypot anti-bots
+       - Validación nativa
+       - Envío simulado en JS
+       ========================================= -->
   <section id="contacto">
     <h2>Contacto</h2>
     <p class="contact-intro">¿Tienes dudas o deseas una demo? Escríbenos y te responderemos.</p>
 
     <div class="contact-wrapper">
-      <!-- NOTA:
-           - Este <form> aún NO envía correo. Mostramos un mensaje "OK" simulado.
-           - PENDIENTE: Conectar con Formspree/Netlify/Getform o backend propio para enviar a contacto@e3ws.com
-      -->
       <form id="contactForm" class="contact-form" method="post" novalidate>
-        <!-- Honeypot (anti-bots): si este campo llega con valor, se ignora el envío -->
+        <!-- Honeypot (si viene con valor, se ignora) -->
         <input type="text" name="company" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
 
-        <!-- Fila 1: Nombre + Correo -->
         <div class="form-row">
           <div class="form-group">
             <label for="nombre">Nombre *</label>
@@ -448,25 +457,23 @@
           </div>
         </div>
 
-        <!-- Fila 2: Asunto -->
         <div class="form-row">
-          <div class="form-group" style="grid-column: 1 / -1;">
+          <div class="form-group" style="grid-column:1/-1;">
             <label for="asunto">Asunto (opcional)</label>
             <input id="asunto" name="asunto" type="text" placeholder="Motivo de tu mensaje">
           </div>
         </div>
 
-        <!-- Fila 3: Mensaje -->
         <div class="form-row">
-          <div class="form-group" style="grid-column: 1 / -1;">
+          <div class="form-group" style="grid-column:1/-1;">
             <label for="mensaje">Mensaje *</label>
             <textarea id="mensaje" name="mensaje" placeholder="Escribe tu mensaje..." required minlength="10"></textarea>
           </div>
         </div>
 
-        <!-- Acciones: Enviar + mensaje de éxito simulado -->
         <div class="contact-actions">
           <button type="submit" class="btn-send">Enviar</button>
+          <!-- Mensaje de éxito (se muestra por JS) -->
           <span id="formSuccess" class="form-success" role="status" aria-live="polite">
             ✅ Gracias. Tu mensaje fue enviado (simulado).
           </span>
@@ -475,98 +482,111 @@
     </div>
   </section>
 
-  <!-- =========================
+  <!-- =========================================
        FOOTER
-       ========================= -->
+       ========================================= -->
   <footer>
     <p>&copy; 2025 E3WS - Sistema de Alerta Sísmica Temprana</p>
   </footer>
 
-  <!-- =========================
-       SCRIPTS (JS)
-       - Scroll suave compensando header fijo
+  <!-- =========================================
+       SCRIPTS
+       - Scroll suave ajustado por header fijo
        - Carrusel básico
        - Formulario simulado
-       ========================= -->
+       ========================================= -->
   <script>
-    /* ---------------------------------
-       A) SCROLL SUAVE con offset de header
-       - Compensa la altura del menú fijo
-       --------------------------------- */
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener("click", e => {
-        const hash = a.getAttribute("href");
-        if (!hash || hash === "#") return;                 // enlaces vacíos no hacen nada
-        const target = document.querySelector(hash);
-        if (!target) return;                               // si el ID no existe, salir
-        e.preventDefault();                                // evita salto instantáneo
-        const header = document.querySelector("header");
-        const offset = header ? header.offsetHeight : 60;  // altura real del header o 60px por defecto
-        const top = target.getBoundingClientRect().top + window.scrollY - offset;
-        window.scrollTo({ top, behavior: "smooth" });      // desplazamiento suave
+    /* ---------------------------------------------------------
+       SCROLL SUAVE (ajustado por altura del header fijo)
+       - Resta la altura del header para que el ancla no quede tapada
+       --------------------------------------------------------- */
+    (function(){
+      const header = document.querySelector('header');
+      const headerH = () => header ? header.offsetHeight : 60; // Fallback 60
+
+      document.querySelectorAll('a[href^="#"]').forEach(a=>{
+        a.addEventListener('click', e=>{
+          const hash = a.getAttribute('href');
+          if(!hash || hash === '#') return;
+          const target = document.querySelector(hash);
+          if(!target) return;
+          e.preventDefault();
+          const top = target.getBoundingClientRect().top + window.scrollY - headerH();
+          window.scrollTo({ top, behavior:'smooth' });
+        });
       });
-    });
+    })();
 
-    /* ---------------------------------
-       B) CARRUSEL BÁSICO (Casos)
-       --------------------------------- */
-    const track = document.querySelector(".carousel-track");
-    const slides = document.querySelectorAll(".carousel-item");
-    const prevBtn = document.querySelector(".prev");
-    const nextBtn = document.querySelector(".next");
-    let index = 0;
+    /* ---------------------------------------------------------
+       CARRUSEL BÁSICO (Casos)
+       - Mueve el track en pasos del 100% del ancho
+       --------------------------------------------------------- */
+    (function(){
+      const track = document.querySelector('.carousel-track');
+      const items = document.querySelectorAll('.carousel-item');
+      const prevBtn = document.querySelector('.prev');
+      const nextBtn = document.querySelector('.next');
+      if(!track || items.length===0 || !prevBtn || !nextBtn) return;
 
-    function updateCarousel(){
-      track.style.transform = `translateX(-${index * 100}%)`;
-    }
-    prevBtn?.addEventListener("click", () => {
-      index = (index === 0) ? slides.length - 1 : index - 1;
-      updateCarousel();
-    });
-    nextBtn?.addEventListener("click", () => {
-      index = (index === slides.length - 1) ? 0 : index + 1;
-      updateCarousel();
-    });
+      let index = 0;
+      const update = () => { track.style.transform = `translateX(-${index*100}%)`; };
 
-    /* ---------------------------------
-       C) FORMULARIO (Simulación de envío)
-       - PENDIENTE: Conectar a un servicio real (Formspree/Getform/Netlify o backend)
-       --------------------------------- */
-    const form = document.getElementById("contactForm");
-    const successEl = document.getElementById("formSuccess");
-    form?.addEventListener("submit", (e) => {
-      e.preventDefault();
+      prevBtn.addEventListener('click', ()=>{
+        index = (index === 0) ? items.length - 1 : index - 1;
+        update();
+      });
+      nextBtn.addEventListener('click', ()=>{
+        index = (index === items.length - 1) ? 0 : index + 1;
+        update();
+      });
+    })();
 
-      // Anti-bot: si el honeypot tiene algo, abortar
-      const honey = form.querySelector('input[name="company"]');
-      if (honey && honey.value.trim() !== "") return;
+    /* ---------------------------------------------------------
+       FORMULARIO (maqueta)
+       - Intercepta submit
+       - Valida nativo
+       - Muestra mensaje de éxito (simulado)
+       - PENDIENTE: conectar a Formspree/Getform/Netlify/Backend
+       --------------------------------------------------------- */
+    (function(){
+      const form = document.getElementById('contactForm');
+      const successEl = document.getElementById('formSuccess');
+      if(!form) return;
 
-      // Validación nativa
-      if (!form.checkValidity()){
-        form.reportValidity();
-        return;
-      }
+      form.addEventListener('submit', (e)=>{
+        e.preventDefault();
 
-      // Simula "OK"
-      successEl.classList.add("visible");
+        // Anti-bot: si honeypot tiene valor, ignorar
+        const honey = form.querySelector('input[name="company"]');
+        if(honey && honey.value.trim() !== '') return;
 
-      // Si quieres resetear el formulario, descomenta:
-      // form.reset();
+        // Si falla validación nativa, mostrar mensajes del navegador
+        if(!form.checkValidity()){
+          form.reportValidity();
+          return;
+        }
 
-      // [PENDIENTE] envío real:
-      // fetch("TU_ENDPOINT_AQUI", { method:"POST", body: new FormData(form) })
-      //   .then(r => r.ok ? ... : ...)
-      //   .catch(err => ...);
-    });
+        // Simulación de envío OK
+        successEl.classList.add('visible');
 
-    /* ---------------------------------
-       D) PENDIENTES (para referencia rápida)
-       1) Logo definitivo (SVG/PNG) en navbar y hero
-       2) Reemplazar imágenes placeholder (Hero, Casos, Novedades)
-       3) Conectar formulario a contacto@e3ws.com (servicio o backend)
-       4) (Opcional) Migrar carrusel a Swiper.js para transición pro
-       5) Separar CSS/JS en archivos externos cuando cerremos la plantilla
-       --------------------------------- */
+        // Si quieres resetear el formulario, descomenta:
+        // form.reset();
+
+        // [PENDIENTE] envío real:
+        // fetch('TU_ENDPOINT', { method:'POST', body:new FormData(form) })
+        //   .then(resp => resp.ok ? ... : ...)
+        //   .catch(err => ...);
+      });
+    })();
+
+    /* ---------------------------------------------------------
+       PENDIENTES (recordatorio)
+       1) Logo definitivo (SVG/PNG) → navbar + Hero
+       2) Reemplazar imágenes placeholders (Hero, Casos, Novedades)
+       3) Conectar formulario a contacto@e3ws.com
+       4) Migrar carrusel a Swiper.js (opcional pro)
+       5) (Luego) separar CSS/JS en archivos externos
+       --------------------------------------------------------- */
   </script>
 </body>
 </html>
