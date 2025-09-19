@@ -187,11 +187,53 @@
     </div>
   </section>
 
-  <!-- Resto de secciones (E3WS, Sistema, Beneficios, Casos, Novedades, Demo, Contacto, Footer) -->
-  <!-- ... el contenido sigue igual que en tu versión estable ... -->
+  <!-- Aquí siguen las secciones E3WS, Sistema, Beneficios, Casos, Novedades, Demo, Contacto y Footer como ya tenías... -->
 
+  <script>
+    /* Scroll suave */
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener("click", e => {
+        const hash = a.getAttribute("href");
+        if (!hash || hash === "#") return;
+        const target = document.querySelector(hash);
+        if (!target) return;
+        e.preventDefault();
+        const top = target.getBoundingClientRect().top + window.scrollY - 60;
+        window.scrollTo({ top, behavior: "smooth" });
+      });
+    });
+
+    /* Carrusel básico */
+    const track = document.querySelector(".carousel-track");
+    if (track) {
+      const items = document.querySelectorAll(".carousel-item");
+      const prevBtn = document.querySelector(".prev");
+      const nextBtn = document.querySelector(".next");
+      let index = 0;
+      function updateCarousel(){ track.style.transform = `translateX(-${index * 100}%)`; }
+      prevBtn.addEventListener("click", () => { index = (index === 0) ? items.length - 1 : index - 1; updateCarousel(); });
+      nextBtn.addEventListener("click", () => { index = (index === items.length - 1) ? 0 : index + 1; updateCarousel(); });
+    }
+
+    /* Formulario simulado */
+    const form = document.getElementById("contactForm");
+    if (form) {
+      const successEl = document.getElementById("formSuccess");
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const honey = form.querySelector('input[name="company"]');
+        if (honey && honey.value.trim() !== "") return;
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+        successEl.classList.add("visible");
+      });
+    }
+  </script>
 </body>
 </html>
+
 
 
 
