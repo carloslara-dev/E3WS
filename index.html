@@ -9,13 +9,11 @@
        ESTILOS INTERNOS (CSS)
        ========================= -->
   <style>
-    /* Reset básico y scroll suave */
+    /* Reset básico */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
 
-    /* =========================
-       VARIABLES DE COLORES
-       ========================= */
+    /* Variables de color */
     :root {
       --bg: #f7faff;
       --text: #2b2f36;
@@ -29,9 +27,6 @@
       --shadow: 0 10px 25px rgba(2,8,23,0.08);
     }
 
-    /* =========================
-       TIPOGRAFÍA BASE
-       ========================= */
     body {
       font-family: system-ui, Arial, sans-serif;
       background: var(--bg);
@@ -46,7 +41,7 @@
     }
 
     /* =========================
-       MENÚ DE NAVEGACIÓN
+       MENÚ SUPERIOR
        ========================= */
     nav {
       background: var(--nav);
@@ -56,18 +51,33 @@
       box-shadow: var(--shadow);
     }
 
+    .nav-container {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .logo {
+      color: white;
+      font-size: 1.5rem;
+      font-weight: bold;
+      padding: 15px 0;
+    }
+
     nav ul {
       display: flex;
       list-style: none;
-      justify-content: center;
       flex-wrap: wrap;
     }
 
-    nav li { margin: 0 10px; }
+    nav li { margin: 0 5px; }
 
     nav a {
       display: block;
-      padding: 15px 20px;
+      padding: 15px 12px;
       color: white;
       text-decoration: none;
       font-weight: bold;
@@ -79,10 +89,10 @@
     nav a.active { background: var(--nav-active); }
 
     /* =========================
-       HERO (INICIO)
+       HERO (sección inicio)
        ========================= */
     header {
-      background: linear-gradient(135deg, rgba(14,165,233,0.85), rgba(2,132,199,0.85));
+      background: linear-gradient(135deg, rgba(14,165,233,0.9), rgba(2,132,199,0.9));
       color: white;
       display: flex;
       flex-direction: column;
@@ -90,23 +100,30 @@
       align-items: center;
       text-align: center;
       min-height: 45vh;
-      padding: 30px 20px;
-      border-radius: 10px;
+      padding: 40px 20px;
       margin-bottom: 40px;
     }
 
     header h1 { font-size: 2.8rem; margin-bottom: 10px; }
     header p { font-size: 1.2rem; margin-bottom: 20px; }
-    header .btn {
+
+    header .buttons {
+      display: flex;
+      gap: 15px;
+    }
+
+    header a.btn {
+      display: inline-block;
+      padding: 12px 20px;
       background: white;
-      color: var(--brand);
-      padding: 10px 20px;
+      color: var(--brand-dark);
       border-radius: 5px;
-      text-decoration: none;
       font-weight: bold;
+      text-decoration: none;
       transition: background 0.3s;
     }
-    header .btn:hover { background: var(--card-dark); }
+
+    header a.btn:hover { background: var(--card-dark); }
 
     /* =========================
        SECCIONES GENERALES
@@ -128,17 +145,8 @@
       font-size: 2rem;
     }
 
-    section p, section ul li {
-      margin-bottom: 15px;
-      color: var(--muted);
-      text-align: justify;
-      font-size: 1rem;
-    }
-
-    section ul { padding-left: 20px; }
-
     /* =========================
-       SECCIÓN: NOSOTROS (tarjetas)
+       SECCIÓN NOSOTROS (tarjetas)
        ========================= */
     .cards-grid {
       display: grid;
@@ -172,74 +180,10 @@
       color: var(--text);
     }
 
-    /* =========================
-       SECCIÓN: CASOS (Carrusel)
-       ========================= */
-    .carousel {
-      position: relative;
-      overflow: hidden;
+    .card p {
+      color: var(--muted);
+      font-size: 0.95rem;
     }
-
-    .carousel-track {
-      display: flex;
-      transition: transform 0.5s ease-in-out;
-    }
-
-    .carousel-item {
-      min-width: 100%;
-      box-sizing: border-box;
-      padding: 20px;
-    }
-
-    .carousel-controls {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 20px;
-    }
-
-    .carousel button {
-      background: var(--brand);
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      cursor: pointer;
-      border-radius: 5px;
-      transition: background 0.3s;
-    }
-
-    .carousel button:hover {
-      background: var(--brand-dark);
-    }
-
-    /* =========================
-       SECCIÓN: CONTACTO (Formulario)
-       ========================= */
-    form {
-      max-width: 600px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    input, textarea {
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 1rem;
-    }
-
-    button {
-      background: var(--brand);
-      color: white;
-      border: none;
-      padding: 10px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    button:hover { background: var(--brand-dark); }
 
     /* =========================
        PIE DE PÁGINA
@@ -251,6 +195,20 @@
       padding: 20px;
       margin-top: 40px;
     }
+
+    /* =========================
+       ANIMACIONES AL SCROLL
+       ========================= */
+    section, header {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    section.visible, header.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
 
@@ -259,32 +217,36 @@
        MENÚ DE NAVEGACIÓN
        ========================= -->
   <nav>
-    <ul>
-      <li><a href="#inicio" class="active">Inicio</a></li>
-      <li><a href="#nosotros">Nosotros</a></li>
-      <li><a href="#e3ws">E3WS</a></li>
-      <li><a href="#sistema">Sistema</a></li>
-      <li><a href="#beneficios">Beneficios</a></li>
-      <li><a href="#casos">Casos</a></li>
-      <li><a href="#novedades">Novedades</a></li>
-      <li><a href="#demo">Demo</a></li>
-      <li><a href="#contacto">Contacto</a></li>
-    </ul>
+    <div class="nav-container">
+      <div class="logo">E3WS</div>
+      <ul>
+        <li><a href="#inicio" class="active">Inicio</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#e3ws">E3WS</a></li>
+        <li><a href="#sistema">Sistema</a></li>
+        <li><a href="#beneficios">Beneficios</a></li>
+        <li><a href="#casos">Casos</a></li>
+        <li><a href="#novedades">Novedades</a></li>
+        <li><a href="#demo">Demo</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </div>
   </nav>
 
   <!-- =========================
-       HERO: INICIO
+       HERO (Inicio)
        ========================= -->
   <header id="inicio">
-    <div class="container">
-      <h1>🌍 Proyecto E3WS</h1>
-      <p>Sistema de Alerta Sísmica Temprana para proteger vidas y comunidades</p>
+    <h1>🌍 Proyecto E3WS</h1>
+    <p>Sistema de Alerta Sísmica Temprana para proteger vidas y comunidades</p>
+    <div class="buttons">
       <a href="#demo" class="btn">Ver Demo</a>
+      <a href="#nosotros" class="btn">Conocer Más</a>
     </div>
   </header>
 
   <!-- =========================
-       SECCIÓN: NOSOTROS
+       SECCIÓN: NOSOTROS (tarjetas)
        ========================= -->
   <section id="nosotros" class="container">
     <h2>Nosotros</h2>
@@ -311,101 +273,65 @@
   </section>
 
   <!-- =========================
-       SECCIÓN: E3WS
+       OTRAS SECCIONES (igual que antes)
        ========================= -->
   <section id="e3ws" class="container">
     <h2>¿Qué es E3WS?</h2>
-    <p>E3WS es un sistema de alerta temprana que detecta movimientos sísmicos y envía notificaciones en tiempo real.</p>
+    <p>E3WS es un sistema de alerta temprana que detecta movimientos sísmicos y envía notificaciones en tiempo real a comunidades, empresas y autoridades.</p>
   </section>
 
-  <!-- =========================
-       SECCIÓN: SISTEMA
-       ========================= -->
   <section id="sistema" class="container">
     <h2>El Sistema</h2>
-    <p>Analiza ondas sísmicas iniciales para estimar epicentro, magnitud e impacto usando inteligencia artificial.</p>
+    <p>El sistema analiza las ondas sísmicas iniciales para estimar epicentro, magnitud y posible impacto. Utiliza algoritmos de inteligencia artificial y redes distribuidas de sensores.</p>
   </section>
 
-  <!-- =========================
-       SECCIÓN: BENEFICIOS
-       ========================= -->
   <section id="beneficios" class="container">
     <h2>Beneficios</h2>
-    <div class="cards-grid">
-      <div class="card"><div class="icon">⏱️</div><h3>Alerta rápida</h3><p>Notificaciones en tiempo real.</p></div>
-      <div class="card"><div class="icon">🏢</div><h3>Infraestructura</h3><p>Protección de edificios y sistemas críticos.</p></div>
-      <div class="card"><div class="icon">👥</div><h3>Comunidad</h3><p>Integración con planes de evacuación.</p></div>
-    </div>
+    <ul>
+      <li>Protección inmediata a comunidades.</li>
+      <li>Reducción de daños en infraestructura crítica.</li>
+      <li>Integración con sistemas de seguridad y evacuación.</li>
+    </ul>
   </section>
 
-  <!-- =========================
-       SECCIÓN: CASOS (Carrusel)
-       ========================= -->
   <section id="casos" class="container">
     <h2>Casos</h2>
-    <div class="carousel">
-      <div class="carousel-track">
-        <div class="carousel-item"><p><strong>Caso 1:</strong> Piloto en Ciudad X redujo tiempo de alerta en 10 segundos.</p></div>
-        <div class="carousel-item"><p><strong>Caso 2:</strong> Integración con bomberos y hospitales en región Y.</p></div>
-        <div class="carousel-item"><p><strong>Caso 3:</strong> Capacitación comunitaria con pruebas de simulacro.</p></div>
-      </div>
-      <div class="carousel-controls">
-        <button id="prev">Anterior</button>
-        <button id="next">Siguiente</button>
-      </div>
-    </div>
+    <p>Ejemplos de aplicación y pruebas piloto en distintas regiones.</p>
   </section>
 
-  <!-- =========================
-       SECCIÓN: NOVEDADES
-       ========================= -->
   <section id="novedades" class="container">
     <h2>Novedades</h2>
-    <div class="cards-grid">
-      <div class="card"><h3>Actualización 1</h3><p>Se integró nuevo algoritmo de predicción.</p></div>
-      <div class="card"><h3>Actualización 2</h3><p>Expansión de sensores en la región.</p></div>
-      <div class="card"><h3>Actualización 3</h3><p>Pruebas de comunicación masiva en comunidades.</p></div>
-    </div>
+    <p>Aquí se publicarán avances, noticias y actualizaciones del proyecto.</p>
   </section>
 
-  <!-- =========================
-       SECCIÓN: DEMO
-       ========================= -->
   <section id="demo" class="container">
     <h2>Demo</h2>
-    <p>Próximamente podrás interactuar con la demo en línea de E3WS.</p>
+    <p>Espacio para probar la plataforma E3WS en acción.</p>
   </section>
 
-  <!-- =========================
-       SECCIÓN: CONTACTO
-       ========================= -->
   <section id="contacto" class="container">
     <h2>Contacto</h2>
-    <form>
-      <input type="text" name="name" placeholder="Tu nombre" required>
-      <input type="email" name="email" placeholder="Tu correo" required>
-      <textarea name="message" rows="5" placeholder="Tu mensaje" required></textarea>
-      <button type="submit">Enviar</button>
-    </form>
+    <p>📧 contacto@e3ws.com</p>
+    <p>🌐 Redes sociales: próximamente</p>
   </section>
 
   <!-- =========================
-       PIE DE PÁGINA
+       FOOTER
        ========================= -->
   <footer>
     © 2025 Proyecto E3WS - Todos los derechos reservados
   </footer>
 
   <!-- =========================
-       SCRIPT: MENÚ + CARRUSEL
+       SCRIPT: menú y animaciones
        ========================= -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      // === Menú activo en scroll ===
       const sections = document.querySelectorAll("section, header");
       const navLinks = document.querySelectorAll("nav a");
       const nav = document.querySelector("nav");
 
+      // Activa el link correcto según el scroll
       const setActiveLink = () => {
         let current = "";
         sections.forEach(section => {
@@ -425,6 +351,7 @@
       window.addEventListener("scroll", setActiveLink);
       setActiveLink();
 
+      // Scroll suave al hacer clic
       navLinks.forEach(link => {
         link.addEventListener("click", e => {
           e.preventDefault();
@@ -434,28 +361,19 @@
         });
       });
 
-      // === Carrusel básico ===
-      const track = document.querySelector(".carousel-track");
-      const items = document.querySelectorAll(".carousel-item");
-      const prevBtn = document.getElementById("prev");
-      const nextBtn = document.getElementById("next");
-      let index = 0;
+      // Animaciones al hacer scroll
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      }, { threshold: 0.2 });
 
-      const updateCarousel = () => {
-        track.style.transform = `translateX(-${index * 100}%)`;
-      };
-
-      prevBtn.addEventListener("click", () => {
-        index = (index > 0) ? index - 1 : items.length - 1;
-        updateCarousel();
-      });
-
-      nextBtn.addEventListener("click", () => {
-        index = (index < items.length - 1) ? index + 1 : 0;
-        updateCarousel();
-      });
+      sections.forEach(section => observer.observe(section));
     });
   </script>
 </body>
 </html>
+
 
