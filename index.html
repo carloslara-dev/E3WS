@@ -1,25 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8"> <!-- Codificación de caracteres -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Escala responsive -->
+  <meta charset="UTF-8"> <!-- Codificación -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive -->
   <title>E3WS - Sistema de Alerta Sísmica Temprana</title>
 
-  <!-- Librería de íconos (temporal). Luego podremos reemplazar por SVGs propios -->
+  <!-- Librería de íconos para Beneficios (rápida de integrar; luego podremos usar SVGs propios) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    /* ============================================================
+    /* =========================
        RESET Y BASE
-       ============================================================ */
+       ========================= */
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; } /* Scroll suave nativo para anchors */
+    html { scroll-behavior: smooth; } /* Scroll suave para anchors */
     body { font-family: Arial, sans-serif; line-height: 1.6; color: #0f172a; }
 
-    /* ============================================================
+    /* =========================
        NAVBAR (menú superior fijo)
-       - Usamos <header> como contenedor fijo del nav
-       ============================================================ */
+       ========================= */
     header {
       position: fixed; top: 0; left: 0; width: 100%;
       background: #111; color: #fff; z-index: 1000;
@@ -30,32 +29,31 @@
       display: flex; justify-content: space-between; align-items: center;
       padding: 15px 20px;
     }
-    .logo { font-size: 22px; font-weight: bold; } /* Logo provisional en texto */
+    .logo { font-size: 22px; font-weight: bold; }
     nav ul { list-style: none; display: flex; gap: 20px; }
     nav a {
       color: #fff; text-decoration: none; font-weight: bold;
       padding: 8px 10px; border-radius: 6px; transition: background .25s ease;
     }
-    nav a:hover { background: #1f2937; } /* Feedback al pasar el mouse */
+    nav a:hover { background: #1f2937; }
 
-    /* ============================================================
+    /* =========================
        HERO (portada principal)
-       - margin-top compensa el header fijo (~70px)
-       ============================================================ */
+       ========================= */
     .hero {
-      margin-top: 70px; /* evita que el hero quede oculto tras el header fijo */
+      margin-top: 70px; /* separa del header fijo */
       display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
       background: linear-gradient(90deg, #0077b6, #00b4d8);
       color: #fff; padding: 100px 20px;
     }
     .hero-content { flex: 1; min-width: 280px; max-width: 600px; }
     .hero-content h1 { font-size: 36px; margin-bottom: 16px; }
-    .hero-content p  { font-size: 18px; margin-bottom: 26px; color: rgba(255,255,255,.95); }
+    .hero-content p { font-size: 18px; margin-bottom: 26px; color: rgba(255,255,255,.95); }
     .hero-buttons a {
       display:inline-block; margin-right: 12px; padding: 12px 22px;
       border-radius: 6px; font-weight: bold; text-decoration: none; transition: background .25s ease;
     }
-    .btn-primary   { background:#fff; color:#0077b6; }
+    .btn-primary { background:#fff; color:#0077b6; }
     .btn-primary:hover { background:#e7e7e7; }
     .btn-secondary { background:transparent; color:#fff; border:2px solid #fff; }
     .btn-secondary:hover { background: rgba(255,255,255,.1); }
@@ -67,35 +65,17 @@
       border-radius: 14px; font-size: 16px; font-style: italic;
     }
 
-    /* ============================================================
+    /* =========================
        SECCIONES GENERALES
-       ============================================================ */
+       ========================= */
     section { padding: 80px 20px; text-align: center; }
-    .section-alt { background: #f9f9f9; } /* alterna fondo suave */
+    .section-alt { background: #f9f9f9; }
     h2 { font-size: 2rem; margin-bottom: 14px; }
     section p { max-width: 820px; margin: 0 auto 8px auto; color:#334155; }
 
-    /* ============================================================
-       NOSOTROS (MEJORADO)
-       - Añadimos tarjetas (Visión, Misión, Equipo) manteniendo estilo del sitio
-       ============================================================ */
-    .about-container {
-      display: grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
-      gap: 24px; max-width: 1100px; margin: 36px auto 0; padding: 0 10px;
-    }
-    .about-card {
-      background:#fff; border-radius: 12px; padding: 28px 20px;
-      box-shadow: 0 6px 16px rgba(0,0,0,.08);
-      transition: transform .25s ease, box-shadow .25s ease;
-    }
-    .about-card:hover { transform: translateY(-6px); box-shadow: 0 10px 22px rgba(0,0,0,.12); }
-    .about-card i    { font-size: 40px; color:#0284c7; margin-bottom: 10px; display:block; }
-    .about-card h3   { margin-bottom: 10px; font-size: 1.15rem; }
-    .about-card p    { color:#4b5563; }
-
-    /* ============================================================
+    /* =========================
        BENEFICIOS (tarjetas + íconos)
-       ============================================================ */
+       ========================= */
     .benefits-container {
       display:grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
       gap: 28px; max-width: 1100px; margin: 36px auto 0; padding: 0 10px;
@@ -108,16 +88,16 @@
     .benefit-card:hover { transform: translateY(-6px); box-shadow: 0 10px 22px rgba(0,0,0,.12); }
     .benefit-card i { font-size: 40px; color:#0284c7; margin-bottom: 10px; }
     .benefit-card h3 { margin-bottom: 8px; font-size: 1.15rem; }
-    .benefit-card p  { color:#4b5563; }
+    .benefit-card p { color:#4b5563; }
 
-    /* ============================================================
-       CASOS (carrusel básico con JS puro)
-       ============================================================ */
+    /* =========================
+       CASOS (carrusel básico)
+       ========================= */
     .carousel-container { max-width: 900px; margin: 24px auto 0; position:relative; overflow:hidden; }
-    .carousel-track     { display:flex; transition: transform .5s ease-in-out; }
-    .carousel-item      { min-width:100%; padding: 40px 18px; box-sizing:border-box; }
-    .carousel-item h3   { margin-bottom: 10px; color:#0077b6; }
-    .carousel-item p    { color:#334155; }
+    .carousel-track { display:flex; transition: transform .5s ease-in-out; }
+    .carousel-item { min-width:100%; padding: 40px 18px; box-sizing:border-box; }
+    .carousel-item h3 { margin-bottom: 10px; color:#0077b6; }
+    .carousel-item p { color:#334155; }
     .carousel-btn {
       position:absolute; top:50%; transform:translateY(-50%);
       background:#0077b6; color:#fff; border:none; cursor:pointer;
@@ -126,9 +106,9 @@
     .carousel-btn:hover { background:#005f86; }
     .prev { left: 10px; } .next { right: 10px; }
 
-    /* ============================================================
-       NOVEDADES (tarjetas tipo blog/noticia)
-       ============================================================ */
+    /* =========================
+       NOVEDADES (tarjetas tipo blog)
+       ========================= */
     .news-container {
       display:grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
       gap: 28px; max-width: 1100px; margin: 36px auto 0; padding: 0 10px;
@@ -144,7 +124,7 @@
       display:flex; align-items:center; justify-content:center; font-size: 14px;
     }
     .news-card h3 { margin: 14px 14px 8px 14px; font-size: 1.1rem; }
-    .news-card p  { margin: 0 14px 16px 14px; color:#4b5563; }
+    .news-card p { margin: 0 14px 16px 14px; color:#4b5563; }
     .btn-news {
       display:inline-block; margin: 0 14px 16px 14px; padding: 8px 14px;
       background:#0077b6; color:#fff; text-decoration:none; border-radius: 8px;
@@ -152,12 +132,13 @@
     }
     .btn-news:hover { background:#005f86; }
 
-    /* ============================================================
-       CONTACTO (formulario con validación nativa + JS simulado)
-       ============================================================ */
+    /* =========================
+       CONTACTO (formulario)
+       ========================= */
     .contact-wrapper { max-width: 980px; margin: 28px auto 0; padding: 0 10px; }
-    .contact-intro   { color:#334155; margin-bottom: 14px; }
+    .contact-intro { color:#334155; margin-bottom: 14px; }
 
+    /* Contenedor del formulario en grid: 2 columnas en desktop, 1 en móvil */
     .contact-form {
       background:#fff; border-radius: 12px; padding: 24px;
       box-shadow: 0 6px 16px rgba(0,0,0,.08);
@@ -166,7 +147,7 @@
     .form-row {
       display:grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
     }
-    .form-row + .form-row { margin-top: 14px; } /* espacio entre filas */
+    .form-row + .form-row { margin-top: 14px; } /* espaciado entre filas */
     .form-group { display:flex; flex-direction:column; }
     .form-group label { font-weight: 600; margin-bottom: 6px; color:#0f172a; }
     .form-group input,
@@ -183,7 +164,8 @@
       box-shadow: 0 0 0 3px rgba(2,132,199, .15);
     }
     .form-group textarea { min-height: 140px; resize: vertical; }
-    /* Estados HTML5 de validación */
+
+    /* Estados invalid/valid del navegador (HTML5) */
     .form-group input:invalid[required],
     .form-group textarea:invalid[required] { border-color:#ef4444; }
     .form-group input:valid,
@@ -200,35 +182,35 @@
     }
     .btn-send:hover { background:#005f86; transform: translateY(-2px); box-shadow: 0 10px 22px rgba(0,0,0,.14); }
 
-    /* Mensaje “enviado” (simulado por JS) */
+    /* Mensaje de éxito (se muestra por JS cuando “envía”) */
     .form-success {
       display:none; color:#065f46; background:#d1fae5; border:1px solid #34d399;
       padding:10px 12px; border-radius: 8px; font-size:.95rem;
     }
     .form-success.visible { display:inline-block; }
 
-    /* Honeypot anti-bots: oculto a humanos */
+    /* Honeypot (anti-bots): se mantiene oculto a usuarios humanos */
     .honeypot { position:absolute; left:-9999px; top:-9999px; }
 
-    /* Responsive del formulario: 1 columna en móviles */
+    /* Responsive: formulario a 1 columna en pantallas pequeñas */
     @media (max-width: 720px) {
       .form-row { grid-template-columns: 1fr; }
     }
 
-    /* ============================================================
+    /* =========================
        FOOTER
-       ============================================================ */
+       ========================= */
     footer { background:#111; color:#fff; text-align:center; padding: 20px; margin-top: 14px; }
   </style>
 </head>
 <body>
 
-  <!-- ============================================================
-       NAVBAR (fijo) — Logo + enlaces
-       ============================================================ -->
+  <!-- =========================
+       NAVBAR
+       ========================= -->
   <header>
     <nav>
-      <div class="logo">E3WS</div> <!-- Logo provisional (texto). Luego lo reemplazaremos por SVG/PNG -->
+      <div class="logo">E3WS</div> <!-- Logo provisional en texto (luego será un <img>) -->
       <ul>
         <li><a href="#inicio">Inicio</a></li>
         <li><a href="#nosotros">Nosotros</a></li>
@@ -243,9 +225,9 @@
     </nav>
   </header>
 
-  <!-- ============================================================
-       HERO (portada con CTA y placeholder para imagen/logo)
-       ============================================================ -->
+  <!-- =========================
+       HERO
+       ========================= -->
   <section id="inicio" class="hero">
     <div class="hero-content">
       <h1>Sistema de Alerta Sísmica Temprana</h1>
@@ -260,82 +242,60 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       NOSOTROS (MEJORADO) — Visión, Misión y Equipo en tarjetas
-       ============================================================ -->
-  <section id="nosotros" class="section-alt">
+  <!-- =========================
+       NOSOTROS
+       ========================= -->
+  <section id="nosotros">
     <h2>Nosotros</h2>
     <p>Somos un equipo de ingenieros y científicos comprometidos con la seguridad sísmica y la resiliencia comunitaria.</p>
-
-    <div class="about-container">
-      <!-- Tarjeta: Visión -->
-      <div class="about-card">
-        <i class="fas fa-eye" aria-hidden="true"></i>
-        <h3>Visión</h3>
-        <p>Construir un sistema de alerta sísmica confiable que salve vidas y fortalezca comunidades en toda Latinoamérica.</p>
-      </div>
-      <!-- Tarjeta: Misión -->
-      <div class="about-card">
-        <i class="fas fa-bullseye" aria-hidden="true"></i>
-        <h3>Misión</h3>
-        <p>Desarrollar tecnología avanzada que detecte sismos en tiempo real y brinde a la población segundos vitales para actuar.</p>
-      </div>
-      <!-- Tarjeta: Equipo -->
-      <div class="about-card">
-        <i class="fas fa-users" aria-hidden="true"></i>
-        <h3>Equipo</h3>
-        <p>Ingenieros, científicos y voluntarios unidos con el propósito de reducir riesgos y salvar vidas.</p>
-      </div>
-    </div>
   </section>
 
-  <!-- ============================================================
-       E3WS — Qué es el sistema (se mantiene igual que tu versión estable)
-       ============================================================ -->
+  <!-- =========================
+       E3WS
+       ========================= -->
   <section id="e3ws" class="section-alt">
     <h2>¿Qué es E3WS?</h2>
     <p>E3WS es un sistema de alerta temprana que detecta movimientos sísmicos y envía notificaciones en tiempo real a comunidades, empresas y autoridades.</p>
   </section>
 
-  <!-- ============================================================
-       SISTEMA — Descripción técnica general (igual a versión estable)
-       ============================================================ -->
+  <!-- =========================
+       SISTEMA
+       ========================= -->
   <section id="sistema">
     <h2>Sistema</h2>
     <p>Analizamos ondas P para estimar epicentro, magnitud e impacto con arquitectura distribuida, IA y redundancia.</p>
   </section>
 
-  <!-- ============================================================
-       BENEFICIOS — Tarjetas con íconos (igual a versión estable)
-       ============================================================ -->
+  <!-- =========================
+       BENEFICIOS (tarjetas + íconos)
+       ========================= -->
   <section id="beneficios" class="section-alt">
     <h2>Beneficios</h2>
     <div class="benefits-container">
       <div class="benefit-card">
-        <i class="fas fa-broadcast-tower" aria-hidden="true"></i>
+        <i class="fas fa-broadcast-tower"></i>
         <h3>Alerta en Tiempo Real</h3>
         <p>Notificaciones inmediatas para comunidades, empresas y autoridades.</p>
       </div>
       <div class="benefit-card">
-        <i class="fas fa-city" aria-hidden="true"></i>
+        <i class="fas fa-city"></i>
         <h3>Protección de Infraestructura</h3>
         <p>Reduce daños en hospitales, escuelas y sistemas críticos.</p>
       </div>
       <div class="benefit-card">
-        <i class="fas fa-people-group" aria-hidden="true"></i>
+        <i class="fas fa-people-group"></i>
         <h3>Seguridad Comunitaria</h3>
         <p>Integra protocolos de evacuación y sistemas de respuesta rápida.</p>
       </div>
     </div>
   </section>
 
-  <!-- ============================================================
-       CASOS — Carrusel básico (igual a versión estable)
-       ============================================================ -->
+  <!-- =========================
+       CASOS (carrusel básico)
+       ========================= -->
   <section id="casos">
     <h2>Casos</h2>
     <div class="carousel-container">
-      <!-- Pista que se desplaza horizontalmente -->
       <div class="carousel-track">
         <div class="carousel-item">
           <h3>Ciudad X</h3>
@@ -350,15 +310,15 @@
           <p>Simulacros con vecinos mejoraron tiempos de evacuación.</p>
         </div>
       </div>
-      <!-- Botones para navegar el carrusel -->
+      <!-- Botones del carrusel -->
       <button class="carousel-btn prev" aria-label="Anterior">&#10094;</button>
       <button class="carousel-btn next" aria-label="Siguiente">&#10095;</button>
     </div>
   </section>
 
-  <!-- ============================================================
-       NOVEDADES — Tarjetas estilo noticias (igual a versión estable)
-       ============================================================ -->
+  <!-- =========================
+       NOVEDADES (tarjetas tipo blog)
+       ========================= -->
   <section id="novedades" class="section-alt">
     <h2>Novedades</h2>
     <div class="news-container">
@@ -383,26 +343,26 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       DEMO — Espacio reservado (igual a versión estable)
-       ============================================================ -->
+  <!-- =========================
+       DEMO
+       ========================= -->
   <section id="demo">
     <h2>Demo</h2>
     <p>Espacio para probar la plataforma E3WS en acción (pendiente integrar mapas/visualizaciones).</p>
   </section>
 
-  <!-- ============================================================
-       CONTACTO — Formulario (validación + simulación de envío)
-       ============================================================ -->
+  <!-- =========================
+       CONTACTO (Formulario – maqueta)
+       ========================= -->
   <section id="contacto" class="section-alt">
     <h2>Contacto</h2>
     <p class="contact-intro">¿Tienes dudas o deseas una demo? Escríbenos y te responderemos.</p>
 
     <div class="contact-wrapper">
-      <!-- NOTA: Este <form> NO envía correo todavía. JS simula el envío.
-           PENDIENTE: Conectar a Formspree/Netlify/Getform o backend propio (SMTP del dominio). -->
+      <!-- NOTA: Este <form> aún NO envía correo. JS intercepta el submit y muestra un mensaje de éxito simulado.
+           PENDIENTE: Conectar a un servicio (Formspree/Netlify/Getform) o backend propio para enviar a contacto@e3ws.com -->
       <form id="contactForm" class="contact-form" method="post" novalidate>
-        <!-- Honeypot (anti-bots). Si llega con valor, se descarta. -->
+        <!-- Honeypot (anti-bots): si este campo llega con valor, se ignora el envío -->
         <input type="text" name="company" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
 
         <!-- Fila 1: Nombre + Correo -->
@@ -433,7 +393,7 @@
           </div>
         </div>
 
-        <!-- Acciones: botón y mensaje de éxito (simulado) -->
+        <!-- Acciones: Enviar + mensaje de éxito simulado -->
         <div class="contact-actions">
           <button type="submit" class="btn-send">Enviar</button>
           <span id="formSuccess" class="form-success" role="status" aria-live="polite">
@@ -444,106 +404,86 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       FOOTER — Derechos reservados
-       ============================================================ -->
+  <!-- =========================
+       FOOTER
+       ========================= -->
   <footer>
     <p>&copy; 2025 E3WS - Sistema de Alerta Sísmica Temprana</p>
   </footer>
 
-  <!-- ============================================================
-       SCRIPT: scroll suave + carrusel + formulario simulado
-       ============================================================ -->
   <script>
-    /* ------------------------------------------------------------
-       Scroll suave con corrección por header fijo (~60px)
-       - Intercepta todos los anchors que empiezan con "#"
-       ------------------------------------------------------------ */
+    /* ============================================================
+       Scroll suave (ajusta por la altura del header fijo ~60-70px)
+       ============================================================ */
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener("click", e => {
         const hash = a.getAttribute("href");
-        if (!hash || hash === "#") return;       // ignora enlaces vacíos
+        if (!hash || hash === "#") return;
         const target = document.querySelector(hash);
-        if (!target) return;                      // ignora si no existe el destino
+        if (!target) return;
         e.preventDefault();
-        // Calculamos la posición objetivo y restamos la altura del header fijo
         const top = target.getBoundingClientRect().top + window.scrollY - 60;
         window.scrollTo({ top, behavior: "smooth" });
       });
     });
 
-    /* ------------------------------------------------------------
+    /* =========================
        Carrusel básico (Casos)
-       - Mueve la pista .carousel-track 100% por ítem
-       - Controles: .prev y .next
-       ------------------------------------------------------------ */
+       ========================= */
     const track = document.querySelector(".carousel-track");
-    if (track) {
-      const items = document.querySelectorAll(".carousel-item");
-      const prevBtn = document.querySelector(".prev");
-      const nextBtn = document.querySelector(".next");
-      let index = 0;
+    const items = document.querySelectorAll(".carousel-item");
+    const prevBtn = document.querySelector(".prev");
+    const nextBtn = document.querySelector(".next");
+    let index = 0;
 
-      function updateCarousel() {
-        track.style.transform = `translateX(-${index * 100}%)`;
+    function updateCarousel(){ track.style.transform = `translateX(-${index * 100}%)`; }
+    prevBtn.addEventListener("click", () => { index = (index === 0) ? items.length - 1 : index - 1; updateCarousel(); });
+    nextBtn.addEventListener("click", () => { index = (index === items.length - 1) ? 0 : index + 1; updateCarousel(); });
+
+    /* =================================================================
+       Formulario de Contacto (MAQUETA)
+       - Interceptamos el submit, validamos y mostramos un mensaje "OK".
+       - PENDIENTE: Conectar a un servicio o backend para enviar correo.
+       ================================================================= */
+    const form = document.getElementById("contactForm");
+    const successEl = document.getElementById("formSuccess");
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      // Anti-bot: si el honeypot tiene algo, abortar
+      const honey = form.querySelector('input[name="company"]');
+      if (honey && honey.value.trim() !== "") return;
+
+      // Validación nativa: si algún campo required/regex falla, parar
+      if (!form.checkValidity()) {
+        form.reportValidity(); // Muestra mensajes nativos del navegador
+        return;
       }
 
-      prevBtn.addEventListener("click", () => {
-        index = (index === 0) ? items.length - 1 : index - 1;
-        updateCarousel();
-      });
+      // Simulación de “envío OK”
+      successEl.classList.add("visible");
 
-      nextBtn.addEventListener("click", () => {
-        index = (index === items.length - 1) ? 0 : index + 1;
-        updateCarousel();
-      });
-    }
+      // Si quieres "resetear" el form tras el OK, descomenta:
+      // form.reset();
 
-    /* ------------------------------------------------------------
-       Formulario de contacto (MAQUETA)
-       - Valida con HTML5 y muestra mensaje "enviado" (simulado)
-       - Pendiente: integrar endpoint real (Formspree/Netlify/SMTP propio)
-       ------------------------------------------------------------ */
-    const form = document.getElementById("contactForm");
-    if (form) {
-      const successEl = document.getElementById("formSuccess");
+      // [PENDIENTE] Aquí iría el fetch() a Formspree/Netlify/Backend propio
+      // fetch("TU_ENDPOINT_AQUI", { method:"POST", body: new FormData(form) })
+      //   .then(r => r.ok ? ... : ...)
+      //   .catch(err => ...);
+    });
 
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
-
-        // Honeypot: si el bot llena este campo oculto, no hacemos nada
-        const honey = form.querySelector('input[name="company"]');
-        if (honey && honey.value.trim() !== "") return;
-
-        // Validación nativa: si falla, mostramos mensajes del navegador
-        if (!form.checkValidity()) {
-          form.reportValidity();
-          return;
-        }
-
-        // Simulación de envío correcto
-        successEl.classList.add("visible");
-
-        // Si quieres limpiar el formulario tras el OK, descomenta:
-        // form.reset();
-
-        // [PENDIENTE] Aquí iría el fetch() al servicio/endpoint real:
-        // fetch("TU_ENDPOINT_AQUI", { method:"POST", body: new FormData(form) })
-        //   .then(r => r.ok ? ... : ...)
-        //   .catch(err => ...);
-      });
-    }
-
-    /* ------------------------------------------------------------
-       Recordatorio de pendientes (para tu hoja de ruta)
+    /* ============================================
+       PENDIENTES anotados (para tu hoja de ruta):
        1) Conectar formulario a contacto@e3ws.com
        2) Reemplazar imágenes placeholder (Hero, Casos, Novedades)
        3) Logo SVG definitivo en la barra de navegación
        4) (Opcional) Cambiar carrusel a Swiper.js
-       ------------------------------------------------------------ */
+       ============================================ */
   </script>
 </body>
 </html>
+
 
 
 
