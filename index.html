@@ -40,7 +40,7 @@
     img{display:block;max-width:100%;height:auto}
 
     /* ===========================================
-       3) NAVBAR FIJO (logo + enlaces + redes)
+       3) NAVBAR FIJO (logo + enlaces + redes + hamburguesa)
        =========================================== */
     header{
       position:fixed; top:0; left:0; width:100%;
@@ -53,6 +53,26 @@
       padding:12px 20px; gap:18px;
     }
     .logo img{ height:52px; }
+
+    /* Botón hamburguesa (oculto en desktop) */
+    .nav-toggle{
+      display:none;
+      background:none; border:0; color:#fff; cursor:pointer;
+      width:40px; height:40px; border-radius:8px;
+      align-items:center; justify-content:center;
+    }
+    .nav-toggle:focus-visible{ outline:2px solid #fff; outline-offset:2px; }
+    .nav-toggle .bar{
+      width:22px; height:2px; background:#fff; display:block; margin:3px 0;
+      transition:transform .2s ease, opacity .2s ease;
+    }
+    .nav-toggle[aria-expanded="true"] .bar:nth-child(1){ transform: translateY(5px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] .bar:nth-child(2){ opacity:0; }
+    .nav-toggle[aria-expanded="true"] .bar:nth-child(3){ transform: translateY(-5px) rotate(-45deg); }
+
+    .nav-wrapper{
+      display:flex; align-items:center; gap:18px; flex:1; justify-content:flex-end;
+    }
 
     .nav-links{
       display:flex; align-items:center; gap:18px; flex-wrap:wrap;
@@ -70,6 +90,29 @@
       transition: background .25s ease;
     }
     .nav-social a:hover{ background:#1f2937; }
+
+    /* ====== NAV: comportamiento móvil ====== */
+    @media (max-width: 900px){
+      .nav-toggle{ display:flex; }
+      .nav-wrapper{
+        position:absolute; top:100%; left:0; right:0;
+        background:var(--nav);
+        flex-direction:column; align-items:stretch;
+        padding:0 16px;
+        max-height:0; overflow:hidden;
+        transition:max-height .3s ease;
+        border-top:1px solid rgba(255,255,255,0.12);
+      }
+      .nav-wrapper.open{ max-height:500px; } /* suficiente para el contenido */
+
+      .nav-links{
+        flex-direction:column; align-items:stretch; gap:6px;
+        padding:10px 0;
+      }
+      .nav-links a{ padding:12px 10px; }
+
+      .nav-social{ display:flex; gap:12px; padding:8px 0 14px; }
+    }
 
     /* ===========================================
        4) HERO FULL-BLEED (slider automático)
@@ -230,15 +273,6 @@
        11) RESPONSIVE MÓVIL (P1 – Parche)
        =========================================== */
     @media (max-width: 720px) {
-      /* Menú: sin solaparse + más respiración */
-      nav { flex-wrap: wrap; row-gap: 8px; }
-      .nav-social { display: none; } /* ocultamos redes en header móvil */
-      .nav-links{
-        width:100%; justify-content:space-between; gap:8px;
-        padding:6px 0 2px; border-top:1px solid rgba(255,255,255,0.10);
-      }
-      .nav-links a{ padding:10px 8px; border-radius:6px; }
-
       /* Hero flexible: evita corte de botones/texto */
       .hero{
         height:auto; min-height:60vh; padding:42px 16px 56px;
@@ -275,22 +309,31 @@
         <img src="img/logo-claro.png" alt="E3WS - Logo">
       </div>
 
-      <div class="nav-links" role="navigation" aria-label="Secciones">
-        <a href="#inicio" class="active">Inicio</a>
-        <a href="#nosotros">Nosotros</a>
-        <a href="#e3ws">E3WS</a>
-        <a href="#sistema">Sistema</a>
-        <a href="#beneficios">Beneficios</a>
-        <a href="#casos">Casos</a>
-        <a href="#novedades">Novedades</a>
-        <a href="#demo">Demo</a>
-        <a href="#contacto">Contacto</a>
-      </div>
+      <!-- Botón hamburguesa -->
+      <button class="nav-toggle" aria-label="Abrir menú" aria-controls="navWrapper" aria-expanded="false">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </button>
 
-      <div class="nav-social" aria-label="Redes sociales">
-        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <!-- Contenedor colapsable en móvil -->
+      <div id="navWrapper" class="nav-wrapper">
+        <div class="nav-links" role="navigation" aria-label="Secciones">
+          <a href="#inicio" class="active">Inicio</a>
+          <a href="#nosotros">Nosotros</a>
+          <a href="#e3ws">E3WS</a>
+          <a href="#sistema">Sistema</a>
+          <a href="#beneficios">Beneficios</a>
+          <a href="#casos">Casos</a>
+          <a href="#novedades">Novedades</a>
+          <a href="#demo">Demo</a>
+          <a href="#contacto">Contacto</a>
+        </div>
+
+        <!-- Redes (se muestran dentro del panel en móvil) -->
+        <div class="nav-social" aria-label="Redes sociales">
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
       </div>
     </nav>
   </header>
@@ -494,8 +537,34 @@
     <p>&copy; 2025 E3WS - Sistema de Alerta Sísmica Temprana</p>
   </footer>
 
-  <!-- ===== JS: scroll suave, activo de menú, animaciones, slider y carrusel ===== -->
+  <!-- ===== JS: nav móvil, scroll suave, activo de menú, animaciones, slider y carrusel ===== -->
   <script>
+    /* 0) Menú hamburguesa accesible */
+    const toggle = document.querySelector('.nav-toggle');
+    const wrapper = document.getElementById('navWrapper');
+    if (toggle && wrapper) {
+      toggle.addEventListener('click', () => {
+        const expanded = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!expanded));
+        wrapper.classList.toggle('open', !expanded);
+      });
+      // Cierra con ESC
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && wrapper.classList.contains('open')) {
+          toggle.setAttribute('aria-expanded', 'false');
+          wrapper.classList.remove('open');
+          toggle.focus();
+        }
+      });
+      // Cierra al navegar a una sección (en móvil)
+      wrapper.querySelectorAll('.nav-links a').forEach(a=>{
+        a.addEventListener('click', ()=>{
+          toggle.setAttribute('aria-expanded','false');
+          wrapper.classList.remove('open');
+        });
+      });
+    }
+
     /* 1) Scroll suave con compensación por header fijo */
     document.querySelectorAll('a[href^="#"]').forEach(a=>{
       a.addEventListener("click", e=>{
@@ -562,12 +631,13 @@
         if(honey && honey.value.trim()!=="") return;          // bot
         if(!form.checkValidity()){ form.reportValidity(); return; }
         ok.classList.add("visible");                           // simulación OK
-        // PENDIENTE: integrar servicio real (Formspree/Netlify/Backend)
+        // PENDIENTIENTE: integrar servicio real (Formspree/Netlify/Backend)
       });
     }
   </script>
 </body>
 </html>
+
 
 
 
