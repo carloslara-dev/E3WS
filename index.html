@@ -71,13 +71,10 @@
 
     /* offcanvas menu (mobile) */
     .offcanvas{
-      position:fixed; right:0; bottom:0; left:auto;
-      width:100%; max-width:360px;
-      background:#0b0f16; color:#fff;
-      transform:translateX(100%);
-      transition:transform .3s ease; z-index:1500; /* por encima del header */
+      position:fixed; inset:64px 0 0 auto; width:100%; max-width:360px;
+      background:#0b0f16; color:#fff; transform:translateX(100%);
+      transition:transform .3s ease; z-index:999;
       box-shadow:-12px 0 30px rgba(0,0,0,.35);
-      /* el "top" se ajusta por JS = altura real del header */
     }
     .offcanvas.open{transform:translateX(0)}
     .off-body{padding:18px}
@@ -86,7 +83,6 @@
       color:#fff; text-decoration:none; font-weight:700;
       padding:14px 14px; border-radius:12px; background:#0f172a;
     }
-    .off-links a:active{background:#192235}
     .off-social{display:flex; gap:12px}
 
     /* ==============================
@@ -146,30 +142,43 @@
     }
     .btn-link:hover{background:#005f86}
 
-    /* Beneficios (íconos SVG inline, seguros contra “corte”) */
+    /* Beneficios (íconos locales SVG) -------- FIX visual "recorte" -------- */
     .benefits{grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); max-width:1100px; margin:36px auto 0}
-    .benefit{padding:26px 20px}
-    .benefit .ico{width:46px; height:46px; display:block}
-    .benefit h3{margin:8px 0 6px; font-size:1.1rem}
-    .benefit p{color:#4b5563}
+    .benefit{padding:26px 20px; display:flex; gap:16px; align-items:flex-start}
+    .benefit .ico-wrap{
+      width:56px; height:56px; flex:0 0 56px;
+      display:grid; place-items:center;
+      border-radius:12px; background:#eef6fb;
+    }
+    .benefit .ico{
+      width:40px; height:40px;
+      /* para SVG no aplica object-fit, pero mantenemos tamaño controlado */
+      display:block;
+    }
+    .benefit h3{margin:4px 0 6px; font-size:1.1rem}
+    .benefit p{color:#4b5563; margin:0}
 
-    /* Casos (carrusel simple) */
+    /* Casos (carrusel simple) -------- FIX texto cortado en móvil -------- */
     .carousel{max-width:900px; margin:24px auto 0; position:relative; overflow:hidden}
     .track{display:flex; transition:transform .5s ease-in-out}
-    .item{min-width:100%; padding:38px 18px; box-sizing:border-box}
+    .item{
+      min-width:100%;
+      padding:38px 88px;            /* más “gutter” para que no tapen las flechas */
+      box-sizing:border-box;
+    }
     .item h3{margin:0 0 8px; color:var(--brand)}
     .item p{
-      color:var(--muted);
-      overflow-wrap: break-word;   /* evita desbordes */
-      word-break: normal;          /* no cortar dentro de palabras normales */
-      hyphens: manual;             /* no insertar guiones automáticos */
+      margin:0;
+      overflow-wrap:anywhere;       /* evita cortes extraños */
+      word-break:normal;
+      hyphens:auto;
     }
     .nav-btn{
       position:absolute; top:50%; transform:translateY(-50%);
       background:var(--brand); color:#fff; border:none; width:44px; height:44px;
-      border-radius:50%; cursor:pointer
+      border-radius:50%; cursor:pointer; z-index:2;
     }
-    .prev{left:10px} .next{right:10px}
+    .prev{left:18px} .next{right:18px}
 
     /* Contacto */
     .contact{max-width:980px; margin:28px auto 0}
@@ -205,14 +214,16 @@
     @media (max-width:720px){
       .hero{height:480px}
       .row{grid-template-columns:1fr}
-      .off-links a{padding:12px 12px}
+      /* más margen lateral en móvil para separar texto de flechas */
+      .item{padding:32px 96px}
+      .nav-btn{width:48px;height:48px}
     }
   </style>
 </head>
 <body>
 
   <!-- ================= HEADER ================= -->
-  <header id="site-header">
+  <header>
     <div class="nav-wrap">
       <a class="brand" href="#inicio" aria-label="Ir al inicio">
         <img src="img/logo-claro.png" alt="E3WS - Logo" />
@@ -267,13 +278,13 @@
           <a href="#contacto">Contacto</a>
         </nav>
         <div class="off-social">
-          <a class="icon-btn" href="#" aria-label="LinkedIn" title="LinkedIn">
+          <a class="icon-btn" href="#" aria-label="LinkedIn">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8.98h5V24H0V8.98zM8.34 8.98h4.78v2.05h.07c.67-1.27 2.3-2.6 4.73-2.6 5.06 0 6 3.33 6 7.66V24h-5v-6.77c0-1.61-.03-3.68-2.24-3.68-2.24 0-2.59 1.75-2.59 3.56V24h-5V8.98z"/></svg>
           </a>
-          <a class="icon-btn" href="#" aria-label="Facebook" title="Facebook">
+          <a class="icon-btn" href="#" aria-label="Facebook">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7h-2v-3h2v-2.3c0-2 1.2-3.1 3-3.1.9 0 1.8.16 1.8.16v2h-1c-1 0-1.3.63-1.3 1.3V12h2.2l-.35 3h-1.85v7A10 10 0 0 0 22 12z"/></svg>
           </a>
-          <a class="icon-btn" href="#" aria-label="Instagram" title="Instagram">
+          <a class="icon-btn" href="#" aria-label="Instagram">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5A6.5 6.5 0 1 1 5.5 14 6.5 6.5 0 0 1 12 7.5zm0 2A4.5 4.5 0 1 0 16.5 14 4.5 4.5 0 0 0 12 9.5zM18 6.3a1 1 0 1 1-1.41 1.41A1 1 0 0 1 18 6.3z"/></svg>
           </a>
         </div>
@@ -344,36 +355,48 @@
     <h2 id="h-beneficios">Beneficios</h2>
     <div class="grid benefits">
       <article class="card benefit">
-        <!-- Torre (broadcast) -->
-        <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M12 3v18M7 21h10M9 17l3-7 3 7" stroke="#0284c7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M5 8a7 7 0 0 1 14 0M7 10a5 5 0 0 1 10 0" stroke="#0284c7" stroke-width="2" stroke-linecap="round" fill="none"/>
-        </svg>
-        <h3>Alerta en Tiempo Real</h3>
-        <p>Notificaciones inmediatas para comunidades, empresas y autoridades.</p>
+        <div class="ico-wrap">
+          <!-- Torre (broadcast) -->
+          <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 3v18M7 21h10M9 17l3-7 3 7" stroke="#0284c7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M5 8a7 7 0 0 1 14 0M7 10a5 5 0 0 1 10 0" stroke="#0284c7" stroke-width="2" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Alerta en Tiempo Real</h3>
+          <p>Notificaciones inmediatas para comunidades, empresas y autoridades.</p>
+        </div>
       </article>
 
       <article class="card benefit">
-        <!-- Ciudad -->
-        <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <rect x="3" y="8" width="6" height="12" rx="1.5" stroke="#0284c7" stroke-width="2"/>
-          <rect x="11" y="4" width="6" height="16" rx="1.5" stroke="#0284c7" stroke-width="2"/>
-          <rect x="19" y="10" width="2" height="10" rx="1" fill="#0284c7"/>
-          <path d="M5 11h2M5 14h2M5 17h2M13 7h2M13 10h2M13 13h2M13 16h2" stroke="#0284c7" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        <h3>Protección de Infraestructura</h3>
-        <p>Reduce daños en hospitales, escuelas y sistemas críticos.</p>
+        <div class="ico-wrap">
+          <!-- Ciudad -->
+          <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="3" y="8" width="6" height="12" rx="1.5" stroke="#0284c7" stroke-width="2"/>
+            <rect x="11" y="4" width="6" height="16" rx="1.5" stroke="#0284c7" stroke-width="2"/>
+            <rect x="19" y="10" width="2" height="10" rx="1" fill="#0284c7"/>
+            <path d="M5 11h2M5 14h2M5 17h2M13 7h2M13 10h2M13 13h2M13 16h2" stroke="#0284c7" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Protección de Infraestructura</h3>
+          <p>Reduce daños en hospitales, escuelas y sistemas críticos.</p>
+        </div>
       </article>
 
       <article class="card benefit">
-        <!-- Personas -->
-        <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <circle cx="7" cy="7" r="3" stroke="#0284c7" stroke-width="2"/>
-          <circle cx="17" cy="7" r="3" stroke="#0284c7" stroke-width="2"/>
-          <path d="M3 20a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4M11 20a5 5 0 0 1 5-5h1a5 5 0 0 1 5 5" stroke="#0284c7" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        <h3>Seguridad Comunitaria</h3>
-        <p>Integra protocolos de evacuación y sistemas de respuesta rápida.</p>
+        <div class="ico-wrap">
+          <!-- Personas -->
+          <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="7" cy="7" r="3" stroke="#0284c7" stroke-width="2"/>
+            <circle cx="17" cy="7" r="3" stroke="#0284c7" stroke-width="2"/>
+            <path d="M3 20a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4M11 20a5 5 0 0 1 5-5h1a5 5 0 0 1 5 5" stroke="#0284c7" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Seguridad Comunitaria</h3>
+          <p>Integra protocolos de evacuación y sistemas de respuesta rápida.</p>
+        </div>
       </article>
     </div>
   </section>
@@ -475,16 +498,6 @@
   </footer>
 
   <script>
-    // Sincroniza el "top" del offcanvas con la altura real del header (para que nunca tape la barra)
-    const headerEl = document.getElementById("site-header");
-    const offcanvas = document.getElementById("offcanvas");
-    function adjustOffcanvasTop(){
-      const h = headerEl?.offsetHeight || 72;
-      offcanvas.style.top = h + "px";
-    }
-    window.addEventListener("load", adjustOffcanvasTop);
-    window.addEventListener("resize", adjustOffcanvasTop);
-
     // 1) Scroll suave compensando el header fijo
     document.querySelectorAll('a[href^="#"]').forEach(a=>{
       a.addEventListener("click", e=>{
@@ -493,7 +506,7 @@
         const el=document.querySelector(id);
         if(!el) return;
         e.preventDefault();
-        const offset=(headerEl?.offsetHeight||72)-2;
+        const offset=(document.querySelector("header")?.offsetHeight||72)-2;
         const top=el.getBoundingClientRect().top+window.scrollY-offset;
         window.scrollTo({top,behavior:"smooth"});
         // cerrar offcanvas en móvil al hacer click
@@ -501,7 +514,7 @@
       });
     });
 
-    // 2) Resaltar enlace activo (solo barra desktop)
+    // 2) Resaltar enlace activo
     const sections=document.querySelectorAll("section[id]");
     const links=document.querySelectorAll(".nav-links a[href^='#']");
     const io=new IntersectionObserver((entries)=>{
@@ -532,20 +545,20 @@
       slides[s].classList.add('active');
     },6000);
 
-    // 5) Carrusel Casos
+    // 5) Carrusel Casos (con gutters para no tapar texto)
     const track=document.getElementById("track");
     const items=document.querySelectorAll(".item");
     const prev=document.getElementById("prev");
     const next=document.getElementById("next");
     let i=0;
     function move(){ track.style.transform=`translateX(-${i*100}%)`; }
-    prev?.addEventListener("click",()=>{ i=(i===0)?items.length-1:i-1; move(); });
-    next?.addEventListener("click",()=>{ i=(i===items.length-1)?0:i+1; move(); });
+    prev.addEventListener("click",()=>{ i=(i===0)?items.length-1:i-1; move(); });
+    next.addEventListener("click",()=>{ i=(i===items.length-1)?0:i+1; move(); });
 
     // 6) Form maqueta
     const form=document.getElementById("contactForm");
     const ok=document.getElementById("ok");
-    form?.addEventListener("submit",(e)=>{
+    form.addEventListener("submit",(e)=>{
       e.preventDefault();
       const honey=form.querySelector('input[name="company"]');
       if(honey && honey.value.trim()!=="") return;
@@ -553,11 +566,11 @@
       ok.classList.add("visible");
     });
 
-    // 7) Offcanvas móvil (abrir/cerrar)
+    // 7) Offcanvas móvil
     const burger=document.getElementById("burger");
-    burger?.addEventListener("click",()=>{ offcanvas.classList.toggle("open"); });
-
-    // cerrar si tocas fuera (simple)
+    const offcanvas=document.getElementById("offcanvas");
+    burger.addEventListener("click",()=>{ offcanvas.classList.toggle("open"); });
+    // cerrar si tocas fuera
     document.addEventListener("click",(e)=>{
       if(!offcanvas.classList.contains("open")) return;
       const inAside = e.target.closest("#offcanvas");
@@ -567,22 +580,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
