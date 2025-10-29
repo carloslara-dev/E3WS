@@ -19,6 +19,7 @@
       --alt:#f7f8fa;
       --shadow:0 8px 22px rgba(0,0,0,.10);
       --radius:12px;
+      --blue-ico:#0284c7;
     }
 
     /* ==============================
@@ -55,13 +56,15 @@
     }
     .nav-links a:hover,.nav-links a.active{background:var(--brand)}
 
-    /* social (SVGs inline) */
+    /* social desktop (inline SVGs locales) */
     .nav-social{display:flex; gap:10px; margin-left:8px}
     .icon-btn{
       width:34px;height:34px;border-radius:50%;
       display:grid;place-items:center; color:#fff; text-decoration:none;
+      background:transparent;
     }
     .icon-btn:hover{background:#1f2937}
+    .icon-btn svg{display:block}
 
     /* hamburger */
     .burger{
@@ -142,43 +145,34 @@
     }
     .btn-link:hover{background:#005f86}
 
-    /* Beneficios (íconos locales SVG) -------- FIX visual "recorte" -------- */
+    /* Beneficios (iconos locales SVG) */
     .benefits{grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); max-width:1100px; margin:36px auto 0}
-    .benefit{padding:26px 20px; display:flex; gap:16px; align-items:flex-start}
-    .benefit .ico-wrap{
-      width:56px; height:56px; flex:0 0 56px;
-      display:grid; place-items:center;
-      border-radius:12px; background:#eef6fb;
-    }
-    .benefit .ico{
-      width:40px; height:40px;
-      /* para SVG no aplica object-fit, pero mantenemos tamaño controlado */
-      display:block;
-    }
-    .benefit h3{margin:4px 0 6px; font-size:1.1rem}
-    .benefit p{color:#4b5563; margin:0}
+    .benefit{padding:26px 20px}
+    .benefit .ico{width:50px; height:50px; margin-bottom:8px}
+    .benefit h3{margin:8px 0 6px; font-size:1.1rem}
+    .benefit p{color:#4b5563}
 
-    /* Casos (carrusel simple) -------- FIX texto cortado en móvil -------- */
-    .carousel{max-width:900px; margin:24px auto 0; position:relative; overflow:hidden}
+    /* Casos (carrusel simple) */
+    .carousel{
+      max-width:900px; margin:24px auto 0; position:relative; overflow:hidden;
+      padding:0 56px;              /* deja espacio lateral para las flechas */
+    }
     .track{display:flex; transition:transform .5s ease-in-out}
     .item{
-      min-width:100%;
-      padding:38px 88px;            /* más “gutter” para que no tapen las flechas */
-      box-sizing:border-box;
+      min-width:100%; box-sizing:border-box; padding:38px 18px;
     }
     .item h3{margin:0 0 8px; color:var(--brand)}
     .item p{
-      margin:0;
-      overflow-wrap:anywhere;       /* evita cortes extraños */
+      margin:0; 
+      overflow-wrap:anywhere;      /* evita cortes de palabra en móvil */
       word-break:normal;
-      hyphens:auto;
     }
     .nav-btn{
       position:absolute; top:50%; transform:translateY(-50%);
       background:var(--brand); color:#fff; border:none; width:44px; height:44px;
       border-radius:50%; cursor:pointer; z-index:2;
     }
-    .prev{left:18px} .next{right:18px}
+    .prev{left:6px} .next{right:6px}
 
     /* Contacto */
     .contact{max-width:980px; margin:28px auto 0}
@@ -208,15 +202,14 @@
        5) RESPONSIVE
        ============================== */
     @media (max-width:1024px){
-      .nav-links,.nav-social{display:none}
+      .nav-links{display:none}
+      .nav-social{display:none}  /* redes pasan al offcanvas */
       .burger{display:block}
     }
     @media (max-width:720px){
       .hero{height:480px}
       .row{grid-template-columns:1fr}
-      /* más margen lateral en móvil para separar texto de flechas */
-      .item{padding:32px 96px}
-      .nav-btn{width:48px;height:48px}
+      .carousel{padding:0 46px}  /* un poco menos en móviles estrechos */
     }
   </style>
 </head>
@@ -245,13 +238,13 @@
       <!-- redes desktop (SVGs locales inline) -->
       <div class="nav-social" aria-label="Redes sociales">
         <a class="icon-btn" href="#" aria-label="LinkedIn" title="LinkedIn">
-          <svg class="ico" width="18" height="18" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8.98h5V24H0V8.98zM8.34 8.98h4.78v2.05h.07c.67-1.27 2.3-2.6 4.73-2.6 5.06 0 6 3.33 6 7.66V24h-5v-6.77c0-1.61-.03-3.68-2.24-3.68-2.24 0-2.59 1.75-2.59 3.56V24h-5V8.98z"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8.98h5V24H0V8.98zM8.34 8.98h4.78v2.05h.07c.67-1.27 2.3-2.6 4.73-2.6 5.06 0 6 3.33 6 7.66V24h-5v-6.77c0-1.61-.03-3.68-2.24-3.68-2.24 0-2.59 1.75-2.59 3.56V24h-5V8.98z"/></svg>
         </a>
         <a class="icon-btn" href="#" aria-label="Facebook" title="Facebook">
-          <svg class="ico" width="18" height="18" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7h-2v-3h2v-2.3c0-2 1.2-3.1 3-3.1.9 0 1.8.16 1.8.16v2h-1c-1 0-1.3.63-1.3 1.3V12h2.2l-.35 3h-1.85v7A10 10 0 0 0 22 12z"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7h-2v-3h2v-2.3c0-2 1.2-3.1 3-3.1.9 0 1.8.16 1.8.16v2h-1c-1 0-1.3.63-1.3 1.3V12h2.2l-.35 3h-1.85v7A10 10 0 0 0 22 12z"/></svg>
         </a>
         <a class="icon-btn" href="#" aria-label="Instagram" title="Instagram">
-          <svg class="ico" width="18" height="18" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5A6.5 6.5 0 1 1 5.5 14 6.5 6.5 0 0 1 12 7.5zm0 2A4.5 4.5 0 1 0 16.5 14 4.5 4.5 0 0 0 12 9.5zM18 6.3a1 1 0 1 1-1.41 1.41A1 1 0 0 1 18 6.3z"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5.5A6.5 6.5 0 1 1 5.5 14 6.5 6.5 0 0 1 12 7.5zm6-1.2a1 1 0 1 1-1.41 1.41A1 1 0 0 1 18 6.3z"/></svg>
         </a>
       </div>
 
@@ -278,14 +271,14 @@
           <a href="#contacto">Contacto</a>
         </nav>
         <div class="off-social">
-          <a class="icon-btn" href="#" aria-label="LinkedIn">
+          <a class="icon-btn" href="#" aria-label="LinkedIn" title="LinkedIn">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8.98h5V24H0V8.98zM8.34 8.98h4.78v2.05h.07c.67-1.27 2.3-2.6 4.73-2.6 5.06 0 6 3.33 6 7.66V24h-5v-6.77c0-1.61-.03-3.68-2.24-3.68-2.24 0-2.59 1.75-2.59 3.56V24h-5V8.98z"/></svg>
           </a>
-          <a class="icon-btn" href="#" aria-label="Facebook">
+          <a class="icon-btn" href="#" aria-label="Facebook" title="Facebook">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7h-2v-3h2v-2.3c0-2 1.2-3.1 3-3.1.9 0 1.8.16 1.8.16v2h-1c-1 0-1.3.63-1.3 1.3V12h2.2l-.35 3h-1.85v7A10 10 0 0 0 22 12z"/></svg>
           </a>
-          <a class="icon-btn" href="#" aria-label="Instagram">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5A6.5 6.5 0 1 1 5.5 14 6.5 6.5 0 0 1 12 7.5zm0 2A4.5 4.5 0 1 0 16.5 14 4.5 4.5 0 0 0 12 9.5zM18 6.3a1 1 0 1 1-1.41 1.41A1 1 0 0 1 18 6.3z"/></svg>
+          <a class="icon-btn" href="#" aria-label="Instagram" title="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5.5A6.5 6.5 0 1 1 5.5 14 6.5 6.5 0 0 1 12 7.5zM18 6.3a1 1 0 1 1-1.41 1.41A1 1 0 0 1 18 6.3z"/></svg>
           </a>
         </div>
       </div>
@@ -355,48 +348,21 @@
     <h2 id="h-beneficios">Beneficios</h2>
     <div class="grid benefits">
       <article class="card benefit">
-        <div class="ico-wrap">
-          <!-- Torre (broadcast) -->
-          <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M12 3v18M7 21h10M9 17l3-7 3 7" stroke="#0284c7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M5 8a7 7 0 0 1 14 0M7 10a5 5 0 0 1 10 0" stroke="#0284c7" stroke-width="2" stroke-linecap="round" fill="none"/>
-          </svg>
-        </div>
-        <div>
-          <h3>Alerta en Tiempo Real</h3>
-          <p>Notificaciones inmediatas para comunidades, empresas y autoridades.</p>
-        </div>
+        <img class="ico" src="img/icons/tower-broadcast.svg" alt="Alerta en Tiempo Real">
+        <h3>Alerta en Tiempo Real</h3>
+        <p>Notificaciones inmediatas para comunidades, empresas y autoridades.</p>
       </article>
 
       <article class="card benefit">
-        <div class="ico-wrap">
-          <!-- Ciudad -->
-          <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <rect x="3" y="8" width="6" height="12" rx="1.5" stroke="#0284c7" stroke-width="2"/>
-            <rect x="11" y="4" width="6" height="16" rx="1.5" stroke="#0284c7" stroke-width="2"/>
-            <rect x="19" y="10" width="2" height="10" rx="1" fill="#0284c7"/>
-            <path d="M5 11h2M5 14h2M5 17h2M13 7h2M13 10h2M13 13h2M13 16h2" stroke="#0284c7" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <div>
-          <h3>Protección de Infraestructura</h3>
-          <p>Reduce daños en hospitales, escuelas y sistemas críticos.</p>
-        </div>
+        <img class="ico" src="img/icons/building-shield.svg" alt="Protección de Infraestructura">
+        <h3>Protección de Infraestructura</h3>
+        <p>Reduce daños en hospitales, escuelas y sistemas críticos.</p>
       </article>
 
       <article class="card benefit">
-        <div class="ico-wrap">
-          <!-- Personas -->
-          <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <circle cx="7" cy="7" r="3" stroke="#0284c7" stroke-width="2"/>
-            <circle cx="17" cy="7" r="3" stroke="#0284c7" stroke-width="2"/>
-            <path d="M3 20a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4M11 20a5 5 0 0 1 5-5h1a5 5 0 0 1 5 5" stroke="#0284c7" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <div>
-          <h3>Seguridad Comunitaria</h3>
-          <p>Integra protocolos de evacuación y sistemas de respuesta rápida.</p>
-        </div>
+        <img class="ico" src="img/icons/people-group.svg" alt="Seguridad Comunitaria">
+        <h3>Seguridad Comunitaria</h3>
+        <p>Integra protocolos de evacuación y sistemas de respuesta rápida.</p>
       </article>
     </div>
   </section>
@@ -545,7 +511,7 @@
       slides[s].classList.add('active');
     },6000);
 
-    // 5) Carrusel Casos (con gutters para no tapar texto)
+    // 5) Carrusel Casos
     const track=document.getElementById("track");
     const items=document.querySelectorAll(".item");
     const prev=document.getElementById("prev");
@@ -570,7 +536,7 @@
     const burger=document.getElementById("burger");
     const offcanvas=document.getElementById("offcanvas");
     burger.addEventListener("click",()=>{ offcanvas.classList.toggle("open"); });
-    // cerrar si tocas fuera
+    // cerrar si tocas fuera (simple)
     document.addEventListener("click",(e)=>{
       if(!offcanvas.classList.contains("open")) return;
       const inAside = e.target.closest("#offcanvas");
