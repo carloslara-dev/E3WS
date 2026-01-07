@@ -180,25 +180,34 @@
     /* ===============================
        CASOS (carrusel simple)
        =============================== */
-    .carousel{max-width:900px; margin:24px auto 0; position:relative; overflow:hidden}
+    .carousel{
+      max-width:900px; margin:24px auto 0; position:relative; overflow:hidden;
+
+      /* ✅ FIX PRINCIPAL: reserva espacio para que los botones NO tapen el texto */
+      padding: 0 64px;
+    }
     .track{display:flex; transition:transform .5s ease-in-out}
     .item{min-width:100%; padding:38px 18px; box-sizing:border-box}
 
-    /* ✅ FIX: texto en carrusel (evitar cortes raros en móvil) */
-    .item h3, .item p{
-      color:var(--muted);
-      word-break: normal;
-      overflow-wrap: break-word;   /* permite romper si es necesario */
-      hyphens: auto;               /* permite guionado natural en ES (según navegador) */
-      white-space: normal;
-    }
     .item h3{margin:0 0 8px; color:var(--brand)}
+    .item p{
+      color:var(--muted);
+      overflow-wrap: break-word;
+      word-break: normal;
+      hyphens: auto;
+      white-space: normal;
+      line-height: 1.65;
+      margin: 0;
+    }
 
     .nav-btn{
       position:absolute; top:50%; transform:translateY(-50%);
-      background:var(--brand); color:#fff; border:none; width:44px; height:44px; border-radius:50%; cursor:pointer
+      background:var(--brand); color:#fff; border:none; width:44px; height:44px; border-radius:50%;
+      cursor:pointer;
+      z-index:2; /* ✅ asegura que queden encima del track */
     }
-    .prev{left:10px} .next{right:10px}
+    .prev{left:12px}
+    .next{right:12px}
 
     /* ===============================
        NOVEDADES (cards)
@@ -242,9 +251,10 @@
       .hero{height:480px}
       .row{grid-template-columns:1fr}
 
-      /* ✅ FIX adicional carrusel en pantallas chicas */
-      .item{padding:32px 16px}
-      .item p{font-size:1rem; line-height:1.65}
+      /* ✅ carrusel: más espacio lateral en móvil para evitar tapado */
+      .carousel{ padding: 0 72px; }
+      .item{ padding:32px 16px; }
+      .item p{ font-size:1rem; }
     }
 
     /* ===============================
@@ -298,7 +308,7 @@
         </a>
       </div>
 
-      <!-- Hamburguesa (✅ a11y) -->
+      <!-- Hamburguesa (a11y) -->
       <button class="burger" id="burger" aria-label="Abrir menú" aria-controls="offcanvas" aria-expanded="false">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true">
           <path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/>
@@ -306,7 +316,7 @@
       </button>
     </div>
 
-    <!-- menú móvil (✅ a11y dialog) -->
+    <!-- menú móvil (a11y dialog) -->
     <aside class="offcanvas" id="offcanvas" aria-label="Menú móvil" role="dialog" aria-modal="true" aria-hidden="true">
       <div class="off-body">
         <nav class="off-links" aria-label="Secciones (móvil)">
@@ -338,24 +348,17 @@
   <!-- ================= HERO ================= -->
   <section id="inicio" class="hero" aria-label="Portada E3WS">
     <div class="hero-slider">
-      <!-- ✅ optimización básica: primera eager + high priority -->
       <div class="slide active">
-        <img src="img/teamwork.png" alt="Equipo de trabajo E3WS"
-             loading="eager" decoding="async" fetchpriority="high" />
-      </div>
-
-      <!-- ✅ restantes lazy (no cambiamos PNG, solo carga diferida) -->
-      <div class="slide">
-        <img src="img/alert-notification.png" alt="Notificación de alerta"
-             loading="lazy" decoding="async" />
+        <img src="img/teamwork.png" alt="Equipo de trabajo E3WS" loading="eager" decoding="async" fetchpriority="high" />
       </div>
       <div class="slide">
-        <img src="img/seismic-sensor-network.png" alt="Red de sensores sísmicos"
-             loading="lazy" decoding="async" />
+        <img src="img/alert-notification.png" alt="Notificación de alerta" loading="lazy" decoding="async" />
       </div>
       <div class="slide">
-        <img src="img/early-earthquake-warning-system.png" alt="Sistema de alerta sísmica temprana"
-             loading="lazy" decoding="async" />
+        <img src="img/seismic-sensor-network.png" alt="Red de sensores sísmicos" loading="lazy" decoding="async" />
+      </div>
+      <div class="slide">
+        <img src="img/early-earthquake-warning-system.png" alt="Sistema de alerta sísmica temprana" loading="lazy" decoding="async" />
       </div>
     </div>
 
@@ -537,6 +540,15 @@
 
   <script>
     // ===== 1) Scroll suave con compensación del header fijo
+    function closeMenu(){
+      if(!offcanvas) return;
+      offcanvas.classList.remove("open");
+      offcanvas.setAttribute("aria-hidden","true");
+      burger?.setAttribute("aria-expanded","false");
+      document.body.style.overflow = "";
+      if(lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
+    }
+
     document.querySelectorAll('a[href^="#"]').forEach(a=>{
       a.addEventListener("click", e=>{
         const id=a.getAttribute("href");
@@ -604,7 +616,7 @@
       ok.classList.add("visible");
     });
 
-    // ===== 7) Offcanvas móvil (✅ a11y + focus)
+    // ===== 7) Offcanvas móvil (a11y + focus)
     const burger=document.getElementById("burger");
     const offcanvas=document.getElementById("offcanvas");
     const focusablesSelector = 'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -615,21 +627,11 @@
       offcanvas.classList.add("open");
       offcanvas.setAttribute("aria-hidden","false");
       burger.setAttribute("aria-expanded","true");
+      document.body.style.overflow = "hidden";
 
       // focus al primer enlace del panel
       const firstLink = offcanvas.querySelector(".off-links a");
       if(firstLink) firstLink.focus();
-      document.body.style.overflow = "hidden";
-    }
-
-    function closeMenu(){
-      offcanvas.classList.remove("open");
-      offcanvas.setAttribute("aria-hidden","true");
-      burger.setAttribute("aria-expanded","false");
-      document.body.style.overflow = "";
-
-      // devolver foco al burger
-      if(lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
     }
 
     burger.addEventListener("click",()=>{
@@ -657,7 +659,7 @@
 
       if(e.key === "Tab"){
         const focusables = Array.from(offcanvas.querySelectorAll(focusablesSelector))
-          .filter(el => el.offsetParent !== null); // visibles
+          .filter(el => el.offsetParent !== null);
         if(focusables.length === 0) return;
 
         const first = focusables[0];
@@ -675,4 +677,5 @@
   </script>
 </body>
 </html>
+
 
