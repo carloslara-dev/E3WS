@@ -6,17 +6,14 @@
   <title>E3WS - Sistema de Alerta Sísmica Temprana</title>
   <meta name="color-scheme" content="light dark" />
   <style>
-    /* ===============================
-       PALETA / TOKENS (sólo locales)
-       =============================== */
     :root{
       --bg:#ffffff;
       --surface:#ffffff;
       --alt:#f7f8fa;
       --text:#0f172a;
       --muted:#334155;
-      --brand:#0077b6;     /* azul institucional */
-      --accent:#00AEEF;    /* celeste de apoyo */
+      --brand:#0077b6;
+      --accent:#00AEEF;
       --nav:#111111;
       --overlay:linear-gradient(180deg,rgba(3,15,28,.38),rgba(3,15,28,.22));
       --shadow:0 8px 22px rgba(0,0,0,.10);
@@ -37,9 +34,6 @@
       }
     }
 
-    /* ===============================
-       BASE
-       =============================== */
     *,*::before,*::after{box-sizing:border-box}
     html{scroll-behavior:smooth}
     body{
@@ -51,9 +45,6 @@
     a{text-decoration:none;color:inherit}
     :focus-visible{ outline:none; box-shadow: var(--focus); border-radius:10px; }
 
-    /* ===============================
-       HEADER / NAV + REDES (local)
-       =============================== */
     header{
       position:fixed; inset:0 0 auto 0; z-index:1000; background:var(--nav); color:#fff;
       box-shadow:0 2px 10px rgba(0,0,0,.2);
@@ -65,14 +56,12 @@
     .brand{display:flex; align-items:center; gap:10px}
     .brand img{height:48px}
 
-    /* enlaces desktop */
     .nav-links{display:flex; gap:16px; margin-left:auto}
     .nav-links a{
       color:#fff; font-weight:700; padding:8px 10px; border-radius:8px; transition:background .2s;
     }
     .nav-links a:hover,.nav-links a.active{background:var(--brand)}
 
-    /* redes (SVGs inline) */
     .nav-social{display:flex; gap:10px; margin-left:8px}
     .icon-btn{
       width:34px;height:34px;border-radius:50%;
@@ -81,13 +70,11 @@
     }
     .icon-btn:hover{background:#1f2937}
 
-    /* botón hamburguesa */
     .burger{
       display:none; margin-left:auto; width:42px;height:42px;
       border:none; background:#1f2937; color:#fff; border-radius:10px; cursor:pointer;
     }
 
-    /* offcanvas móvil */
     .offcanvas{
       position:fixed; inset:64px 0 0 auto; width:100%; max-width:360px;
       background:#0b0f16; color:#fff; transform:translateX(100%);
@@ -106,9 +93,6 @@
       .burger{display:block}
     }
 
-    /* ===============================
-       HERO FULL-BLEED (slider 4 imgs)
-       =============================== */
     .hero{
       margin-top:72px; position:relative; height:520px; overflow:hidden;
       display:grid; place-items:center; color:#fff;
@@ -137,17 +121,11 @@
     .btn-outline{color:#fff; border:2px solid #fff}
     .btn-outline:hover{background:rgba(255,255,255,.12)}
 
-    /* ===============================
-       SECCIONES GENERALES
-       =============================== */
     section{padding:80px 20px; text-align:center}
     .section-alt{background:var(--alt)}
     h2{font-size:2rem; margin:0 0 10px; color:var(--brand)}
     section p{max-width:820px; margin:0 auto 8px; color:var(--muted)}
 
-    /* ===============================
-       NOSOTROS (4 tarjetas)
-       =============================== */
     .grid{display:grid; gap:24px}
     .about{grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); max-width:1100px; margin:36px auto 0}
     .card{
@@ -161,13 +139,9 @@
     }
     .btn-link:hover{background:#005f86}
 
-    /* ===============================
-       BENEFICIOS (iconos locales SVG)
-       =============================== */
     .benefits{grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); max-width:1100px; margin:36px auto 0}
     .benefit{padding:26px 20px; background:var(--surface); border-radius:var(--radius)}
     .ico-wrap{display:grid; place-items:center; margin-bottom:10px}
-    /* Truco: usamos los SVG externos como máscara para mantener el color azul uniforme */
     .ico{
       width:52px; height:52px; display:block; margin:auto;
       background-color:var(--accent);
@@ -178,16 +152,23 @@
     .benefit p{color:var(--muted)}
 
     /* ===============================
-       CASOS (carrusel simple)
+       CASOS (carrusel) ✅ 1 slide visible
        =============================== */
     .carousel{
-      max-width:900px; margin:24px auto 0; position:relative; overflow:hidden;
-
-      /* ✅ FIX PRINCIPAL: reserva espacio para que los botones NO tapen el texto */
-      padding: 0 64px;
+      max-width:900px;
+      margin:24px auto 0;
+      position:relative;
+      overflow:hidden; /* ✅ garantiza que NO se asome el siguiente */
+      padding:0;       /* ✅ sin padding aquí */
     }
     .track{display:flex; transition:transform .5s ease-in-out}
-    .item{min-width:100%; padding:38px 18px; box-sizing:border-box}
+
+    /* ✅ Aquí movemos el espacio lateral para los botones */
+    .item{
+      min-width:100%;
+      padding:38px 72px; /* ✅ espacio para que botones no tapen texto */
+      box-sizing:border-box;
+    }
 
     .item h3{margin:0 0 8px; color:var(--brand)}
     .item p{
@@ -204,14 +185,11 @@
       position:absolute; top:50%; transform:translateY(-50%);
       background:var(--brand); color:#fff; border:none; width:44px; height:44px; border-radius:50%;
       cursor:pointer;
-      z-index:2; /* ✅ asegura que queden encima del track */
+      z-index:2;
     }
     .prev{left:12px}
     .next{right:12px}
 
-    /* ===============================
-       NOVEDADES (cards)
-       =============================== */
     .news{grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); max-width:1100px; margin:36px auto 0}
     .news-card{background:var(--surface); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); text-align:left}
     .news-image{height:160px; background:#d1d5db; display:grid; place-items:center; color:#374151}
@@ -220,9 +198,6 @@
     .btn-news{display:inline-block; margin:0 14px 16px; padding:8px 14px; border-radius:10px; background:var(--brand); color:#fff; font-weight:800}
     .btn-news:hover{background:#005f86}
 
-    /* ===============================
-       CONTACTO (maqueta + validación)
-       =============================== */
     .contact{max-width:980px; margin:28px auto 0}
     .form{background:var(--surface); border-radius:var(--radius); padding:24px; text-align:left; box-shadow:var(--shadow)}
     .row{display:grid; grid-template-columns:repeat(2,1fr); gap:16px}
@@ -239,41 +214,29 @@
     .ok.visible{display:inline-block}
     .honeypot{position:absolute; left:-9999px; top:-9999px}
 
-    /* ===============================
-       FOOTER
-       =============================== */
     footer{background:var(--nav); color:#fff; text-align:center; padding:20px; margin-top:14px}
 
-    /* ===============================
-       RESPONSIVE extra
-       =============================== */
     @media (max-width:720px){
       .hero{height:480px}
       .row{grid-template-columns:1fr}
 
-      /* ✅ carrusel: más espacio lateral en móvil para evitar tapado */
-      .carousel{ padding: 0 72px; }
-      .item{ padding:32px 16px; }
+      /* ✅ en móvil, aún más espacio lateral */
+      .item{ padding:32px 78px; }
       .item p{ font-size:1rem; }
     }
 
-    /* ===============================
-       APARICIÓN SUAVE
-       =============================== */
     .hero,section{opacity:0; transform:translateY(24px); transition:opacity .8s ease, transform .8s ease}
     .visible{opacity:1; transform:translateY(0)}
   </style>
 </head>
 <body>
 
-  <!-- ================= HEADER ================= -->
   <header>
     <div class="nav-wrap">
       <a class="brand" href="#inicio" aria-label="Ir al inicio">
         <img src="img/logo-claro.png" alt="E3WS - Logo" decoding="async" loading="eager" />
       </a>
 
-      <!-- Enlaces desktop -->
       <nav class="nav-links" aria-label="Secciones">
         <a href="#inicio" class="active">Inicio</a>
         <a href="#nosotros">Nosotros</a>
@@ -286,21 +249,17 @@
         <a href="#contacto">Contacto</a>
       </nav>
 
-      <!-- Redes desktop (SVGs inline, locales) -->
       <div class="nav-social" aria-label="Redes sociales">
-        <!-- LinkedIn -->
         <a class="icon-btn" href="#" aria-label="LinkedIn" title="LinkedIn">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true">
             <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8.98h5V24H0V8.98zM8.34 8.98h4.78v2.05h.07c.67-1.27 2.3-2.6 4.73-2.6 5.06 0 6 3.33 6 7.66V24h-5v-6.77c0-1.61-.03-3.68-2.24-3.68-2.24 0-2.59 1.75-2.59 3.56V24h-5V8.98z"/>
           </svg>
         </a>
-        <!-- Facebook -->
         <a class="icon-btn" href="#" aria-label="Facebook" title="Facebook">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true">
             <path d="M22 12a10 10 0 1 0-11.5 9.9v-7h-2v-3h2v-2.3c0-2 1.2-3.1 3-3.1.9 0 1.8.16 1.8.16v2h-1c-1 0-1.3.63-1.3 1.3V12h2.2l-.35 3h-1.85v7A10 10 0 0 0 22 12z"/>
           </svg>
         </a>
-        <!-- Instagram -->
         <a class="icon-btn" href="#" aria-label="Instagram" title="Instagram">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true">
             <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5A6.5 6.5 0 1 1 5.5 14 6.5 6.5 0 0 1 12 7.5zm0 2A4.5 4.5 0 1 0 16.5 14 4.5 4.5 0 0 0 12 9.5zM18 6.3a1 1 0 1 1-1.41 1.41A1 1 0 0 1 18 6.3z"/>
@@ -308,7 +267,6 @@
         </a>
       </div>
 
-      <!-- Hamburguesa (a11y) -->
       <button class="burger" id="burger" aria-label="Abrir menú" aria-controls="offcanvas" aria-expanded="false">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true">
           <path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/>
@@ -316,7 +274,6 @@
       </button>
     </div>
 
-    <!-- menú móvil (a11y dialog) -->
     <aside class="offcanvas" id="offcanvas" aria-label="Menú móvil" role="dialog" aria-modal="true" aria-hidden="true">
       <div class="off-body">
         <nav class="off-links" aria-label="Secciones (móvil)">
@@ -345,7 +302,6 @@
     </aside>
   </header>
 
-  <!-- ================= HERO ================= -->
   <section id="inicio" class="hero" aria-label="Portada E3WS">
     <div class="hero-slider">
       <div class="slide active">
@@ -374,7 +330,6 @@
     </div>
   </section>
 
-  <!-- ================= NOSOTROS ================= -->
   <section id="nosotros" aria-labelledby="h-nosotros">
     <h2 id="h-nosotros">Nosotros</h2>
     <p>Somos un equipo de ingenieros y científicos comprometidos con la seguridad sísmica y la resiliencia comunitaria.</p>
@@ -400,19 +355,16 @@
     </div>
   </section>
 
-  <!-- ================= ¿QUÉ ES E3WS? ================= -->
   <section id="e3ws" class="section-alt" aria-labelledby="h-e3ws">
     <h2 id="h-e3ws">¿Qué es E3WS?</h2>
     <p>E3WS es un sistema de alerta temprana que detecta las ondas iniciales de un sismo y notifica a comunidades, empresas y autoridades en tiempo real.</p>
   </section>
 
-  <!-- ================= EL SISTEMA ================= -->
   <section id="sistema" aria-labelledby="h-sistema">
     <h2 id="h-sistema">El Sistema</h2>
     <p>Analizamos ondas P para estimar epicentro, magnitud e impacto usando IA y redes distribuidas de sensores con arquitectura redundante.</p>
   </section>
 
-  <!-- ================= BENEFICIOS ================= -->
   <section id="beneficios" class="section-alt" aria-labelledby="h-beneficios">
     <h2 id="h-beneficios">Beneficios</h2>
     <div class="grid benefits">
@@ -442,7 +394,6 @@
     </div>
   </section>
 
-  <!-- ================= CASOS (carrusel) ================= -->
   <section id="casos" aria-labelledby="h-casos">
     <h2 id="h-casos">Casos</h2>
     <div class="carousel" aria-roledescription="carrusel">
@@ -465,7 +416,6 @@
     </div>
   </section>
 
-  <!-- ================= NOVEDADES ================= -->
   <section id="novedades" class="section-alt" aria-labelledby="h-novedades">
     <h2 id="h-novedades">Novedades</h2>
     <div class="grid news">
@@ -490,13 +440,11 @@
     </div>
   </section>
 
-  <!-- ================= DEMO ================= -->
   <section id="demo" aria-labelledby="h-demo">
     <h2 id="h-demo">Demo</h2>
     <p>Espacio para probar la plataforma E3WS en acción (pendiente integrar mapas/visualizaciones).</p>
   </section>
 
-  <!-- ================= CONTACTO ================= -->
   <section id="contacto" class="section-alt" aria-labelledby="h-contacto">
     <h2 id="h-contacto">Contacto</h2>
     <p class="contact-intro">¿Tienes dudas o deseas una demo? Escríbenos y te responderemos.</p>
@@ -539,16 +487,30 @@
   </footer>
 
   <script>
-    // ===== 1) Scroll suave con compensación del header fijo
+    // ===== Helpers menú móvil
+    const burger=document.getElementById("burger");
+    const offcanvas=document.getElementById("offcanvas");
+    const focusablesSelector = 'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    let lastFocused = null;
+
+    function openMenu(){
+      lastFocused = document.activeElement;
+      offcanvas.classList.add("open");
+      offcanvas.setAttribute("aria-hidden","false");
+      burger.setAttribute("aria-expanded","true");
+      document.body.style.overflow = "hidden";
+      const firstLink = offcanvas.querySelector(".off-links a");
+      if(firstLink) firstLink.focus();
+    }
     function closeMenu(){
-      if(!offcanvas) return;
       offcanvas.classList.remove("open");
       offcanvas.setAttribute("aria-hidden","true");
-      burger?.setAttribute("aria-expanded","false");
+      burger.setAttribute("aria-expanded","false");
       document.body.style.overflow = "";
       if(lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
     }
 
+    // ===== 1) Scroll suave con compensación del header fijo
     document.querySelectorAll('a[href^="#"]').forEach(a=>{
       a.addEventListener("click", e=>{
         const id=a.getAttribute("href");
@@ -559,12 +521,11 @@
         const headerH=(document.querySelector("header")?.offsetHeight||72)-2;
         const top=el.getBoundingClientRect().top+window.scrollY-headerH;
         window.scrollTo({top,behavior:"smooth"});
-        // cerrar offcanvas si está abierto (móvil)
         closeMenu();
       });
     });
 
-    // ===== 2) Resaltar enlace activo
+    // ===== 2) Resaltar enlace activo (desktop)
     const sections=document.querySelectorAll("section[id]");
     const links=document.querySelectorAll(".nav-links a[href^='#']");
     const io=new IntersectionObserver((entries)=>{
@@ -586,7 +547,7 @@
     },{threshold:0.12});
     document.querySelectorAll(".hero, section").forEach(el=>appearIO.observe(el));
 
-    // ===== 4) Slider Hero (4 imágenes, 6s)
+    // ===== 4) Slider Hero
     const slides=document.querySelectorAll('.slide');
     let s=0;
     setInterval(()=>{
@@ -600,10 +561,10 @@
     const items=document.querySelectorAll(".item");
     const prev=document.getElementById("prev");
     const next=document.getElementById("next");
-    let i=0;
-    function move(){ track.style.transform=`translateX(-${i*100}%)`; }
-    prev.addEventListener("click",()=>{ i=(i===0)?items.length-1:i-1; move(); });
-    next.addEventListener("click",()=>{ i=(i===items.length-1)?0:i+1; move(); });
+    let idx=0;
+    function move(){ track.style.transform=`translateX(-${idx*100}%)`; }
+    prev.addEventListener("click",()=>{ idx=(idx===0)?items.length-1:idx-1; move(); });
+    next.addEventListener("click",()=>{ idx=(idx===items.length-1)?0:idx+1; move(); });
 
     // ===== 6) Form maqueta
     const form=document.getElementById("contactForm");
@@ -616,30 +577,12 @@
       ok.classList.add("visible");
     });
 
-    // ===== 7) Offcanvas móvil (a11y + focus)
-    const burger=document.getElementById("burger");
-    const offcanvas=document.getElementById("offcanvas");
-    const focusablesSelector = 'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
-    let lastFocused = null;
-
-    function openMenu(){
-      lastFocused = document.activeElement;
-      offcanvas.classList.add("open");
-      offcanvas.setAttribute("aria-hidden","false");
-      burger.setAttribute("aria-expanded","true");
-      document.body.style.overflow = "hidden";
-
-      // focus al primer enlace del panel
-      const firstLink = offcanvas.querySelector(".off-links a");
-      if(firstLink) firstLink.focus();
-    }
-
+    // ===== 7) Offcanvas móvil
     burger.addEventListener("click",()=>{
       const isOpen = offcanvas.classList.contains("open");
       isOpen ? closeMenu() : openMenu();
     });
 
-    // cerrar tocando fuera
     document.addEventListener("click",(e)=>{
       if(!offcanvas.classList.contains("open")) return;
       const inAside=e.target.closest("#offcanvas");
@@ -647,7 +590,6 @@
       if(!inAside && !inBurger) closeMenu();
     });
 
-    // cerrar con Escape + focus trap con Tab
     document.addEventListener("keydown",(e)=>{
       if(!offcanvas.classList.contains("open")) return;
 
@@ -677,5 +619,6 @@
   </script>
 </body>
 </html>
+
 
 
