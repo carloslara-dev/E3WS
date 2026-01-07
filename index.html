@@ -44,8 +44,10 @@
     img{display:block;max-width:100%;height:auto}
     a{text-decoration:none;color:inherit}
 
+    /* ✅ Mantengo el foco visible en general (accesible) */
     :focus-visible{ outline:none; box-shadow: var(--focus); border-radius:10px; }
 
+    /* Helper accesibilidad */
     .sr-only{
       position:absolute !important;
       width:1px;height:1px;
@@ -159,7 +161,7 @@
     .benefit h3{margin:8px 0 6px; color:var(--brand)}
     .benefit p{color:var(--muted)}
 
-    /* ===== CASOS: 1 slide visible + swipe + teclado */
+    /* ===== CASOS */
     .carousel{
       max-width:900px;
       margin:24px auto 0;
@@ -169,6 +171,14 @@
       touch-action: pan-y;
       user-select: none;
     }
+
+    /* ✅ IMPORTANTE: ocultar SOLO el foco visible del carrusel (estética) */
+    .carousel:focus,
+    .carousel:focus-visible{
+      outline:none;
+      box-shadow:none;
+    }
+
     .track{
       display:flex;
       transition:transform .5s ease-in-out;
@@ -485,7 +495,6 @@
   </footer>
 
   <script>
-    // ===== Menú móvil
     const burger=document.getElementById("burger");
     const offcanvas=document.getElementById("offcanvas");
     let lastFocused = null;
@@ -534,7 +543,7 @@
       slides[s].classList.add('active');
     },6000);
 
-    // ===== Carrusel Casos (flechas + swipe + teclado + auto-focus)
+    // ===== Carrusel Casos
     const carousel = document.getElementById("carouselCasos");
     const statusEl = document.getElementById("casosStatus");
     const track=document.getElementById("track");
@@ -547,30 +556,22 @@
       const title = items[idx].querySelector("h3")?.textContent?.trim() || "Caso";
       statusEl.textContent = `${title}. Caso ${idx+1} de ${items.length}.`;
     }
-
     function move(){
       track.style.transform=`translateX(-${idx*100}%)`;
       announce();
     }
-    function goPrev(){
-      idx=(idx===0)?items.length-1:idx-1;
-      move();
-    }
-    function goNext(){
-      idx=(idx===items.length-1)?0:idx+1;
-      move();
-    }
+    function goPrev(){ idx=(idx===0)?items.length-1:idx-1; move(); }
+    function goNext(){ idx=(idx===items.length-1)?0:idx+1; move(); }
 
     prev.addEventListener("click", goPrev);
     next.addEventListener("click", goNext);
 
-    // Teclado (cuando el carrusel tiene foco)
     carousel.addEventListener("keydown",(e)=>{
       if(e.key === "ArrowLeft"){ e.preventDefault(); goPrev(); }
       if(e.key === "ArrowRight"){ e.preventDefault(); goNext(); }
     });
 
-    // ✅ Auto-focus cuando el carrusel entra en pantalla (PC)
+    // ✅ Auto-focus SIN “recuadro” visible (porque lo apagamos solo en CSS del carrusel)
     const focusIO = new IntersectionObserver((entries)=>{
       entries.forEach(entry=>{
         if(entry.isIntersecting){
@@ -585,9 +586,7 @@
     focusIO.observe(carousel);
 
     // Swipe
-    let startX = 0;
-    let startY = 0;
-    let dragging = false;
+    let startX = 0, startY = 0, dragging = false;
 
     carousel.addEventListener("touchstart", (e)=>{
       const t = e.touches[0];
@@ -617,7 +616,6 @@
       else if(dx < -threshold) goNext();
     }, {passive:true});
 
-    // Estado inicial aria-live
     announce();
 
     // Form maqueta
@@ -653,6 +651,7 @@
   </script>
 </body>
 </html>
+
 
 
 
