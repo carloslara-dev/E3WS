@@ -43,9 +43,9 @@
     }
     img{display:block;max-width:100%;height:auto}
     a{text-decoration:none;color:inherit}
+
     :focus-visible{ outline:none; box-shadow: var(--focus); border-radius:10px; }
 
-    /* Helper accesibilidad */
     .sr-only{
       position:absolute !important;
       width:1px;height:1px;
@@ -392,7 +392,6 @@
   <section id="casos" aria-labelledby="h-casos">
     <h2 id="h-casos">Casos</h2>
 
-    <!-- ✅ aria-live para anunciar cambios -->
     <p id="casosStatus" class="sr-only" aria-live="polite"></p>
 
     <div class="carousel" id="carouselCasos" aria-roledescription="carrusel" tabindex="0" aria-label="Carrusel de casos (usa flechas o swipe)">
@@ -486,7 +485,7 @@
   </footer>
 
   <script>
-    // ===== Menú móvil mínimo
+    // ===== Menú móvil
     const burger=document.getElementById("burger");
     const offcanvas=document.getElementById("offcanvas");
     let lastFocused = null;
@@ -535,7 +534,7 @@
       slides[s].classList.add('active');
     },6000);
 
-    // ===== Carrusel Casos (flechas + swipe + teclado + aria-live)
+    // ===== Carrusel Casos (flechas + swipe + teclado + auto-focus)
     const carousel = document.getElementById("carouselCasos");
     const statusEl = document.getElementById("casosStatus");
     const track=document.getElementById("track");
@@ -570,6 +569,20 @@
       if(e.key === "ArrowLeft"){ e.preventDefault(); goPrev(); }
       if(e.key === "ArrowRight"){ e.preventDefault(); goNext(); }
     });
+
+    // ✅ Auto-focus cuando el carrusel entra en pantalla (PC)
+    const focusIO = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          const tag = document.activeElement?.tagName?.toLowerCase();
+          const typing = (tag === "input" || tag === "textarea" || tag === "select");
+          if(!typing){
+            carousel.focus({ preventScroll: true });
+          }
+        }
+      });
+    },{ threshold: 0.35 });
+    focusIO.observe(carousel);
 
     // Swipe
     let startX = 0;
@@ -640,6 +653,7 @@
   </script>
 </body>
 </html>
+
 
 
 
