@@ -152,24 +152,27 @@
     .benefit p{color:var(--muted)}
 
     /* ===============================
-       CASOS (carrusel) ✅ 1 slide visible
+       CASOS (carrusel) ✅ 1 slide visible + swipe
        =============================== */
     .carousel{
       max-width:900px;
       margin:24px auto 0;
       position:relative;
-      overflow:hidden; /* ✅ garantiza que NO se asome el siguiente */
-      padding:0;       /* ✅ sin padding aquí */
+      overflow:hidden;
+      padding:0;
+      touch-action: pan-y; /* ✅ permite scroll vertical, pero habilita swipe horizontal controlado */
+      user-select: none;
     }
-    .track{display:flex; transition:transform .5s ease-in-out}
-
-    /* ✅ Aquí movemos el espacio lateral para los botones */
+    .track{
+      display:flex;
+      transition:transform .5s ease-in-out;
+      will-change: transform;
+    }
     .item{
       min-width:100%;
-      padding:38px 72px; /* ✅ espacio para que botones no tapen texto */
+      padding:38px 72px;
       box-sizing:border-box;
     }
-
     .item h3{margin:0 0 8px; color:var(--brand)}
     .item p{
       color:var(--muted);
@@ -219,8 +222,6 @@
     @media (max-width:720px){
       .hero{height:480px}
       .row{grid-template-columns:1fr}
-
-      /* ✅ en móvil, aún más espacio lateral */
       .item{ padding:32px 78px; }
       .item p{ font-size:1rem; }
     }
@@ -287,17 +288,6 @@
           <a href="#demo">Demo</a>
           <a href="#contacto">Contacto</a>
         </nav>
-        <div class="off-social" aria-label="Redes sociales (móvil)">
-          <a class="icon-btn" href="#" aria-label="LinkedIn" title="LinkedIn">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8.98h5V24H0V8.98zM8.34 8.98h4.78v2.05h.07c.67-1.27 2.3-2.6 4.73-2.6 5.06 0 6 3.33 6 7.66V24h-5v-6.77c0-1.61-.03-3.68-2.24-3.68-2.24 0-2.59 1.75-2.59 3.56V24h-5V8.98z"/></svg>
-          </a>
-          <a class="icon-btn" href="#" aria-label="Facebook" title="Facebook">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7h-2v-3h2v-2.3c0-2 1.2-3.1 3-3.1.9 0 1.8.16 1.8.16v2h-1c-1 0-1.3.63-1.3 1.3V12h2.2l-.35 3h-1.85v7A10 10 0 0 0 22 12z"/></svg>
-          </a>
-          <a class="icon-btn" href="#" aria-label="Instagram" title="Instagram">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5A6.5 6.5 0 1 1 5.5 14 6.5 6.5 0 0 1 12 7.5zm0 2A4.5 4.5 0 1 0 16.5 14 4.5 4.5 0 0 0 12 9.5zM18 6.3a1 1 0 1 1-1.41 1.41A1 1 0 0 1 18 6.3z"/></svg>
-          </a>
-        </div>
       </div>
     </aside>
   </header>
@@ -396,7 +386,7 @@
 
   <section id="casos" aria-labelledby="h-casos">
     <h2 id="h-casos">Casos</h2>
-    <div class="carousel" aria-roledescription="carrusel">
+    <div class="carousel" id="carouselCasos" aria-roledescription="carrusel">
       <div class="track" id="track">
         <article class="item">
           <h3>Ciudad X</h3>
@@ -487,10 +477,9 @@
   </footer>
 
   <script>
-    // ===== Helpers menú móvil
+    // ===== Helpers menú móvil (mantengo lo esencial)
     const burger=document.getElementById("burger");
     const offcanvas=document.getElementById("offcanvas");
-    const focusablesSelector = 'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
     let lastFocused = null;
 
     function openMenu(){
@@ -525,29 +514,13 @@
       });
     });
 
-    // ===== 2) Resaltar enlace activo (desktop)
-    const sections=document.querySelectorAll("section[id]");
-    const links=document.querySelectorAll(".nav-links a[href^='#']");
-    const io=new IntersectionObserver((entries)=>{
-      entries.forEach(entry=>{
-        const id=entry.target.id;
-        const link=document.querySelector(`.nav-links a[href="#${id}"]`);
-        if(!link) return;
-        if(entry.isIntersecting){
-          links.forEach(l=>l.classList.remove("active"));
-          link.classList.add("active");
-        }
-      });
-    },{rootMargin:"-45% 0px -45% 0px", threshold:0.01});
-    sections.forEach(s=>io.observe(s));
-
-    // ===== 3) Aparición suave
+    // ===== 2) Aparición suave
     const appearIO=new IntersectionObserver((entries)=>{
       entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add("visible"); });
     },{threshold:0.12});
     document.querySelectorAll(".hero, section").forEach(el=>appearIO.observe(el));
 
-    // ===== 4) Slider Hero
+    // ===== 3) Slider Hero
     const slides=document.querySelectorAll('.slide');
     let s=0;
     setInterval(()=>{
@@ -556,17 +529,71 @@
       slides[s].classList.add('active');
     },6000);
 
-    // ===== 5) Carrusel Casos
+    // ===== 4) Carrusel Casos (flechas + swipe)
+    const carousel = document.getElementById("carouselCasos");
     const track=document.getElementById("track");
     const items=document.querySelectorAll(".item");
     const prev=document.getElementById("prev");
     const next=document.getElementById("next");
     let idx=0;
-    function move(){ track.style.transform=`translateX(-${idx*100}%)`; }
-    prev.addEventListener("click",()=>{ idx=(idx===0)?items.length-1:idx-1; move(); });
-    next.addEventListener("click",()=>{ idx=(idx===items.length-1)?0:idx+1; move(); });
 
-    // ===== 6) Form maqueta
+    function move(){
+      track.style.transform=`translateX(-${idx*100}%)`;
+    }
+    function goPrev(){
+      idx=(idx===0)?items.length-1:idx-1;
+      move();
+    }
+    function goNext(){
+      idx=(idx===items.length-1)?0:idx+1;
+      move();
+    }
+
+    prev.addEventListener("click", goPrev);
+    next.addEventListener("click", goNext);
+
+    // ✅ Swipe básico (sin librerías)
+    let startX = 0;
+    let startY = 0;
+    let dragging = false;
+
+    carousel.addEventListener("touchstart", (e)=>{
+      const t = e.touches[0];
+      startX = t.clientX;
+      startY = t.clientY;
+      dragging = true;
+    }, {passive:true});
+
+    carousel.addEventListener("touchmove", (e)=>{
+      if(!dragging) return;
+      const t = e.touches[0];
+      const dx = t.clientX - startX;
+      const dy = t.clientY - startY;
+
+      // si el usuario está scrolleando vertical, no hacemos nada
+      if(Math.abs(dy) > Math.abs(dx)) return;
+
+      // si es swipe horizontal, evitamos que "rebote" el scroll
+      e.preventDefault();
+    }, {passive:false});
+
+    carousel.addEventListener("touchend", (e)=>{
+      if(!dragging) return;
+      dragging = false;
+      const t = e.changedTouches[0];
+      const dx = t.clientX - startX;
+
+      // umbral para considerar swipe
+      const threshold = 40;
+
+      if(dx > threshold){
+        goPrev();
+      } else if(dx < -threshold){
+        goNext();
+      }
+    }, {passive:true});
+
+    // ===== 5) Form maqueta
     const form=document.getElementById("contactForm");
     const ok=document.getElementById("ok");
     form.addEventListener("submit",(e)=>{
@@ -577,7 +604,7 @@
       ok.classList.add("visible");
     });
 
-    // ===== 7) Offcanvas móvil
+    // ===== 6) Offcanvas móvil
     burger.addEventListener("click",()=>{
       const isOpen = offcanvas.classList.contains("open");
       isOpen ? closeMenu() : openMenu();
@@ -592,33 +619,15 @@
 
     document.addEventListener("keydown",(e)=>{
       if(!offcanvas.classList.contains("open")) return;
-
       if(e.key === "Escape"){
         e.preventDefault();
         closeMenu();
-        return;
-      }
-
-      if(e.key === "Tab"){
-        const focusables = Array.from(offcanvas.querySelectorAll(focusablesSelector))
-          .filter(el => el.offsetParent !== null);
-        if(focusables.length === 0) return;
-
-        const first = focusables[0];
-        const last = focusables[focusables.length - 1];
-
-        if(e.shiftKey && document.activeElement === first){
-          e.preventDefault();
-          last.focus();
-        } else if(!e.shiftKey && document.activeElement === last){
-          e.preventDefault();
-          first.focus();
-        }
       }
     });
   </script>
 </body>
 </html>
+
 
 
 
