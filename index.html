@@ -44,10 +44,9 @@
     img{display:block;max-width:100%;height:auto}
     a{text-decoration:none;color:inherit}
 
-    /* ✅ Mantengo el foco visible en general (accesible) */
+    /* foco accesible global */
     :focus-visible{ outline:none; box-shadow: var(--focus); border-radius:10px; }
 
-    /* Helper accesibilidad */
     .sr-only{
       position:absolute !important;
       width:1px;height:1px;
@@ -171,8 +170,7 @@
       touch-action: pan-y;
       user-select: none;
     }
-
-    /* ✅ IMPORTANTE: ocultar SOLO el foco visible del carrusel (estética) */
+    /* Ocultar foco visible SOLO en carrusel (estética) */
     .carousel:focus,
     .carousel:focus-visible{
       outline:none;
@@ -516,6 +514,7 @@
       if(lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
     }
 
+    // Scroll suave compensando header fijo + cerrar menú
     document.querySelectorAll('a[href^="#"]').forEach(a=>{
       a.addEventListener("click", e=>{
         const id=a.getAttribute("href");
@@ -530,11 +529,13 @@
       });
     });
 
+    // Aparición suave
     const appearIO=new IntersectionObserver((entries)=>{
       entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add("visible"); });
     },{threshold:0.12});
     document.querySelectorAll(".hero, section").forEach(el=>appearIO.observe(el));
 
+    // Slider Hero
     const slides=document.querySelectorAll('.slide');
     let s=0;
     setInterval(()=>{
@@ -543,7 +544,7 @@
       slides[s].classList.add('active');
     },6000);
 
-    // ===== Carrusel Casos
+    // ===== Carrusel Casos (botones + teclado + swipe + auto-focus)
     const carousel = document.getElementById("carouselCasos");
     const statusEl = document.getElementById("casosStatus");
     const track=document.getElementById("track");
@@ -571,7 +572,7 @@
       if(e.key === "ArrowRight"){ e.preventDefault(); goNext(); }
     });
 
-    // ✅ Auto-focus SIN “recuadro” visible (porque lo apagamos solo en CSS del carrusel)
+    // Auto-focus al entrar a la sección (sin borde, por CSS)
     const focusIO = new IntersectionObserver((entries)=>{
       entries.forEach(entry=>{
         if(entry.isIntersecting){
@@ -618,6 +619,51 @@
 
     announce();
 
+    // ===== 8) Auto-rotación del carrusel (suave + pausa inteligente)
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    let autoTimer = null;
+    let autoEnabled = !prefersReducedMotion;
+    let pausedByUser = false;
+
+    function startAuto(){
+      if(!autoEnabled || pausedByUser) return;
+      stopAuto();
+      autoTimer = setInterval(()=>{ goNext(); }, 9000); // 9s recomendado
+    }
+
+    function stopAuto(){
+      if(autoTimer){ clearInterval(autoTimer); autoTimer = null; }
+    }
+
+    function pauseAutoByUser(){
+      pausedByUser = true;
+      stopAuto();
+    }
+
+    // Pausa si el usuario interactúa
+    prev.addEventListener("click", pauseAutoByUser);
+    next.addEventListener("click", pauseAutoByUser);
+    carousel.addEventListener("keydown", (e)=>{
+      if(e.key === "ArrowLeft" || e.key === "ArrowRight") pauseAutoByUser();
+    });
+    carousel.addEventListener("touchstart", pauseAutoByUser, {passive:true});
+
+    // Pausa con mouse encima (PC)
+    carousel.addEventListener("mouseenter", stopAuto);
+    carousel.addEventListener("mouseleave", startAuto);
+
+    // Pausa si no está visible
+    const autoIO = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting) startAuto();
+        else stopAuto();
+      });
+    },{ threshold: 0.35 });
+    autoIO.observe(carousel);
+
+    startAuto();
+
     // Form maqueta
     const form=document.getElementById("contactForm");
     const ok=document.getElementById("ok");
@@ -629,6 +675,7 @@
       ok.classList.add("visible");
     });
 
+    // Menú móvil
     burger.addEventListener("click",()=>{
       const isOpen = offcanvas.classList.contains("open");
       isOpen ? closeMenu() : openMenu();
@@ -651,6 +698,7 @@
   </script>
 </body>
 </html>
+
 
 
 
