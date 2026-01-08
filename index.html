@@ -544,7 +544,7 @@
       slides[s].classList.add('active');
     },6000);
 
-    // ===== Carrusel Casos (botones + teclado + swipe + auto-focus)
+    // ===== Carrusel Casos
     const carousel = document.getElementById("carouselCasos");
     const statusEl = document.getElementById("casosStatus");
     const track=document.getElementById("track");
@@ -619,50 +619,51 @@
 
     announce();
 
-    // ===== 8) Auto-rotación del carrusel (suave + pausa inteligente)
+    // ===== 8) Auto-rotación del carrusel (arreglado para PC)
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    let autoTimer = null;
     let autoEnabled = !prefersReducedMotion;
-    let pausedByUser = false;
-
-    function startAuto(){
-      if(!autoEnabled || pausedByUser) return;
-      stopAuto();
-      autoTimer = setInterval(()=>{ goNext(); }, 9000); // 9s recomendado
-    }
+    let autoTimer = null;
+    let resumeTimer = null;
+    let isVisible = false;
 
     function stopAuto(){
       if(autoTimer){ clearInterval(autoTimer); autoTimer = null; }
     }
 
-    function pauseAutoByUser(){
-      pausedByUser = true;
+    function startAuto(){
+      if(!autoEnabled || !isVisible) return;
       stopAuto();
+      autoTimer = setInterval(()=>{ goNext(); }, 9000); // 9s (cambia a 8000/10000 si quieres)
     }
 
-    // Pausa si el usuario interactúa
-    prev.addEventListener("click", pauseAutoByUser);
-    next.addEventListener("click", pauseAutoByUser);
-    carousel.addEventListener("keydown", (e)=>{
-      if(e.key === "ArrowLeft" || e.key === "ArrowRight") pauseAutoByUser();
-    });
-    carousel.addEventListener("touchstart", pauseAutoByUser, {passive:true});
+    function pauseAutoTemporarily(ms = 15000){
+      stopAuto();
+      if(resumeTimer) clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(()=>{ startAuto(); }, ms);
+    }
 
-    // Pausa con mouse encima (PC)
+    // Interacción => pausa 15s y reanuda
+    prev.addEventListener("click", ()=>pauseAutoTemporarily(15000));
+    next.addEventListener("click", ()=>pauseAutoTemporarily(15000));
+    carousel.addEventListener("keydown", (e)=>{
+      if(e.key === "ArrowLeft" || e.key === "ArrowRight") pauseAutoTemporarily(15000);
+    });
+    carousel.addEventListener("touchstart", ()=>pauseAutoTemporarily(15000), {passive:true});
+
+    // Mouse encima => pausa; al salir => reanuda si visible
     carousel.addEventListener("mouseenter", stopAuto);
     carousel.addEventListener("mouseleave", startAuto);
 
-    // Pausa si no está visible
+    // Visible => inicia; no visible => pausa (threshold más tolerante)
     const autoIO = new IntersectionObserver((entries)=>{
       entries.forEach(entry=>{
-        if(entry.isIntersecting) startAuto();
+        isVisible = entry.isIntersecting;
+        if(isVisible) startAuto();
         else stopAuto();
       });
-    },{ threshold: 0.35 });
+    },{ threshold: 0.15 });
     autoIO.observe(carousel);
-
-    startAuto();
 
     // Form maqueta
     const form=document.getElementById("contactForm");
@@ -698,6 +699,7 @@
   </script>
 </body>
 </html>
+
 
 
 
