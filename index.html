@@ -130,10 +130,24 @@
     .btn-outline{color:#fff; border:2px solid #fff}
     .btn-outline:hover{background:rgba(255,255,255,.12)}
 
+    /* ===============================
+       SECCIONES + TEXTOS (mejor móvil)
+       =============================== */
     section{padding:80px 20px; text-align:center}
     .section-alt{background:var(--alt)}
     h2{font-size:2rem; margin:0 0 10px; color:var(--brand)}
-    section p{max-width:820px; margin:0 auto 8px; color:var(--muted)}
+
+    /* Párrafos: más estables en móvil, sin cortes raros */
+    section p{
+      max-width:820px;
+      margin:0 auto 8px;
+      color:var(--muted);
+      line-height:1.75;
+      overflow-wrap:anywhere;  /* evita desbordes */
+      word-break:normal;
+      hyphens:auto;
+      text-wrap:pretty;        /* mejora saltos (si el navegador lo soporta) */
+    }
 
     .grid{display:grid; gap:24px}
     .about{grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); max-width:1100px; margin:36px auto 0}
@@ -142,6 +156,14 @@
       box-shadow:var(--shadow)
     }
     .card h3{margin:0 0 8px; color:var(--brand)}
+    .card p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.75;
+      overflow-wrap:anywhere;
+      hyphens:auto;
+      text-wrap:pretty;
+    }
     .btn-link{
       display:inline-block; margin-top:10px; padding:10px 14px; border-radius:10px;
       background:var(--brand); color:#fff; font-weight:800;
@@ -158,9 +180,16 @@
               mask:var(--ico) no-repeat center/contain;
     }
     .benefit h3{margin:8px 0 6px; color:var(--brand)}
-    .benefit p{color:var(--muted)}
+    .benefit p{
+      color:var(--muted);
+      line-height:1.75;
+      overflow-wrap:anywhere;
+      hyphens:auto;
+      text-wrap:pretty;
+      margin:0;
+    }
 
-    /* ===== CASOS */
+    /* ===== CASOS (no tocar lógica, solo estabilidad texto) */
     .carousel{
       max-width:900px;
       margin:24px auto 0;
@@ -170,7 +199,7 @@
       touch-action: pan-y;
       user-select: none;
     }
-    /* Ocultar foco visible SOLO en carrusel (estética) */
+    /* estética: sin foco visible en carrusel */
     .carousel:focus,
     .carousel:focus-visible{
       outline:none;
@@ -187,15 +216,21 @@
       padding:38px 72px;
       box-sizing:border-box;
     }
-    .item h3{margin:0 0 8px; color:var(--brand)}
+    .item h3{
+      margin:0 0 8px;
+      color:var(--brand);
+      overflow-wrap:anywhere;
+      hyphens:none;       /* evita guiones raros en títulos */
+      text-wrap:pretty;
+    }
     .item p{
       color:var(--muted);
-      overflow-wrap: break-word;
-      word-break: normal;
-      hyphens: auto;
-      white-space: normal;
-      line-height: 1.65;
-      margin: 0;
+      line-height:1.75;
+      overflow-wrap:anywhere; /* evita desbordes */
+      word-break:normal;
+      hyphens:none;          /* evita cortes “feos” en carrusel */
+      text-wrap:pretty;
+      margin:0;
     }
     .nav-btn{
       position:absolute; top:50%; transform:translateY(-50%);
@@ -206,12 +241,40 @@
     .prev{left:12px}
     .next{right:12px}
 
+    /* ===== NOVEDADES (evitar colores fijos para dark mode) */
     .news{grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); max-width:1100px; margin:36px auto 0}
-    .news-card{background:var(--surface); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); text-align:left}
-    .news-image{height:160px; background:#d1d5db; display:grid; place-items:center; color:#374151}
-    .news-card h3{margin:14px}
-    .news-card p{margin:0 14px 16px; color:#4b5563}
-    .btn-news{display:inline-block; margin:0 14px 16px; padding:8px 14px; border-radius:10px; background:var(--brand); color:#fff; font-weight:800}
+    .news-card{
+      background:var(--surface);
+      border-radius:var(--radius);
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      text-align:left;
+    }
+    .news-image{
+      height:160px;
+      background:rgba(148,163,184,.35);
+      display:grid;
+      place-items:center;
+      color:var(--muted);
+    }
+    .news-card h3{margin:14px; color:var(--brand)}
+    .news-card p{
+      margin:0 14px 16px;
+      color:var(--muted);
+      line-height:1.75;
+      overflow-wrap:anywhere;
+      hyphens:auto;
+      text-wrap:pretty;
+    }
+    .btn-news{
+      display:inline-block;
+      margin:0 14px 16px;
+      padding:8px 14px;
+      border-radius:10px;
+      background:var(--brand);
+      color:#fff;
+      font-weight:800
+    }
     .btn-news:hover{background:#005f86}
 
     .contact{max-width:980px; margin:28px auto 0}
@@ -232,11 +295,30 @@
 
     footer{background:var(--nav); color:#fff; text-align:center; padding:20px; margin-top:14px}
 
+    /* ===============================
+       RESPONSIVE: ajustes finos móvil
+       =============================== */
     @media (max-width:720px){
-      .hero{height:480px}
-      .row{grid-template-columns:1fr}
-      .item{ padding:32px 78px; }
-      .item p{ font-size:1rem; }
+      /* menos “aire” vertical para que no parezca eterno en móvil */
+      section{ padding:64px 16px; }
+
+      /* títulos un poco más compactos */
+      h2{ font-size:1.7rem; }
+
+      /* párrafos más cómodos y visibles */
+      section p{
+        font-size:1.03rem;
+        line-height:1.78;
+        margin-bottom:10px;
+      }
+
+      /* tarjetas: mejor lectura */
+      .card{ padding:20px; }
+      .card p{ font-size:1.02rem; }
+
+      /* carrusel: padding suficiente sin “apretar” demasiado */
+      .item{ padding:30px 72px; }
+      .item p{ font-size:1.02rem; }
     }
 
     .hero,section{opacity:0; transform:translateY(24px); transition:opacity .8s ease, transform .8s ease}
@@ -572,7 +654,7 @@
       if(e.key === "ArrowRight"){ e.preventDefault(); goNext(); }
     });
 
-    // Auto-focus al entrar a la sección (sin borde, por CSS)
+    // Auto-focus al entrar a la sección
     const focusIO = new IntersectionObserver((entries)=>{
       entries.forEach(entry=>{
         if(entry.isIntersecting){
@@ -619,7 +701,7 @@
 
     announce();
 
-    // ===== 8) Auto-rotación del carrusel (arreglado para PC)
+    // ===== Auto-rotación del carrusel (confirmada)
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     let autoEnabled = !prefersReducedMotion;
@@ -634,7 +716,7 @@
     function startAuto(){
       if(!autoEnabled || !isVisible) return;
       stopAuto();
-      autoTimer = setInterval(()=>{ goNext(); }, 9000); // 9s (cambia a 8000/10000 si quieres)
+      autoTimer = setInterval(()=>{ goNext(); }, 9000); // 9s
     }
 
     function pauseAutoTemporarily(ms = 15000){
@@ -643,7 +725,6 @@
       resumeTimer = setTimeout(()=>{ startAuto(); }, ms);
     }
 
-    // Interacción => pausa 15s y reanuda
     prev.addEventListener("click", ()=>pauseAutoTemporarily(15000));
     next.addEventListener("click", ()=>pauseAutoTemporarily(15000));
     carousel.addEventListener("keydown", (e)=>{
@@ -651,11 +732,9 @@
     });
     carousel.addEventListener("touchstart", ()=>pauseAutoTemporarily(15000), {passive:true});
 
-    // Mouse encima => pausa; al salir => reanuda si visible
     carousel.addEventListener("mouseenter", stopAuto);
     carousel.addEventListener("mouseleave", startAuto);
 
-    // Visible => inicia; no visible => pausa (threshold más tolerante)
     const autoIO = new IntersectionObserver((entries)=>{
       entries.forEach(entry=>{
         isVisible = entry.isIntersecting;
@@ -699,6 +778,7 @@
   </script>
 </body>
 </html>
+
 
 
 
