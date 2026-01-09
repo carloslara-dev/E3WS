@@ -126,24 +126,18 @@
       transition:transform .3s ease; z-index:999; box-shadow:-12px 0 30px rgba(0,0,0,.35);
       display:flex; flex-direction:column;
 
-      /* ===== FIX: scroll interno en móvil + altura estable ===== */
-      height: calc(100dvh - 64px);
-      overflow-y: auto;
+      /* IMPORTANTE: permite scroll interno en móvil */
+      overflow-y:auto;
       -webkit-overflow-scrolling: touch;
-      overscroll-behavior: contain;
     }
     .offcanvas.open{transform:translateX(0)}
 
     .off-head{
       display:flex; align-items:center; justify-content:space-between;
       padding:16px 18px 10px;
-
-      /* mantiene el header del menú visible mientras haces scroll */
-      position: sticky;
-      top: 0;
-      background: rgba(11,15,22,.96);
-      backdrop-filter: blur(6px);
-      z-index: 2;
+      position:sticky; top:0;
+      background:#0b0f16;
+      z-index:1;
     }
     .off-title{
       font-weight:900; letter-spacing:.2px;
@@ -684,7 +678,7 @@
       slides[s].classList.add('active');
     },6000);
 
-    // ===== 5) Carrusel Casos (manual + swipe + auto-rotación inteligente)
+    // ===== 5) Carrusel Casos (manual + swipe + auto-rotación inteligente + teclado)
     const track=document.getElementById("track");
     const items=document.querySelectorAll(".item");
     const prev=document.getElementById("prev");
@@ -695,8 +689,10 @@
     function move(){ track.style.transform=`translateX(-${i*100}%)`; }
 
     function userInteracted(){
+      // pausa 12s después de interacción
       pauseUntil = Date.now() + 12000;
     }
+
     function goNext(){
       i=(i===items.length-1)?0:i+1;
       move();
@@ -738,7 +734,7 @@
         if(Date.now() < pauseUntil) return;
         i=(i+1)%items.length;
         move();
-      }, 9000);
+      }, 9000); // 9s (suave)
     }
 
     function stopAuto(){
@@ -754,6 +750,30 @@
       });
     },{threshold:0.35});
     casosIO.observe(casosSection);
+
+    // Teclado (PC): flechas ← → para cambiar Casos cuando la sección está visible
+    let casosVisible = false;
+    const casosKeyIO = new IntersectionObserver((entries) => {
+      entries.forEach(e => { casosVisible = e.isIntersecting; });
+    }, { threshold: 0.35 });
+    casosKeyIO.observe(casosSection);
+
+    document.addEventListener("keydown", (e) => {
+      if (!casosVisible) return;
+
+      // No interferir si estás escribiendo en un input/textarea o elemento editable
+      const tag = (document.activeElement?.tagName || "").toLowerCase();
+      const isTyping = tag === "input" || tag === "textarea" || document.activeElement?.isContentEditable;
+      if (isTyping) return;
+
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        goNext();
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        goPrev();
+      }
+    });
 
     // ===== 6) Form maqueta
     const form=document.getElementById("contactForm");
@@ -866,6 +886,7 @@
   </script>
 </body>
 </html>
+
 
 
 
