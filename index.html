@@ -61,6 +61,28 @@
     }
 
     /* ===============================
+       SKIP LINK (Accesibilidad)
+       =============================== */
+    .skip-link{
+      position:fixed;
+      left:14px;
+      top:14px;
+      z-index:2000;
+      padding:10px 14px;
+      border-radius:12px;
+      font-weight:900;
+      background:var(--surface);
+      color:var(--text);
+      border:1px solid rgba(71,193,238,.45);
+      box-shadow:var(--shadow);
+      transform:translateY(-160%);
+      transition:transform .2s ease;
+    }
+    .skip-link:focus{
+      transform:translateY(0);
+    }
+
+    /* ===============================
        HEADER / NAV + REDES (local)
        =============================== */
     header{
@@ -306,12 +328,18 @@
     footer{background:var(--nav); color:#fff; text-align:center; padding:20px; margin-top:14px}
 
     /* ===============================
-       RESPONSIVE extra
+       RESPONSIVE extra (Ajustes finos Hero)
        =============================== */
     @media (max-width:720px){
       .hero{height:480px}
       .row{grid-template-columns:1fr}
       .plate{max-width:min(92vw, 560px)}
+    }
+    @media (max-width:480px){
+      .hero{height:460px}
+      .plate{padding:16px 16px; border-radius:14px}
+      .hero-buttons{gap:10px}
+      .hero-buttons .btn{width:100%; max-width:320px}
     }
 
     /* ===============================
@@ -323,6 +351,9 @@
 </head>
 
 <body>
+
+  <!-- Skip link: aparece al presionar TAB al inicio -->
+  <a class="skip-link" href="#page">Saltar al contenido</a>
 
   <!-- Backdrop para menú móvil -->
   <div class="backdrop" id="backdrop" aria-hidden="true"></div>
@@ -438,7 +469,7 @@
   </header>
 
   <!-- ================= CONTENIDO PRINCIPAL ================= -->
-  <main id="page">
+  <main id="page" tabindex="-1">
     <!-- ================= HERO ================= -->
     <section id="inicio" class="hero" aria-label="Portada E3WS">
       <div class="hero-slider" aria-hidden="true">
@@ -794,7 +825,6 @@
     }
 
     function disablePageInteraction(disable){
-      // "inert" evita TAB a todo lo de afuera (Chrome/Edge/Firefox modernos)
       if(page){
         try{ page.inert = !!disable; }catch(_){}
         page.setAttribute("aria-hidden", disable ? "true" : "false");
@@ -814,7 +844,6 @@
       document.body.style.overflow = "hidden";
       disablePageInteraction(true);
 
-      // foco al primer elemento del menú
       const focusables = getFocusable(offcanvas);
       if (focusables.length) focusables[0].focus();
       else offcanvas.focus();
@@ -842,14 +871,10 @@
 
     closeMenuBtn.addEventListener("click", closeMenu);
 
-    // cerrar tocando el backdrop
     backdrop.addEventListener("click", () => {
       if (isMenuOpen()) closeMenu();
     });
 
-    // ESC + Focus Trap (TAB dentro del menú) — versión fuerte:
-    // - si el foco se va "afuera", lo trae de vuelta
-    // - Tab/Shift+Tab cicla entre primero/último
     document.addEventListener("keydown", (e) => {
       if (!isMenuOpen()) return;
 
@@ -871,14 +896,12 @@
         const last = focusables[focusables.length - 1];
         const active = document.activeElement;
 
-        // Si por cualquier razón el foco ya está fuera del menú, lo re-encerramos.
         if (!offcanvas.contains(active)) {
           e.preventDefault();
           (e.shiftKey ? last : first).focus();
           return;
         }
 
-        // Ciclo normal dentro del menú
         if (e.shiftKey && active === first) {
           e.preventDefault();
           last.focus();
@@ -893,7 +916,6 @@
       }
     });
 
-    // Extra seguridad: si el foco se mueve afuera por click/otros, lo traemos de vuelta.
     document.addEventListener("focusin", (e) => {
       if (!isMenuOpen()) return;
       if (offcanvas.contains(e.target)) return;
@@ -903,7 +925,6 @@
       else offcanvas.focus();
     });
 
-    // cerrar menú al hacer click en un link del menú móvil
     offcanvas.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener("click", () => {
         if (isMenuOpen()) closeMenu();
@@ -912,6 +933,7 @@
   </script>
 </body>
 </html>
+
 
 
 
