@@ -55,9 +55,6 @@
       white-space:nowrap;border:0;
     }
 
-    /* ===============================
-       HEADER / NAV
-       =============================== */
     header{
       position:fixed; inset:0 0 auto 0; z-index:1000; background:var(--nav); color:#fff;
       box-shadow:0 2px 10px rgba(0,0,0,.2);
@@ -90,7 +87,6 @@
       flex:0 0 auto;
     }
 
-    /* Backdrop del menú (clic para cerrar) */
     .backdrop{
       position:fixed; inset:0;
       background:rgba(0,0,0,.45);
@@ -100,12 +96,12 @@
     }
     .backdrop.open{opacity:1; pointer-events:auto;}
 
-    /* offcanvas móvil */
     .offcanvas{
       position:fixed; inset:64px 0 0 auto; width:100%; max-width:360px;
       background:#0b0f16; color:#fff; transform:translateX(100%);
       transition:transform .3s ease; z-index:999; box-shadow:-12px 0 30px rgba(0,0,0,.35);
       will-change: transform;
+      outline:none;
     }
     .offcanvas.open{transform:translateX(0)}
     .off-body{padding:18px}
@@ -132,9 +128,6 @@
       .burger{display:block}
     }
 
-    /* ===============================
-       HERO
-       =============================== */
     .hero{
       margin-top:72px; position:relative; height:520px; overflow:hidden;
       display:grid; place-items:center; color:#fff;
@@ -170,9 +163,6 @@
     .btn-outline{color:#fff; border:2px solid #fff}
     .btn-outline:hover{background:rgba(255,255,255,.12)}
 
-    /* ===============================
-       SECCIONES + TEXTOS
-       =============================== */
     section{padding:80px 20px; text-align:center}
     .section-alt{background:var(--alt)}
     h2{font-size:2rem; margin:0 0 10px; color:var(--brand)}
@@ -188,9 +178,6 @@
       text-wrap:pretty;
     }
 
-    /* ===============================
-       NOSOTROS
-       =============================== */
     .grid{display:grid; gap:24px}
     .about{grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); max-width:1100px; margin:36px auto 0}
     .card{
@@ -212,9 +199,6 @@
     }
     .btn-link:hover{background:#005f86}
 
-    /* ===============================
-       BENEFICIOS (SVG locales)
-       =============================== */
     .benefits{grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); max-width:1100px; margin:36px auto 0}
     .benefit{padding:26px 20px; background:var(--surface); border-radius:var(--radius)}
     .ico-wrap{display:grid; place-items:center; margin-bottom:10px}
@@ -234,9 +218,6 @@
       margin:0;
     }
 
-    /* ===============================
-       CASOS
-       =============================== */
     .carousel{
       max-width:900px;
       margin:24px auto 0;
@@ -281,9 +262,6 @@
     .prev{left:12px}
     .next{right:12px}
 
-    /* ===============================
-       NOVEDADES
-       =============================== */
     .news{grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); max-width:1100px; margin:36px auto 0}
     .news-card{
       background:var(--surface);
@@ -319,9 +297,6 @@
     }
     .btn-news:hover{background:#005f86}
 
-    /* ===============================
-       CONTACTO
-       =============================== */
     .contact{max-width:980px; margin:28px auto 0}
     .form{background:var(--surface); border-radius:var(--radius); padding:24px; text-align:left; box-shadow:var(--shadow)}
     .row{display:grid; grid-template-columns:repeat(2,1fr); gap:16px}
@@ -357,7 +332,6 @@
 </head>
 <body>
 
-  <!-- Backdrop para el menú móvil -->
   <div class="backdrop" id="backdrop" aria-hidden="true"></div>
 
   <header>
@@ -410,12 +384,12 @@
            role="dialog"
            aria-modal="true"
            aria-hidden="true"
-           aria-label="Menú móvil">
+           aria-label="Menú móvil"
+           tabindex="-1">
       <div class="off-body">
         <div class="off-head">
           <div class="off-title">Menú</div>
           <button class="close-btn" id="closeMenu" type="button" aria-label="Cerrar menú">
-            <!-- ícono X -->
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M6 6l12 12M18 6L6 18" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
             </svg>
@@ -437,7 +411,6 @@
     </aside>
   </header>
 
-  <!-- Todo el contenido de la página (para inert/aria-hidden cuando menú abre) -->
   <main id="page">
 
     <section id="inicio" class="hero" aria-label="Portada E3WS">
@@ -630,7 +603,7 @@
 
   <script>
     // =========================
-    // 0) Helpers accesibilidad menú
+    // 0) Menú accesible (FIX: trap real incluso sin inert)
     // =========================
     const burger = document.getElementById("burger");
     const offcanvas = document.getElementById("offcanvas");
@@ -639,6 +612,8 @@
     const page = document.getElementById("page");
 
     let lastFocused = null;
+    let focusablesPageCache = [];
+    let menuOpen = false;
 
     function getFocusable(container){
       return Array.from(container.querySelectorAll(
@@ -646,16 +621,49 @@
       )).filter(el => !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length));
     }
 
+    // Fallback real cuando NO hay inert: deshabilitar TAB en el resto de la página
+    function disablePageTabbing(){
+      focusablesPageCache = getFocusable(page);
+      focusablesPageCache.forEach(el=>{
+        const prev = el.getAttribute("tabindex");
+        if(prev !== null) el.dataset.prevTabindex = prev;
+        el.setAttribute("tabindex","-1");
+      });
+      page.setAttribute("aria-hidden","true");
+    }
+
+    function restorePageTabbing(){
+      focusablesPageCache.forEach(el=>{
+        if("prevTabindex" in el.dataset){
+          el.setAttribute("tabindex", el.dataset.prevTabindex);
+          delete el.dataset.prevTabindex;
+        } else {
+          el.removeAttribute("tabindex");
+        }
+      });
+      focusablesPageCache = [];
+      page.setAttribute("aria-hidden","false");
+    }
+
     function setPageInert(on){
-      // inert es ideal si está soportado (Chrome/Edge/Android modernos)
       if ("inert" in page) {
         page.inert = on;
       } else {
-        page.setAttribute("aria-hidden", on ? "true" : "false");
+        if(on) disablePageTabbing();
+        else restorePageTabbing();
       }
     }
 
+    function focusFirstInMenu(){
+      const focusables = getFocusable(offcanvas);
+      if(focusables.length) focusables[0].focus();
+      else offcanvas.focus();
+    }
+
     function openMenu(){
+      if(menuOpen) return;
+      menuOpen = true;
+
       lastFocused = document.activeElement;
 
       offcanvas.classList.add("open");
@@ -667,12 +675,13 @@
       document.body.style.overflow = "hidden";
       setPageInert(true);
 
-      // foco al primer elemento útil (botón cerrar si existe)
-      const focusables = getFocusable(offcanvas);
-      (focusables[0] || offcanvas).focus();
+      focusFirstInMenu();
     }
 
     function closeMenu(){
+      if(!menuOpen) return;
+      menuOpen = false;
+
       offcanvas.classList.remove("open");
       backdrop.classList.remove("open");
 
@@ -687,39 +696,42 @@
       }
     }
 
-    // =========================
-    // 1) Botón hamburguesa abre/cierra
-    // =========================
     burger.addEventListener("click", ()=>{
-      const isOpen = offcanvas.classList.contains("open");
-      isOpen ? closeMenu() : openMenu();
+      menuOpen ? closeMenu() : openMenu();
     });
 
-    // Botón X cierra
     closeMenuBtn.addEventListener("click", closeMenu);
-
-    // Clic en backdrop cierra
     backdrop.addEventListener("click", closeMenu);
 
-    // Escape cierra
     document.addEventListener("keydown", (e)=>{
-      if(!offcanvas.classList.contains("open")) return;
+      if(!menuOpen) return;
       if(e.key === "Escape"){
         e.preventDefault();
         closeMenu();
       }
     });
 
-    // Focus trap (Tab/Shift+Tab dentro del menú)
+    // Trap de TAB (mejorado)
     document.addEventListener("keydown", (e)=>{
-      if(!offcanvas.classList.contains("open")) return;
+      if(!menuOpen) return;
       if(e.key !== "Tab") return;
 
       const focusables = getFocusable(offcanvas);
-      if(focusables.length === 0) return;
+      if(focusables.length === 0){
+        e.preventDefault();
+        offcanvas.focus();
+        return;
+      }
 
       const first = focusables[0];
       const last = focusables[focusables.length - 1];
+
+      // Si el foco está fuera del menú, lo regresamos
+      if(!offcanvas.contains(document.activeElement)){
+        e.preventDefault();
+        (e.shiftKey ? last : first).focus();
+        return;
+      }
 
       if(e.shiftKey && document.activeElement === first){
         e.preventDefault();
@@ -728,15 +740,21 @@
         e.preventDefault();
         first.focus();
       }
+    }, true);
+
+    // Si por alguna razón el foco “se escapa”, lo devolvemos al menú
+    document.addEventListener("focusin", (e)=>{
+      if(!menuOpen) return;
+      if(offcanvas.contains(e.target)) return;
+      focusFirstInMenu();
     });
 
-    // Al hacer click en un link del menú, navegar y cerrar
     offcanvas.querySelectorAll('a[href^="#"]').forEach(a=>{
       a.addEventListener("click", ()=> closeMenu());
     });
 
     // =========================
-    // 2) Scroll suave compensando header
+    // 1) Scroll suave compensando header
     // =========================
     document.querySelectorAll('a[href^="#"]').forEach(a=>{
       a.addEventListener("click", e=>{
@@ -752,7 +770,7 @@
     });
 
     // =========================
-    // 3) Aparición suave
+    // 2) Aparición suave
     // =========================
     const appearIO=new IntersectionObserver((entries)=>{
       entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add("visible"); });
@@ -760,7 +778,7 @@
     document.querySelectorAll(".hero, section").forEach(el=>appearIO.observe(el));
 
     // =========================
-    // 4) Slider Hero
+    // 3) Slider Hero
     // =========================
     const slides=document.querySelectorAll('.slide');
     let s=0;
@@ -771,7 +789,7 @@
     },6000);
 
     // =========================
-    // 5) Carrusel Casos (teclado + swipe + auto)
+    // 4) Carrusel Casos (teclado + swipe + auto)
     // =========================
     const carousel = document.getElementById("carouselCasos");
     const statusEl = document.getElementById("casosStatus");
@@ -800,7 +818,6 @@
       if(e.key === "ArrowRight"){ e.preventDefault(); goNext(); }
     });
 
-    // auto-focus al entrar a la sección
     const focusIO = new IntersectionObserver((entries)=>{
       entries.forEach(entry=>{
         if(entry.isIntersecting){
@@ -812,7 +829,6 @@
     },{ threshold: 0.35 });
     focusIO.observe(carousel);
 
-    // Swipe
     let startX = 0, startY = 0, dragging = false;
     carousel.addEventListener("touchstart", (e)=>{
       const t = e.touches[0];
@@ -842,7 +858,6 @@
 
     announce();
 
-    // Auto-rotación "inteligente"
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let autoEnabled = !prefersReducedMotion;
     let autoTimer = null;
@@ -882,7 +897,7 @@
     autoIO.observe(carousel);
 
     // =========================
-    // 6) Form maqueta
+    // 5) Form maqueta
     // =========================
     const form=document.getElementById("contactForm");
     const ok=document.getElementById("ok");
@@ -896,6 +911,7 @@
   </script>
 </body>
 </html>
+
 
 
 
