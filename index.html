@@ -61,28 +61,6 @@
     }
 
     /* ===============================
-       SKIP LINK (Accesibilidad)
-       =============================== */
-    .skip-link{
-      position:fixed;
-      left:14px;
-      top:14px;
-      z-index:2000;
-      padding:10px 14px;
-      border-radius:12px;
-      font-weight:900;
-      background:var(--surface);
-      color:var(--text);
-      border:1px solid rgba(71,193,238,.45);
-      box-shadow:var(--shadow);
-      transform:translateY(-160%);
-      transition:transform .2s ease;
-    }
-    .skip-link:focus{
-      transform:translateY(0);
-    }
-
-    /* ===============================
        HEADER / NAV + REDES (local)
        =============================== */
     header{
@@ -124,14 +102,6 @@
     }
 
     /* ===============================
-       MODO PRUEBA MENÚ MÓVIL EN PC
-       (?mobiletest=1)
-       =============================== */
-    body.force-mobile .nav-links,
-    body.force-mobile .nav-social{ display:none !important; }
-    body.force-mobile .burger{ display:block !important; }
-
-    /* ===============================
        BACKDROP (para menú móvil)
        =============================== */
     .backdrop{
@@ -155,14 +125,29 @@
       background:#0b0f16; color:#fff; transform:translateX(100%);
       transition:transform .3s ease; z-index:999; box-shadow:-12px 0 30px rgba(0,0,0,.35);
       display:flex; flex-direction:column;
+
+      /* ===== FIX: scroll interno en móvil + altura estable ===== */
+      height: calc(100dvh - 64px);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
     }
     .offcanvas.open{transform:translateX(0)}
 
     .off-head{
       display:flex; align-items:center; justify-content:space-between;
       padding:16px 18px 10px;
+
+      /* mantiene el header del menú visible mientras haces scroll */
+      position: sticky;
+      top: 0;
+      background: rgba(11,15,22,.96);
+      backdrop-filter: blur(6px);
+      z-index: 2;
     }
-    .off-title{font-weight:900; letter-spacing:.2px;}
+    .off-title{
+      font-weight:900; letter-spacing:.2px;
+    }
     .close-btn{
       width:42px; height:42px; border-radius:12px;
       border:1px solid rgba(255,255,255,.14);
@@ -328,18 +313,12 @@
     footer{background:var(--nav); color:#fff; text-align:center; padding:20px; margin-top:14px}
 
     /* ===============================
-       RESPONSIVE extra (Ajustes finos Hero)
+       RESPONSIVE extra
        =============================== */
     @media (max-width:720px){
       .hero{height:480px}
       .row{grid-template-columns:1fr}
       .plate{max-width:min(92vw, 560px)}
-    }
-    @media (max-width:480px){
-      .hero{height:460px}
-      .plate{padding:16px 16px; border-radius:14px}
-      .hero-buttons{gap:10px}
-      .hero-buttons .btn{width:100%; max-width:320px}
     }
 
     /* ===============================
@@ -351,9 +330,6 @@
 </head>
 
 <body>
-
-  <!-- Skip link: aparece al presionar TAB al inicio -->
-  <a class="skip-link" href="#page">Saltar al contenido</a>
 
   <!-- Backdrop para menú móvil -->
   <div class="backdrop" id="backdrop" aria-hidden="true"></div>
@@ -421,8 +397,6 @@
       aria-label="Menú móvil"
       aria-hidden="true"
       role="dialog"
-      aria-modal="true"
-      tabindex="-1"
     >
       <div class="off-head">
         <div class="off-title">Menú</div>
@@ -468,214 +442,203 @@
     </aside>
   </header>
 
-  <!-- ================= CONTENIDO PRINCIPAL ================= -->
-  <main id="page" tabindex="-1">
-    <!-- ================= HERO ================= -->
-    <section id="inicio" class="hero" aria-label="Portada E3WS">
-      <div class="hero-slider" aria-hidden="true">
-        <div class="slide active"><img src="img/teamwork.png" alt="Equipo de trabajo E3WS" /></div>
-        <div class="slide"><img src="img/alert-notification.png" alt="Notificación de alerta" /></div>
-        <div class="slide"><img src="img/seismic-sensor-network.png" alt="Red de sensores sísmicos" /></div>
-        <div class="slide"><img src="img/early-earthquake-warning-system.png" alt="Sistema de alerta sísmica temprana" /></div>
-      </div>
-      <div class="hero-content">
-        <div class="plate">
-          <h1>Sistema de Alerta Sísmica Temprana</h1>
-          <p>Protegemos vidas y comunidades en Latinoamérica mediante detección rápida y notificaciones en tiempo real.</p>
-          <div class="hero-buttons">
-            <a href="#demo" class="btn btn-primary">Ver Demo</a>
-            <a href="#beneficios" class="btn btn-outline">Conocer más</a>
-          </div>
+  <!-- ================= HERO ================= -->
+  <section id="inicio" class="hero" aria-label="Portada E3WS">
+    <div class="hero-slider" aria-hidden="true">
+      <div class="slide active"><img src="img/teamwork.png" alt="Equipo de trabajo E3WS" /></div>
+      <div class="slide"><img src="img/alert-notification.png" alt="Notificación de alerta" /></div>
+      <div class="slide"><img src="img/seismic-sensor-network.png" alt="Red de sensores sísmicos" /></div>
+      <div class="slide"><img src="img/early-earthquake-warning-system.png" alt="Sistema de alerta sísmica temprana" /></div>
+    </div>
+    <div class="hero-content">
+      <div class="plate">
+        <h1>Sistema de Alerta Sísmica Temprana</h1>
+        <p>Protegemos vidas y comunidades en Latinoamérica mediante detección rápida y notificaciones en tiempo real.</p>
+        <div class="hero-buttons">
+          <a href="#demo" class="btn btn-primary">Ver Demo</a>
+          <a href="#beneficios" class="btn btn-outline">Conocer más</a>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ================= NOSOTROS ================= -->
-    <section id="nosotros" aria-labelledby="h-nosotros">
-      <h2 id="h-nosotros">Nosotros</h2>
-      <p>Somos un equipo de ingenieros y científicos comprometidos con la seguridad sísmica y la resiliencia comunitaria.</p>
+  <!-- ================= NOSOTROS ================= -->
+  <section id="nosotros" aria-labelledby="h-nosotros">
+    <h2 id="h-nosotros">Nosotros</h2>
+    <p>Somos un equipo de ingenieros y científicos comprometidos con la seguridad sísmica y la resiliencia comunitaria.</p>
 
-      <div class="grid about">
-        <article class="card">
-          <h3>Visión</h3>
-          <p>Construir comunidades más seguras y resilientes ante sismos en toda Latinoamérica.</p>
-        </article>
-        <article class="card">
-          <h3>Misión</h3>
-          <p>Desarrollar e implementar sistemas de alerta temprana accesibles, confiables y en tiempo real.</p>
-        </article>
-        <article class="card">
-          <h3>Valores</h3>
-          <p>Compromiso, innovación y colaboración con la sociedad, la academia y las autoridades.</p>
-        </article>
-        <article class="card">
-          <h3>Investigador Principal</h3>
-          <p>El Dr. Pablo E. Lara impulsa la investigación y desarrollo del sistema E3WS.</p>
-          <a class="btn-link" href="https://github.com/PabloELara" target="_blank" rel="noopener">Ver GitHub</a>
-        </article>
-      </div>
-    </section>
+    <div class="grid about">
+      <article class="card">
+        <h3>Visión</h3>
+        <p>Construir comunidades más seguras y resilientes ante sismos en toda Latinoamérica.</p>
+      </article>
+      <article class="card">
+        <h3>Misión</h3>
+        <p>Desarrollar e implementar sistemas de alerta temprana accesibles, confiables y en tiempo real.</p>
+      </article>
+      <article class="card">
+        <h3>Valores</h3>
+        <p>Compromiso, innovación y colaboración con la sociedad, la academia y las autoridades.</p>
+      </article>
+      <article class="card">
+        <h3>Investigador Principal</h3>
+        <p>El Dr. Pablo E. Lara impulsa la investigación y desarrollo del sistema E3WS.</p>
+        <a class="btn-link" href="https://github.com/PabloELara" target="_blank" rel="noopener">Ver GitHub</a>
+      </article>
+    </div>
+  </section>
 
-    <!-- ================= ¿QUÉ ES E3WS? ================= -->
-    <section id="e3ws" class="section-alt" aria-labelledby="h-e3ws">
-      <h2 id="h-e3ws">¿Qué es E3WS?</h2>
-      <p>E3WS es un sistema de alerta temprana que detecta las ondas iniciales de un sismo y notifica a comunidades, empresas y autoridades en tiempo real.</p>
-    </section>
+  <!-- ================= ¿QUÉ ES E3WS? ================= -->
+  <section id="e3ws" class="section-alt" aria-labelledby="h-e3ws">
+    <h2 id="h-e3ws">¿Qué es E3WS?</h2>
+    <p>E3WS es un sistema de alerta temprana que detecta las ondas iniciales de un sismo y notifica a comunidades, empresas y autoridades en tiempo real.</p>
+  </section>
 
-    <!-- ================= EL SISTEMA ================= -->
-    <section id="sistema" aria-labelledby="h-sistema">
-      <h2 id="h-sistema">El Sistema</h2>
-      <p>Analizamos ondas P para estimar epicentro, magnitud e impacto usando IA y redes distribuidas de sensores con arquitectura redundante.</p>
-    </section>
+  <!-- ================= EL SISTEMA ================= -->
+  <section id="sistema" aria-labelledby="h-sistema">
+    <h2 id="h-sistema">El Sistema</h2>
+    <p>Analizamos ondas P para estimar epicentro, magnitud e impacto usando IA y redes distribuidas de sensores con arquitectura redundante.</p>
+  </section>
 
-    <!-- ================= BENEFICIOS ================= -->
-    <section id="beneficios" class="section-alt" aria-labelledby="h-beneficios">
-      <h2 id="h-beneficios">Beneficios</h2>
+  <!-- ================= BENEFICIOS ================= -->
+  <section id="beneficios" class="section-alt" aria-labelledby="h-beneficios">
+    <h2 id="h-beneficios">Beneficios</h2>
 
-      <div class="grid benefits">
-        <article class="card benefit">
-          <div class="ico-wrap">
-            <span class="ico" style="--ico:url('img/icons/tower-broadcast.svg')"></span>
-          </div>
-          <h3>Alerta en Tiempo Real</h3>
-          <p>Notificaciones inmediatas para comunidades, empresas y autoridades.</p>
-        </article>
-
-        <article class="card benefit">
-          <div class="ico-wrap">
-            <span class="ico" style="--ico:url('img/icons/building-shield.svg')"></span>
-          </div>
-          <h3>Protección de Infraestructura</h3>
-          <p>Reduce daños en hospitales, escuelas y sistemas críticos.</p>
-        </article>
-
-        <article class="card benefit">
-          <div class="ico-wrap">
-            <span class="ico" style="--ico:url('img/icons/people-group.svg')"></span>
-          </div>
-          <h3>Seguridad Comunitaria</h3>
-          <p>Integra protocolos de evacuación y sistemas de respuesta rápida.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- ================= CASOS (carrusel) ================= -->
-    <section id="casos" aria-labelledby="h-casos">
-      <h2 id="h-casos">Casos</h2>
-
-      <div class="carousel" aria-roledescription="carrusel" aria-label="Casos de uso">
-        <div class="track" id="track">
-          <article class="item">
-            <div class="case-card">
-              <h3>Ciudad X</h3>
-              <p>Implementación piloto redujo el tiempo de alerta en 10 segundos.</p>
-            </div>
-          </article>
-          <article class="item">
-            <div class="case-card">
-              <h3>Autoridades</h3>
-              <p>Integración con hospitales y bomberos para respuesta inmediata.</p>
-            </div>
-          </article>
-          <article class="item">
-            <div class="case-card">
-              <h3>Comunidad</h3>
-              <p>Simulacros con vecinos mejoraron los tiempos de evacuación.</p>
-            </div>
-          </article>
+    <div class="grid benefits">
+      <article class="card benefit">
+        <div class="ico-wrap">
+          <span class="ico" style="--ico:url('img/icons/tower-broadcast.svg')"></span>
         </div>
+        <h3>Alerta en Tiempo Real</h3>
+        <p>Notificaciones inmediatas para comunidades, empresas y autoridades.</p>
+      </article>
 
-        <button class="nav-btn prev" id="prev" aria-label="Anterior">‹</button>
-        <button class="nav-btn next" id="next" aria-label="Siguiente">›</button>
-      </div>
-    </section>
+      <article class="card benefit">
+        <div class="ico-wrap">
+          <span class="ico" style="--ico:url('img/icons/building-shield.svg')"></span>
+        </div>
+        <h3>Protección de Infraestructura</h3>
+        <p>Reduce daños en hospitales, escuelas y sistemas críticos.</p>
+      </article>
 
-    <!-- ================= NOVEDADES ================= -->
-    <section id="novedades" class="section-alt" aria-labelledby="h-novedades">
-      <h2 id="h-novedades">Novedades</h2>
+      <article class="card benefit">
+        <div class="ico-wrap">
+          <span class="ico" style="--ico:url('img/icons/people-group.svg')"></span>
+        </div>
+        <h3>Seguridad Comunitaria</h3>
+        <p>Integra protocolos de evacuación y sistemas de respuesta rápida.</p>
+      </article>
+    </div>
+  </section>
 
-      <div class="grid news">
-        <article class="news-card">
-          <div class="news-image">Imagen</div>
-          <h3>Nuevo sensor instalado</h3>
-          <p>Se implementó un nuevo sensor sísmico en Ciudad X para mejorar la cobertura.</p>
-          <a href="#" class="btn-news">Leer más</a>
+  <!-- ================= CASOS (carrusel) ================= -->
+  <section id="casos" aria-labelledby="h-casos">
+    <h2 id="h-casos">Casos</h2>
+
+    <div class="carousel" aria-roledescription="carrusel" aria-label="Casos de uso">
+      <div class="track" id="track">
+        <article class="item">
+          <div class="case-card">
+            <h3>Ciudad X</h3>
+            <p>Implementación piloto redujo el tiempo de alerta en 10 segundos.</p>
+          </div>
         </article>
-
-        <article class="news-card">
-          <div class="news-image">Imagen</div>
-          <h3>Prueba piloto</h3>
-          <p>La comunidad de Ciudad Y realizó un simulacro exitoso con el sistema E3WS.</p>
-          <a href="#" class="btn-news">Leer más</a>
+        <article class="item">
+          <div class="case-card">
+            <h3>Autoridades</h3>
+            <p>Integración con hospitales y bomberos para respuesta inmediata.</p>
+          </div>
         </article>
-
-        <article class="news-card">
-          <div class="news-image">Imagen</div>
-          <h3>Colaboración académica</h3>
-          <p>Universidades locales se unieron para analizar datos sísmicos en tiempo real.</p>
-          <a href="#" class="btn-news">Leer más</a>
+        <article class="item">
+          <div class="case-card">
+            <h3>Comunidad</h3>
+            <p>Simulacros con vecinos mejoraron los tiempos de evacuación.</p>
+          </div>
         </article>
       </div>
-    </section>
 
-    <!-- ================= DEMO ================= -->
-    <section id="demo" aria-labelledby="h-demo">
-      <h2 id="h-demo">Demo</h2>
-      <p>Espacio para probar la plataforma E3WS en acción (pendiente integrar mapas/visualizaciones).</p>
-    </section>
+      <button class="nav-btn prev" id="prev" aria-label="Anterior">‹</button>
+      <button class="nav-btn next" id="next" aria-label="Siguiente">›</button>
+    </div>
+  </section>
 
-    <!-- ================= CONTACTO ================= -->
-    <section id="contacto" class="section-alt" aria-labelledby="h-contacto">
-      <h2 id="h-contacto">Contacto</h2>
-      <p class="contact-intro">¿Tienes dudas o deseas una demo? Escríbenos y te responderemos.</p>
+  <!-- ================= NOVEDADES ================= -->
+  <section id="novedades" class="section-alt" aria-labelledby="h-novedades">
+    <h2 id="h-novedades">Novedades</h2>
 
-      <div class="contact">
-        <form id="contactForm" class="form" method="post" novalidate>
-          <input type="text" name="company" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
-          <div class="row">
-            <div class="group">
-              <label for="nombre">Nombre *</label>
-              <input id="nombre" name="nombre" type="text" placeholder="Tu nombre" required minlength="2" />
-            </div>
-            <div class="group">
-              <label for="correo">Correo *</label>
-              <input id="correo" name="correo" type="email" placeholder="tucorreo@dominio.com" required />
-            </div>
-          </div>
-          <div class="row" style="margin-top:12px">
-            <div class="group" style="grid-column:1 / -1">
-              <label for="asunto">Asunto (opcional)</label>
-              <input id="asunto" name="asunto" type="text" placeholder="Motivo de tu mensaje" />
-            </div>
-          </div>
-          <div class="row" style="margin-top:12px">
-            <div class="group" style="grid-column:1 / -1">
-              <label for="mensaje">Mensaje *</label>
-              <textarea id="mensaje" name="mensaje" placeholder="Escribe tu mensaje..." required minlength="10"></textarea>
-            </div>
-          </div>
-          <div style="margin-top:14px; display:flex; align-items:center; gap:12px">
-            <button type="submit" class="send">Enviar</button>
-            <span id="ok" class="ok" role="status" aria-live="polite">✅ Gracias. Tu mensaje fue enviado (simulado).</span>
-          </div>
-        </form>
-      </div>
-    </section>
+    <div class="grid news">
+      <article class="news-card">
+        <div class="news-image">Imagen</div>
+        <h3>Nuevo sensor instalado</h3>
+        <p>Se implementó un nuevo sensor sísmico en Ciudad X para mejorar la cobertura.</p>
+        <a href="#" class="btn-news">Leer más</a>
+      </article>
 
-    <footer>
-      <p>&copy; 2025 E3WS - Sistema de Alerta Sísmica Temprana</p>
-    </footer>
-  </main>
+      <article class="news-card">
+        <div class="news-image">Imagen</div>
+        <h3>Prueba piloto</h3>
+        <p>La comunidad de Ciudad Y realizó un simulacro exitoso con el sistema E3WS.</p>
+        <a href="#" class="btn-news">Leer más</a>
+      </article>
+
+      <article class="news-card">
+        <div class="news-image">Imagen</div>
+        <h3>Colaboración académica</h3>
+        <p>Universidades locales se unieron para analizar datos sísmicos en tiempo real.</p>
+        <a href="#" class="btn-news">Leer más</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= DEMO ================= -->
+  <section id="demo" aria-labelledby="h-demo">
+    <h2 id="h-demo">Demo</h2>
+    <p>Espacio para probar la plataforma E3WS en acción (pendiente integrar mapas/visualizaciones).</p>
+  </section>
+
+  <!-- ================= CONTACTO ================= -->
+  <section id="contacto" class="section-alt" aria-labelledby="h-contacto">
+    <h2 id="h-contacto">Contacto</h2>
+    <p class="contact-intro">¿Tienes dudas o deseas una demo? Escríbenos y te responderemos.</p>
+
+    <div class="contact">
+      <form id="contactForm" class="form" method="post" novalidate>
+        <input type="text" name="company" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <div class="row">
+          <div class="group">
+            <label for="nombre">Nombre *</label>
+            <input id="nombre" name="nombre" type="text" placeholder="Tu nombre" required minlength="2" />
+          </div>
+          <div class="group">
+            <label for="correo">Correo *</label>
+            <input id="correo" name="correo" type="email" placeholder="tucorreo@dominio.com" required />
+          </div>
+        </div>
+        <div class="row" style="margin-top:12px">
+          <div class="group" style="grid-column:1 / -1">
+            <label for="asunto">Asunto (opcional)</label>
+            <input id="asunto" name="asunto" type="text" placeholder="Motivo de tu mensaje" />
+          </div>
+        </div>
+        <div class="row" style="margin-top:12px">
+          <div class="group" style="grid-column:1 / -1">
+            <label for="mensaje">Mensaje *</label>
+            <textarea id="mensaje" name="mensaje" placeholder="Escribe tu mensaje..." required minlength="10"></textarea>
+          </div>
+        </div>
+        <div style="margin-top:14px; display:flex; align-items:center; gap:12px">
+          <button type="submit" class="send">Enviar</button>
+          <span id="ok" class="ok" role="status" aria-live="polite">✅ Gracias. Tu mensaje fue enviado (simulado).</span>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 E3WS - Sistema de Alerta Sísmica Temprana</p>
+  </footer>
 
   <script>
-    // ===== 0) Modo prueba: forzar menú móvil en PC con ?mobiletest=1
-    (function(){
-      const params = new URLSearchParams(window.location.search);
-      if (params.get("mobiletest") === "1") {
-        document.body.classList.add("force-mobile");
-      }
-    })();
-
     // ===== 1) Scroll suave con compensación del header fijo
     document.querySelectorAll('a[href^="#"]').forEach(a=>{
       a.addEventListener("click", e=>{
@@ -731,6 +694,9 @@
     let i=0;
     function move(){ track.style.transform=`translateX(-${i*100}%)`; }
 
+    function userInteracted(){
+      pauseUntil = Date.now() + 12000;
+    }
     function goNext(){
       i=(i===items.length-1)?0:i+1;
       move();
@@ -765,11 +731,6 @@
     let autoTimer=null;
     let pauseUntil=0;
 
-    function userInteracted(){
-      // pausa 12s después de interacción
-      pauseUntil = Date.now() + 12000;
-    }
-
     function startAuto(){
       if(prefersReduced) return;
       if(autoTimer) return;
@@ -777,7 +738,7 @@
         if(Date.now() < pauseUntil) return;
         i=(i+1)%items.length;
         move();
-      }, 9000); // 9s (suave)
+      }, 9000);
     }
 
     function stopAuto(){
@@ -805,12 +766,11 @@
       ok.classList.add("visible");
     });
 
-    // ===== 7) Offcanvas móvil (Accesibilidad avanzada + Focus Trap REAL)
+    // ===== 7) Offcanvas móvil (Accesibilidad avanzada + Focus Trap)
     const burger = document.getElementById("burger");
     const offcanvas = document.getElementById("offcanvas");
     const closeMenuBtn = document.getElementById("closeMenu");
     const backdrop = document.getElementById("backdrop");
-    const page = document.getElementById("page");
 
     function getFocusable(container) {
       return [...container.querySelectorAll(
@@ -824,13 +784,6 @@
       return offcanvas.classList.contains("open");
     }
 
-    function disablePageInteraction(disable){
-      if(page){
-        try{ page.inert = !!disable; }catch(_){}
-        page.setAttribute("aria-hidden", disable ? "true" : "false");
-      }
-    }
-
     function openMenu() {
       lastFocus = document.activeElement;
 
@@ -842,11 +795,9 @@
       backdrop.setAttribute("aria-hidden", "false");
 
       document.body.style.overflow = "hidden";
-      disablePageInteraction(true);
 
       const focusables = getFocusable(offcanvas);
       if (focusables.length) focusables[0].focus();
-      else offcanvas.focus();
     }
 
     function closeMenu() {
@@ -858,7 +809,6 @@
       backdrop.setAttribute("aria-hidden", "true");
 
       document.body.style.overflow = "";
-      disablePageInteraction(false);
 
       if (lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
       else burger.focus();
@@ -871,10 +821,12 @@
 
     closeMenuBtn.addEventListener("click", closeMenu);
 
+    // cerrar tocando el backdrop
     backdrop.addEventListener("click", () => {
       if (isMenuOpen()) closeMenu();
     });
 
+    // ESC + Focus Trap (TAB dentro del menú)
     document.addEventListener("keydown", (e) => {
       if (!isMenuOpen()) return;
 
@@ -886,29 +838,18 @@
 
       if (e.key === "Tab") {
         const focusables = getFocusable(offcanvas);
-        if (!focusables.length) {
-          e.preventDefault();
-          offcanvas.focus();
-          return;
-        }
+        if (!focusables.length) return;
 
         const first = focusables[0];
         const last = focusables[focusables.length - 1];
-        const active = document.activeElement;
 
-        if (!offcanvas.contains(active)) {
-          e.preventDefault();
-          (e.shiftKey ? last : first).focus();
-          return;
-        }
-
-        if (e.shiftKey && active === first) {
+        if (e.shiftKey && document.activeElement === first) {
           e.preventDefault();
           last.focus();
           return;
         }
 
-        if (!e.shiftKey && active === last) {
+        if (!e.shiftKey && document.activeElement === last) {
           e.preventDefault();
           first.focus();
           return;
@@ -916,15 +857,7 @@
       }
     });
 
-    document.addEventListener("focusin", (e) => {
-      if (!isMenuOpen()) return;
-      if (offcanvas.contains(e.target)) return;
-
-      const focusables = getFocusable(offcanvas);
-      if (focusables.length) focusables[0].focus();
-      else offcanvas.focus();
-    });
-
+    // cerrar menú al hacer click en un link del menú móvil
     offcanvas.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener("click", () => {
         if (isMenuOpen()) closeMenu();
@@ -933,6 +866,7 @@
   </script>
 </body>
 </html>
+
 
 
 
