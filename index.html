@@ -60,6 +60,17 @@
       border-radius:10px;
     }
 
+    /* Utilidad: texto solo para lectores de pantalla */
+    .sr-only{
+      position:absolute;
+      width:1px; height:1px;
+      padding:0; margin:-1px;
+      overflow:hidden;
+      clip:rect(0,0,0,0);
+      white-space:nowrap;
+      border:0;
+    }
+
     /* ===============================
        HEADER / NAV + REDES (local)
        =============================== */
@@ -126,18 +137,16 @@
       transition:transform .3s ease; z-index:999; box-shadow:-12px 0 30px rgba(0,0,0,.35);
       display:flex; flex-direction:column;
 
-      /* IMPORTANTE: permite scroll interno en móvil */
-      overflow-y:auto;
+      /* FIX clave: scroll interno del panel */
+      overflow:auto;
       -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
     }
     .offcanvas.open{transform:translateX(0)}
 
     .off-head{
       display:flex; align-items:center; justify-content:space-between;
       padding:16px 18px 10px;
-      position:sticky; top:0;
-      background:#0b0f16;
-      z-index:1;
     }
     .off-title{
       font-weight:900; letter-spacing:.2px;
@@ -337,7 +346,7 @@
 
       <!-- Enlaces desktop -->
       <nav class="nav-links" aria-label="Secciones">
-        <a href="#inicio" class="active">Inicio</a>
+        <a href="#inicio" class="active" aria-current="page">Inicio</a>
         <a href="#nosotros">Nosotros</a>
         <a href="#e3ws">E3WS</a>
         <a href="#sistema">Sistema</a>
@@ -529,6 +538,9 @@
   <section id="casos" aria-labelledby="h-casos">
     <h2 id="h-casos">Casos</h2>
 
+    <!-- Anuncio accesible del caso actual -->
+    <p class="sr-only" id="casesLive" aria-live="polite" aria-atomic="true">Caso: Ciudad X</p>
+
     <div class="carousel" aria-roledescription="carrusel" aria-label="Casos de uso">
       <div class="track" id="track">
         <article class="item">
@@ -647,18 +659,22 @@
       });
     });
 
-    // ===== 2) Resaltar enlace activo (desktop)
+    // ===== 2) Resaltar enlace activo (desktop) + aria-current="page"
     const sections=document.querySelectorAll("section[id]");
-    const links=document.querySelectorAll(".nav-links a[href^='#']");
+    const navLinks=[...document.querySelectorAll(".nav-links a[href^='#']")];
+
+    function setActiveLink(id){
+      navLinks.forEach(l=>{
+        const isActive = l.getAttribute("href") === `#${id}`;
+        l.classList.toggle("active", isActive);
+        if(isActive) l.setAttribute("aria-current","page");
+        else l.removeAttribute("aria-current");
+      });
+    }
+
     const io=new IntersectionObserver((entries)=>{
       entries.forEach(entry=>{
-        const id=entry.target.id;
-        const link=document.querySelector(`.nav-links a[href="#${id}"]`);
-        if(!link) return;
-        if(entry.isIntersecting){
-          links.forEach(l=>l.classList.remove("active"));
-          link.classList.add("active");
-        }
+        if(entry.isIntersecting) setActiveLink(entry.target.id);
       });
     },{rootMargin:"-45% 0px -45% 0px", threshold:0.01});
     sections.forEach(s=>io.observe(s));
@@ -678,19 +694,29 @@
       slides[s].classList.add('active');
     },6000);
 
-    // ===== 5) Carrusel Casos (manual + swipe + auto-rotación inteligente + teclado)
+    // ===== 5) Carrusel Casos (manual + swipe + auto-rotación inteligente)
     const track=document.getElementById("track");
     const items=document.querySelectorAll(".item");
     const prev=document.getElementById("prev");
     const next=document.getElementById("next");
     const casosSection=document.getElementById("casos");
+    const casesLive=document.getElementById("casesLive");
 
     let i=0;
-    function move(){ track.style.transform=`translateX(-${i*100}%)`; }
+
+    function announceCase(){
+      if(!casesLive) return;
+      const title = items[i]?.querySelector("h3")?.textContent?.trim() || "Caso";
+      casesLive.textContent = `Caso: ${title}`;
+    }
+
+    function move(){
+      track.style.transform=`translateX(-${i*100}%)`;
+      announceCase();
+    }
 
     function userInteracted(){
-      // pausa 12s después de interacción
-      pauseUntil = Date.now() + 12000;
+      pauseUntil = Date.now() + 12000; // pausa 12s
     }
 
     function goNext(){
@@ -722,6 +748,26 @@
       else goPrev();
     },{passive:true});
 
+    // Teclado (← →) en PC: solo si Casos está visible o si el foco está dentro del carrusel
+    let casosVisible = false;
+    function isTypingTarget(el){
+      if(!el) return false;
+      const tag = el.tagName?.toLowerCase();
+      return el.isContentEditable || tag === "input" || tag === "textarea" || tag === "select";
+    }
+
+    document.addEventListener("keydown",(e)=>{
+      if(e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      if(isTypingTarget(document.activeElement)) return;
+
+      const focusInsideCarousel = !!document.activeElement?.closest?.(".carousel");
+      if(!casosVisible && !focusInsideCarousel) return;
+
+      e.preventDefault();
+      if(e.key === "ArrowRight") goNext();
+      else goPrev();
+    });
+
     // Auto-rotación: sólo cuando "Casos" está visible
     const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let autoTimer=null;
@@ -745,35 +791,15 @@
 
     const casosIO=new IntersectionObserver((entries)=>{
       entries.forEach(e=>{
+        casosVisible = !!e.isIntersecting;
         if(e.isIntersecting) startAuto();
         else stopAuto();
       });
     },{threshold:0.35});
     casosIO.observe(casosSection);
 
-    // Teclado (PC): flechas ← → para cambiar Casos cuando la sección está visible
-    let casosVisible = false;
-    const casosKeyIO = new IntersectionObserver((entries) => {
-      entries.forEach(e => { casosVisible = e.isIntersecting; });
-    }, { threshold: 0.35 });
-    casosKeyIO.observe(casosSection);
-
-    document.addEventListener("keydown", (e) => {
-      if (!casosVisible) return;
-
-      // No interferir si estás escribiendo en un input/textarea o elemento editable
-      const tag = (document.activeElement?.tagName || "").toLowerCase();
-      const isTyping = tag === "input" || tag === "textarea" || document.activeElement?.isContentEditable;
-      if (isTyping) return;
-
-      if (e.key === "ArrowRight") {
-        e.preventDefault();
-        goNext();
-      } else if (e.key === "ArrowLeft") {
-        e.preventDefault();
-        goPrev();
-      }
-    });
+    // Inicializa anuncio del primer caso
+    announceCase();
 
     // ===== 6) Form maqueta
     const form=document.getElementById("contactForm");
@@ -886,6 +912,7 @@
   </script>
 </body>
 </html>
+
 
 
 
