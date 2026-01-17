@@ -55,9 +55,9 @@
     a{text-decoration:none;color:inherit}
 
     /* ===============================
-       FOCUS (FIX: sin recuadro por click)
-       - El foco visible sólo aparece con teclado (:focus-visible)
-       - El foco por click no muestra "recuadro" (Chrome)
+       FOCUS (Pulido final)
+       - Foco visible SOLO con teclado (:focus-visible)
+       - Click con mouse NO deja recuadro
        =============================== */
     :focus{ outline:none; }
     :focus-visible{
@@ -65,18 +65,16 @@
       box-shadow:var(--focus);
       border-radius:10px;
     }
-    /* Evita anillos/rectángulos en elementos del carrusel por click */
-    .carousel:focus,
-    .carousel:active,
-    .track:focus,
-    .track:active,
-    .item:focus,
-    .item:active,
-    .case-card:focus,
-    .case-card:active{
-      outline:none !important;
+
+    /* En el carrusel: si queda foco por click, lo ocultamos.
+       Si es teclado (:focus-visible), se mantiene (correcto). */
+    .carousel :focus:not(:focus-visible){
       box-shadow:none !important;
     }
+
+    /* Botones del carrusel: foco visible sólo con teclado */
+    .nav-btn:focus{ box-shadow:none; }
+    .nav-btn:focus-visible{ box-shadow:var(--focus); }
 
     /* ===============================
        HEADER / NAV + REDES (local)
@@ -143,7 +141,7 @@
       background:#0b0f16; color:#fff; transform:translateX(100%);
       transition:transform .3s ease; z-index:999; box-shadow:-12px 0 30px rgba(0,0,0,.35);
       display:flex; flex-direction:column;
-      overflow:auto; /* FIX: permite scroll interno en móvil si hace falta */
+      overflow:auto;
       -webkit-overflow-scrolling: touch;
     }
     .offcanvas.open{transform:translateX(0)}
@@ -875,16 +873,9 @@
         if (isMenuOpen()) closeMenu();
       });
     });
-
-    // ✅ EXTRA: evita que un click ponga foco "raro" en carrusel
-    document.querySelector(".carousel")?.addEventListener("mousedown", (e) => {
-      if (e.target.closest("button")) return;
-      e.preventDefault();
-    });
   </script>
 </body>
 </html>
-
 
 
 
