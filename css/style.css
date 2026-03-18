@@ -222,6 +222,7 @@
     height:52px;
     display:block;
     margin:auto;
+    object-fit:contain;
     }
     .ico{
         width:52px;
