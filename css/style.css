@@ -170,16 +170,18 @@ header{
   color:#fff;
   border-radius:10px;
   cursor:pointer;
+  position:relative;
+  z-index:1001;
 }
 
 @media (max-width:1024px){
   .nav-links,
   .nav-social{
-    display:none;
+    display:none !important;
   }
 
   .burger{
-    display:block;
+    display:block !important;
   }
 }
 
