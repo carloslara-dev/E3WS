@@ -230,7 +230,12 @@
         height:52px;
         display:block;
         margin:auto;
-        fill: var(--accent);
+        color: var(--accent);
+        flex: 0 0 52px;
+        }
+
+        .ico-svg path{
+        fill: currentColor;
     }
     .ico{
         width:52px;
