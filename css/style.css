@@ -225,6 +225,13 @@
         object-fit:contain;
         color: var(--accent); /* 🔥 AQUÍ está el color */
     }
+    .ico-svg{
+        width:52px;
+        height:52px;
+        display:block;
+        margin:auto;
+        fill: var(--accent);
+    }
     .ico{
         width:52px;
         height:52px;
