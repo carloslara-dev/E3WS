@@ -774,29 +774,32 @@ section{
   opacity:1;
   transform:translateY(0);
 }
+
 @media (max-width:720px){
   .carousel{
-    padding:0 18px;
+    padding:0 10px;
+    overflow:visible;
   }
 
   .item{
-    padding:38px 8px;
+    padding:38px 0;
   }
 
   .case-card{
-    padding:28px 42px;
+    padding:28px 56px;
   }
 
   .nav-btn{
     width:40px;
     height:40px;
+    z-index:2;
   }
 
   .prev{
-    left:0;
+    left:-6px;
   }
 
   .next{
-    right:0;
+    right:-6px;
   }
 }
