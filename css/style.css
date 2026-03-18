@@ -218,10 +218,19 @@
     .benefit{padding:26px 20px; background:var(--surface); border-radius:var(--radius)}
     .ico-wrap{display:grid; place-items:center; margin-bottom:10px}
     .ico{
-      width:52px; height:52px; display:block; margin:auto;
-      background-color:var(--accent);
-      -webkit-mask:var(--ico) no-repeat center/contain;
-              mask:var(--ico) no-repeat center/contain;
+        width:52px;
+        height:52px;
+        display:block;
+        margin:auto;
+        background-color:var(--accent);
+        -webkit-mask-image: var(--ico);
+        mask-image: var(--ico);
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
     }
     .benefit h3{margin:8px 0 6px; color:var(--brand)}
     .benefit p{color:var(--muted)}
