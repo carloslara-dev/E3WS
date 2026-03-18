@@ -218,11 +218,12 @@
     .benefit{padding:26px 20px; background:var(--surface); border-radius:var(--radius)}
     .ico-wrap{display:grid; place-items:center; margin-bottom:10px}
     .ico-img{
-    width:52px;
-    height:52px;
-    display:block;
-    margin:auto;
-    object-fit:contain;
+        width:52px;
+        height:52px;
+        display:block;
+        margin:auto;
+        object-fit:contain;
+        color: var(--accent); /* 🔥 AQUÍ está el color */
     }
     .ico{
         width:52px;
