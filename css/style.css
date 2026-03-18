@@ -777,29 +777,31 @@ section{
 
 @media (max-width:720px){
   .carousel{
-    padding:0 10px;
     overflow:visible;
+    padding-bottom:70px;
   }
 
   .item{
-    padding:38px 0;
+    padding:24px 0 0;
   }
 
   .case-card{
-    padding:28px 64px;
+    padding:28px 20px;
   }
 
   .nav-btn{
-    width:40px;
-    height:40px;
-    z-index:2;
+    top:auto;
+    bottom:0;
+    transform:none;
+    width:42px;
+    height:42px;
   }
 
   .prev{
-    left:-6px;
+    left:calc(50% - 52px);
   }
 
   .next{
-    right:-6px;
+    right:calc(50% - 52px);
   }
 }
