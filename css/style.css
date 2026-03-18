@@ -778,30 +778,28 @@ section{
 @media (max-width:720px){
   .carousel{
     overflow:visible;
-    padding-bottom:70px;
+    padding:0 18px;
   }
 
   .item{
-    padding:24px 0 0;
+    padding:38px 0;
   }
 
   .case-card{
-    padding:28px 20px;
+    padding:28px 56px;
   }
 
   .nav-btn{
-    top:auto;
-    bottom:0;
-    transform:none;
-    width:42px;
-    height:42px;
+    width:38px;
+    height:38px;
+    z-index:3;
   }
 
   .prev{
-    left:calc(50% - 52px);
+    left:6px;
   }
 
   .next{
-    right:calc(50% - 52px);
+    right:6px;
   }
 }
