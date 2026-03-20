@@ -294,7 +294,21 @@ header{
   background:rgba(0, 55, 140, .26);
   border-color:rgba(71,193,238,.28);
 }
+.off-links a.active{
+  background:linear-gradient(180deg, rgba(0,119,182,.34), rgba(0,90,140,.28));
+  border-color:rgba(71,193,238,.38);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.04),
+    0 0 0 1px rgba(71,193,238,.10);
+}
 
+.off-links a:active{
+  transform:scale(.98);
+}
+
+.off-links a{
+  transition:transform .15s ease, background .2s ease;
+}
 .off-links a:active{
   transform:scale(.99);
 }
