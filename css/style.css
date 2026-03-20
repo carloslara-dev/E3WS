@@ -295,11 +295,11 @@ header{
   border-color:rgba(71,193,238,.28);
 }
 .off-links a.active{
-  background:linear-gradient(180deg, rgba(0,119,182,.34), rgba(0,90,140,.28));
-  border-color:rgba(71,193,238,.38);
+  background:linear-gradient(180deg, rgba(0,160,255,.45), rgba(0,120,200,.35));
+  border-color:rgba(71,193,238,.6);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.04),
-    0 0 0 1px rgba(71,193,238,.10);
+    0 0 12px rgba(71,193,238,.25),
+    inset 0 1px 0 rgba(255,255,255,.05);
 }
 
 .off-links a:active{
