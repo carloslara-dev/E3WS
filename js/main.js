@@ -1,26 +1,26 @@
-const desktopLinks = document.querySelectorAll('.nav-links a[href^="#"]');
-const mobileLinks = document.querySelectorAll('.off-links a[href^="#"]');
-const sections = document.querySelectorAll('section[id]');
+const menuDesktopLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+const menuMobileLinks = document.querySelectorAll('.off-links a[href^="#"]');
+const observedSections = document.querySelectorAll('section[id]');
 
-function clearActiveLinks() {
-  desktopLinks.forEach(link => link.classList.remove('active'));
-  mobileLinks.forEach(link => link.classList.remove('active'));
+function clearMenuActive() {
+  menuDesktopLinks.forEach(link => link.classList.remove('active'));
+  menuMobileLinks.forEach(link => link.classList.remove('active'));
 }
 
-function setActiveLink(id) {
-  clearActiveLinks();
+function activateMenuLink(sectionId) {
+  clearMenuActive();
 
-  const desktopLink = document.querySelector(`.nav-links a[href="#${id}"]`);
-  const mobileLink = document.querySelector(`.off-links a[href="#${id}"]`);
+  const desktopTarget = document.querySelector(`.nav-links a[href="#${sectionId}"]`);
+  const mobileTarget = document.querySelector(`.off-links a[href="#${sectionId}"]`);
 
-  if (desktopLink) desktopLink.classList.add('active');
-  if (mobileLink) mobileLink.classList.add('active');
+  if (desktopTarget) desktopTarget.classList.add('active');
+  if (mobileTarget) mobileTarget.classList.add('active');
 }
 
-const observer = new IntersectionObserver((entries) => {
+const menuObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      setActiveLink(entry.target.id);
+      activateMenuLink(entry.target.id);
     }
   });
 }, {
@@ -28,4 +28,13 @@ const observer = new IntersectionObserver((entries) => {
   threshold: 0.01
 });
 
-sections.forEach(section => observer.observe(section));
+observedSections.forEach(section => menuObserver.observe(section));
+
+[...menuDesktopLinks, ...menuMobileLinks].forEach(link => {
+  link.addEventListener('click', () => {
+    const href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      activateMenuLink(href.slice(1));
+    }
+  });
+});
