@@ -207,7 +207,7 @@ header{
   pointer-events:auto;
 }
 .offcanvas{
-  position:fixed;
+position:fixed;
   inset:64px 0 0 auto;
   width:min(86vw, 320px);
   max-width:320px;
@@ -219,7 +219,7 @@ header{
   background:linear-gradient(180deg,#07101f 0%, #050b16 100%);
   color:#fff;
   box-shadow:-18px 0 40px rgba(0,0,0,.42);
-  transition:transform .3s ease;
+  transition:transform .35s cubic-bezier(.22,.8,.2,1);
   -webkit-overflow-scrolling:touch;
 }
 
@@ -303,7 +303,7 @@ header{
 }
 
 .off-links a:active{
-  transform:scale(.98);
+  transform:scale(0.96);
 }
 
 .off-links a{
